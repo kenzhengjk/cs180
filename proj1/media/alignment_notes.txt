@@ -6,6 +6,10 @@ church.tif
 Green displacement: (dx=4, dy=25)
 Red displacement: (dx=-4, dy=58)
 
+emir.tif
+Green displacement: (dx=24, dy=49)
+Red displacement: (dx=40, dy=107)
+
 harvesters.tif
 Green displacement: (dx=16, dy=59)
 Red displacement: (dx=13, dy=124)
