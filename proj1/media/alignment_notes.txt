@@ -1,7 +1,31 @@
-melons
-Green displacement: (dx=4, dy=83)
-Red displacement: (dx=7, dy=176)
+harvesters.tif
+Green displacement: (dx=16, dy=59)
+Red displacement: (dx=13, dy=124)
 
-italil
+icon.tif
+Green displacement: (dx=16, dy=42)
+Red displacement: (dx=22, dy=89)
+
+italil.tif
 Green displacement: (dx=18, dy=38)
 Red displacement: (dx=34, dy=78)
+
+lastochikino.tif
+Green displacement: (dx=-2, dy=-2)
+Red displacement: (dx=-8, dy=75)
+
+lugano.tif
+Green displacement: (dx=-16, dy=41)
+Red displacement: (dx=-29, dy=92)
+
+melons.tif
+Green displacement: (dx=10, dy=81)
+Red displacement: (dx=13, dy=178)
+
+self_portrait.tif
+Green displacement: (dx=29, dy=78)
+Red displacement: (dx=37, dy=176)
+
+siren.tif
+Green displacement: (dx=-7, dy=48)
+Red displacement: (dx=-21, dy=96)
