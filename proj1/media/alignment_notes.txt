@@ -1,3 +1,7 @@
+church.tif
+Green displacement: (dx=4, dy=25)
+Red displacement: (dx=-4, dy=58)
+
 harvesters.tif
 Green displacement: (dx=16, dy=59)
 Red displacement: (dx=13, dy=124)
@@ -29,3 +33,7 @@ Red displacement: (dx=37, dy=176)
 siren.tif
 Green displacement: (dx=-7, dy=48)
 Red displacement: (dx=-21, dy=96)
+
+three_generations.tif
+Green displacement: (dx=14, dy=53)
+Red displacement: (dx=11, dy=112)
