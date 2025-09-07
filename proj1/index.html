@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 1: Images of the Russian Empire</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+            background-color: #696363;
+            color: #f0f0f0;
+        }
+    
+        h1, h2, h3 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+    
+        img {
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+    
+        img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 25px rgba(255, 255, 255, 0.1);
+        }
+    
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1f1f1f 0%, #121212 100%);
+            z-index: -1;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project 1: Images of the Russian Empire</h1>
+        <h2>Project Overview</h2>
+            <h3>For this project, I worked with Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos. 
+              Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty!</h3>
+        <h2>Alignment Algorithm Overview</h2>
+            <h3>code written --> images aligned</h3>
+        <h2>Alignment Results</h2>
+            <h3>Melons</h3>
+                <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
+
+      
+</body>
+</html>
