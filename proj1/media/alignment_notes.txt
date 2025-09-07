@@ -1,3 +1,7 @@
+cathedral.jpg
+Green displacement: (dx=2, dy=5)
+Red displacement: (dx=3, dy=12)
+
 church.tif
 Green displacement: (dx=4, dy=25)
 Red displacement: (dx=-4, dy=58)
@@ -26,6 +30,10 @@ melons.tif
 Green displacement: (dx=10, dy=81)
 Red displacement: (dx=13, dy=178)
 
+monastery.jpg
+Green displacement: (dx=2, dy=-3)
+Red displacement: (dx=2, dy=3)
+
 self_portrait.tif
 Green displacement: (dx=29, dy=78)
 Red displacement: (dx=37, dy=176)
@@ -37,3 +45,7 @@ Red displacement: (dx=-21, dy=96)
 three_generations.tif
 Green displacement: (dx=14, dy=53)
 Red displacement: (dx=11, dy=112)
+
+tobolsk.jpg
+Green displacement: (dx=3, dy=3)
+Red displacement: (dx=3, dy=6)
