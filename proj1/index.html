@@ -1,115 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Project 1: Images of the Russian Empire</title>
+    <meta charset="UTF-8">
+    <title>Project Portfolio</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0; /* Remove default body margin */
-            background-color: #ffffff;
-            color: #333333;
+        body {   
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #e0e0de; /* Slightly grey background for the page */
         }
-
-        /* Full-width blue header */
+        
         header {
-            background-color: #003366; /* Dark blue background */
-            width: 100%; /* Span full screen width */
-            padding: 15px 0; /* Vertical padding */
-            box-sizing: border-box; /* Include padding in width calculation */
+          background-color: #003366; /* Dark grey top banner */
+          color: white;
+          text-align: center;
+          padding: 2rem 1rem; /* Spacing to make the banner large */
+          color: white;
         }
-
-        /* Header content wrapper (to align with main content) */
-        .header-content {
-            max-width: 800px; /* Match container width */
-            width: 100%;
-            margin: 0 auto; /* Center header content */
-            padding: 0 20px; /* Match container padding */
-            display: flex;
-            align-items: center;
-            text-align: center;
+        
+        header h1 {
+          margin: 0;
+          font-size: 2rem;
         }
-
-        header img {
-            width: 60px;
-            height: 60px;
-            margin-right: 15px;
-            border-radius: 0;
-            box-shadow: none;
+        
+        header h2 {
+          margin: 1rem 0 0 0;
+          font-size: 1.5rem;
         }
-
-        .header-text h1 {
-            margin: 0;
-            font-size: 22px;
-            color: #ffffff; /* White text on blue background */
+        
+        .big_container {
+          max-width: 1000px;
+          margin: 2rem auto; /* Centers the container */
+          background-color: #003366; /* White background for content */
+          padding: 2rem;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+          color: white;   
         }
-
-        .header-text p {
-            margin: 5px 0;
-            font-size: 14px;
-            color: #e0e0e0; /* Light gray text for subtext */
-        }
-
-        /* Centered container for main content */
+            
         .container {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
+          max-width: 900px;
+          margin: 2rem auto; /* Centers the container */
+          background-color: black; /* White background for content */
+          padding: 2rem;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+          color: white;
         }
-
-        /* Styled Sections */
-        .section {
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            background-color: #ffffff;
+        
+        .container a {
+          color: #007bff; /* Blue link for "Back to Home" */
+          text-decoration: none;
         }
-
-        .section h2 {
-            color: #003366;
-            margin-top: 0;
-            font-size: 18px;
+        
+        .container a:hover {
+          text-decoration: underline;
         }
-
-        /* Link Styling */
-        a {
-            color: #0066cc;
-            text-decoration: underline;
+        
+        .container h3 {
+          font-size: 1.5rem;
+          margin-top: 2rem;
         }
-
-        a:hover {
-            color: #004499;
+        
+        .container p {
+          line-height: 1.6; /* Improved readability for paragraphs */
         }
-
-        img {
-            border-radius: 0;
-            box-shadow: none;
-            transition: none;
-        }
-    </style>    
+      </style>
 </head>
+    
 <body>
-    <!-- Header with Logo and Course Title -->
     <header>
-        <div class="header-text">
-            <h1>CS 180 Project 1: Images of the Russian Empire</h1>
-            <p>Objective: Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
-              Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty</p>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="section">
-            <h2>Alignment Algorithm Overview</h2>
-            <p><strong>Low-res image pipeline:</strong> code written --> images aligned</p>
-        </div>
-
-        <div class="section">
-            <h2>Alignment Results</h2>
-                <h3>Melons</h3>
-                    <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
-        </div>
-      
+        <h1>CS 180 Project 1</h1>
+            <h3>Images of the Russian Empire</h3>
+      </header>
+      <div class="container">
+        <h3>Project Overview</h3>
+        <p>Objective: Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
+                  Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty!</p>
+      </div>
+      <div class="container">
+        <h3>Approach Overview</h3>
+            <p><strong>Low res images:</strong> dodo filtering</p>
+      </div>
+      <div class="container">
+        <h3>Problems Encountered</h3>
+        <p>`emir.tif` caused real problems bro</p>
+          <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
+      </div>
 </body>
 </html>
