@@ -16,7 +16,7 @@
           color: white;
           text-align: center;
           padding: 2rem 1rem; /* Spacing to make the banner large */
-          color: white;
+          color: black;
         }
         
         header h1 {
@@ -35,7 +35,7 @@
           background-color: silver; /* White background for content */
           padding: 1rem;
           border-radius: 5px;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
           color: white;   
         }
             
@@ -45,7 +45,7 @@
           background-color: #f2f2f0; /* White background for content */
           padding: 2rem;
           border-radius: 5px;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
           color: black;
         }
         
@@ -66,7 +66,27 @@
         .container p {
           line-height: 1.6; /* Improved readability for paragraphs */
         }
-      </style>
+
+        .image-gallery {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: flex-start;
+          margin-top: 1rem;
+        }
+        
+        .image-item {
+          width: 300px;
+          text-align: center;
+        }
+        
+        .image-item img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>  
 </head>
     
 <body>
@@ -100,17 +120,33 @@
         <div class="container">
             <h2>Results</h2>
                 <h3>Low Resolution Images</h3>
-                    <p>cathedral.jpg<br>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
+                <div class="image-gallery">
+                    <div class="image-item">
                         <img src="media/cathedral_aligned.jpg" alt="cathedral aligned" width="300">
-                    <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                        <p>cathedral.jpg<br>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
+                    </div>
+                
+                    <div class="image-item">
                         <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
+                        <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                    </div>
+                </div>
+                
                 <h3>High Resolution Images</h3>
-                    <p>church.tif<br>Green displacement: (dx=4, dy=25)<br>Red displacement: (dx=-4, dy=58)</p>
+                <div class="image-gallery">
+                    <div class="image-item">
                         <img src="media/church_aligned.jpg" alt="church aligned" width="300">
-                        
+                        <p>church.tif<br>Green displacement: (dx=4, dy=25)<br>Red displacement: (dx=-4, dy=58)</p>
+                    </div>
+                </div>
+                
                 <h3>My Own Examples</h3>
-                    <p>Detali_sobora_v_Milanie.tif<br>Green displacement: (dx=-18, dy=-10)<br>Red displacement: (dx=-52, dy=0)</p>
+                <div class="image-gallery">
+                    <div class="image-item">
                         <img src="media/Detali_sobora_v_Milanie_aligned.jpg" alt="Detali_sobora_v_Milanie aligned" width="300">
+                        <p>Detali_sobora_v_Milanie.tif<br>Green displacement: (dx=-18, dy=-10)<br>Red displacement: (dx=-52, dy=0)</p>
+                    </div>
+                </div>
             
         </div>
 </body>
