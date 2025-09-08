@@ -112,8 +112,8 @@
                     At the coarsest scale (default set to 5 levels deep), the algorithm performs a coarse alignment via the <code>_align_single_scale</code> function, searching for the best (dx, dy) displacement using an image similiarity metric. 
                     After finding the best shift at the lowest resolution, the algorithm propagates this alignment up the pyramid, doubling the shift at each level to approximate the corresponding shift center in higher resolutions. At each level, the algorithm performs a local refinement step in a narrow window (default set to +-5 pixels) around the upscaled shift center.
                     This hierarchical refinement continues recursively until the full-resolution images are aligned. By combining global context from coarse levels with precision from fine levels, the multi-scale pipeline efficiently and accurately aligns the larger (.tif) images. This strategy significantly reduces computational cost compared to exhaustive full-resolution search!</p>
-                <p><strong>Image Similarity Metric:</strong> After experimenting with both the Euclidean Distance (L2 Norm) metric and the Normalized Cross-Correlation (NCC) metric, both performed similarly well on the images, and I opted for the NCC metric because it felt a bit more robust. 
-                    Since NCC effectively "de-means" the data, it makes sense that it would be mathematically more resistant to pixel intensity shifts across images.                    
+                <p><strong>Image Similarity Metric:</strong> After experimenting with both the Euclidean Distance (L2 Norm) metric and the Normalized Cross-Correlation (NCC) metric, I opted for the NCC metric because it proved to be more robust. 
+                    Since NCC effectively "de-means" the data, it makes sense that it would be mathematically more resistant to "uniform" pixel intensity shifts across images.
         </div>
 
         <div class="container">
@@ -167,11 +167,11 @@
                         </div>
                         <div class="image-item">
                             <img src="media/icon_aligned.jpg" alt="icon aligned" width="300">
-                            <p>icon.tif<br>Green displacement: (dx=16, dy=42)<br>Red displacement: (dx=22, dy=89)</p>
+                            <p>icon.tif<br>Green displacement: (dx=17, dy=41)<br>Red displacement: (dx=23, dy=89)</p>
                         </div>
                         <div class="image-item">
                             <img src="media/italil_aligned.jpg" alt="italil aligned" width="300">
-                            <p>italil.tif<br>Green displacement: (dx=18, dy=38)<br>Red displacement: (dx=34, dy=78)</p>
+                            <p>italil.tif<br>Green displacement: (dx=21, dy=38)<br>Red displacement: (dx=35, dy=76)</p>
                         </div>
                         <div class="image-item">
                             <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
@@ -191,7 +191,7 @@
                         </div>
                         <div class="image-item">
                             <img src="media/siren_aligned.jpg" alt="siren aligned" width="300">
-                            <p>siren.tif<br>Green displacement: (dx=-7, dy=48)<br>Red displacement: (dx=-21, dy=96)</p>
+                            <p>siren.tif<br>Green displacement: (dx=-6, dy=49)<br>Red displacement: (dx=-25, dy=95)</p>
                         </div>
                         <div class="image-item">
                             <img src="media/three_generations_aligned.jpg" alt="three_generations aligned" width="300">
@@ -203,15 +203,15 @@
                     <div class="image-gallery">
                         <div class="image-item">
                             <img src="media/Detali_sobora_v_Milanie_aligned.jpg" alt="Detali_sobora_v_Milanie aligned" width="300">
-                            <p>Detali_sobora_v_Milanie.tif<br>Green displacement: (dx=-18, dy=-10)<br>Red displacement: (dx=-52, dy=0)</p>
+                            <p>Detali_sobora_v_Milanie.tif<br>Green displacement: (dx=-19, dy=-10)<br>Red displacement: (dx=-56, dy=-2)</p>
                         </div>
                         <div class="image-item">
                             <img src="media/V_oranzhereie_aligned.jpg" alt="V_oranzhereie aligned" width="300">
-                            <p>V_oranzhereie.tif<br>Green displacement: (dx=27, dy=59)<br>Red displacement: (dx=34, dy=126)</p>
+                            <p>V_oranzhereie.tif<br>Green displacement: (dx=28, dy=59)<br>Red displacement: (dx=34, dy=126)</p>
                         </div>
                         <div class="image-item">
                             <img src="media/woman_yurt_aligned.jpg" alt="woman_yurt aligned" width="300">
-                            <p>woman_yurt.tif<br>Green displacement: (dx=38, dy=49)<br>Red displacement: (dx=56, dy=107)</p>
+                            <p>woman_yurt.tif<br>Green displacement: (dx=38, dy=48)<br>Red displacement: (dx=55, dy=107)</p>
                         </div>
                     </div>
                 
