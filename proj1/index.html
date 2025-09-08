@@ -8,7 +8,7 @@
           font-family: Arial, sans-serif;
           margin: 0;
           padding: 0;
-          background-color: black; /* Slightly grey background for the page */
+          background-color: #4a4a48; /* Slightly grey background for the page */
         }
         
         header {
@@ -118,7 +118,7 @@
 
         <div class="container">
             <h2><center>Bells & Whistles (Extra) and Problems Encountered</center></h2>
-                <p><strong>Better features:</strong>The image <code>emir.tif</code> was especially problematic since it didn't have the same brightness values (i.e., "different color channels"). Inspired by this headache, I modified the NCC metric function to incorporate Sobel edge maps. 
+                <p><strong>Better Features:</strong> The image <code>emir.tif</code> was especially problematic since it didn't have the same brightness values (i.e., had different color channels). Inspired by this headache, I modified the NCC metric function to incorporate Sobel edge maps. 
                     By applying Sobel filters before NCC, the metric focuses on comparing structural edge features (i.e., high-contrast/rapid-change regions) instead of brightness and color intensity between pixels. This addition finally enabled <code>emir.tif</code> to be recovered in all its beauty!</p>
             <div class="image-gallery">
                 <div class="image-item">
