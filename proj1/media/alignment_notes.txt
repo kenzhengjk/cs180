@@ -53,3 +53,16 @@ Red displacement: (dx=11, dy=112)
 tobolsk.jpg
 Green displacement: (dx=3, dy=3)
 Red displacement: (dx=3, dy=6)
+
+
+Detali_sobora_v_Milanie.tif
+Green displacement: (dx=-18, dy=-10)
+Red displacement: (dx=-52, dy=0)
+
+V_oranzhereie.tif
+Green displacement: (dx=27, dy=59)
+Red displacement: (dx=34, dy=126)
+
+woman_yurt.tif
+Green displacement: (dx=38, dy=49)
+Red displacement: (dx=56, dy=107)
