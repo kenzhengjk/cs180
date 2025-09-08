@@ -4,7 +4,7 @@
     <title>Project 1: Images of the Russian Empire</title>
     <style>
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Arial', sans-serif;
             margin: 0; /* Remove default body margin */
             background-color: #ffffff;
             color: #333333;
@@ -26,6 +26,7 @@
             padding: 0 20px; /* Match container padding */
             display: flex;
             align-items: center;
+            text-align: center;
         }
 
         header img {
@@ -91,25 +92,24 @@
 <body>
     <!-- Header with Logo and Course Title -->
     <header>
-        <img src="berkeley_seal.png" alt="UC Berkeley Seal">
         <div class="header-text">
             <h1>CS 180 Project 1: Images of the Russian Empire</h1>
             <p>Objective: Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
               Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty</p>
         </div>
     </header>
-    
+
     <div class="container">
-        <h2>Alignment Algorithm Overview</h2>
-        <p><strong>Instructor:</strong> code written --> images aligned
+        <div class="section">
+            <h2>Alignment Algorithm Overview</h2>
+            <p><strong>Low-res image pipeline:</strong> code written --> images aligned</p>
+        </div>
 
-            
-        <h2>Alignment Algorithm Overview</h2>
-            <h3>code written --> images aligned</h3>
-        <h2>Alignment Results</h2>
-            <h3>Melons</h3>
-                <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
-
+        <div class="section">
+            <h2>Alignment Results</h2>
+                <h3>Melons</h3>
+                    <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
+        </div>
       
 </body>
 </html>
