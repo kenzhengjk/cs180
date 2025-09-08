@@ -30,7 +30,7 @@
         }
         
         .big_container {
-          max-width: 1000px;
+          max-width: 1200px;
           margin: 1rem auto; /* Centers the container */
           background-color: silver; /* White background for content */
           padding: 1rem;
@@ -40,7 +40,7 @@
         }
             
         .container {
-          max-width: 1200px;
+          max-width: 1100px;
           margin: 2rem auto; /* Centers the container */
           background-color: #f2f2f0; /* White background for content */
           padding: 2rem;
@@ -102,7 +102,7 @@
     
         <div class="container">
             <h2>Algorithm Overview & Problems Encountered</h2>
-                <p><strong>Preprocessing:</strong>After cropping out the B, G, and R images from the original triplet, my pipeline cropps 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
+                <p><strong>Preprocessing:</strong> After cropping out the B, G, and R images from the original triplet, my pipeline cropps 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
                 <p><strong>Lower Resolution Images:</strong> For images with resolution below 1000 pixels in either dimension (.jpg images), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
                     The alignment is carried out using <code>_align_single_scale</code>, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
                     For each potential (dx, dy) shift, the source channel is spatially rolled and compared against the reference using the computed similarity score. The shift that maximizes this score is selected as the optimal alignment. This approach is both accurate and reasonably fast for small or moderately-sized images. 
@@ -118,8 +118,8 @@
         </div>
     
         <div class="container">
-            <h2>Postprocessing Results</h2>
-                <p><strong>Lower Resolution Images</strong></p>
+            <h2><center>Postprocessing Results</h2></center>
+                <h3>Lower Resolution Images</h3>
                     <div class="image-gallery">
                         <div class="image-item">
                             <img src="media/cathedral_aligned.jpg" alt="cathedral aligned" width="300">
@@ -130,16 +130,16 @@
                             <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
                         </div>
                         <div class="image-item">
-                            <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
-                            <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                            <img src="media/tobolsk_aligned.jpg" alt="tobolsk aligned" width="300">
+                            <p>tobolsk.jpg<br>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=6)</p>
                         </div>
                     </div>
                 
-                <p><strong>Higher Resolution Images</strong></p>
+                <h3>Higher Resolution Images</h3>
                     <div class="image-gallery">
                         <div class="image-item">
-                            <img src="media/tobolsk_aligned.jpg" alt="tobolsk aligned" width="300">
-                            <p>tobolsk.jpg<br>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=6)</p>
+                            <img src="media/church_aligned.jpg" alt="church aligned" width="300">
+                            <p>church.tif<br>Green displacement: (dx=4, dy=25)<br>Red displacement: (dx=-4, dy=58)</p>
                         </div>
                         <div class="image-item">
                             <img src="media/emir_aligned.jpg" alt="emir aligned" width="300">
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 
-                <p><strong>My Own Examples</strong></p>
+                <h3>My Own Examples</h3>
                     <div class="image-gallery">
                         <div class="image-item">
                             <img src="media/Detali_sobora_v_Milanie_aligned.jpg" alt="Detali_sobora_v_Milanie aligned" width="300">
