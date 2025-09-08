@@ -102,7 +102,7 @@
     
         <div class="container">
             <h2><center>Algorithm Overview</center></h2>
-                <p><strong>Preprocessing:</strong> After cropping out the B, G, and R images from the original triplet, my pipeline cropps 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
+                <p><strong>Preprocessing:</strong> After cropping out the B, G, and R images from the original triplet, my pipeline crops 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
                 <p><strong>Lower Resolution Images:</strong> For images with resolution below 1000 pixels in either dimension (.jpg images), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
                     The alignment is carried out using <code>_align_single_scale</code>, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
                     For each potential (dx, dy) shift, the source channel is spatially rolled and compared against the reference using the computed similarity score. The shift that maximizes this score is selected as the optimal alignment. This approach is both accurate and reasonably fast for small or moderately-sized images. 
@@ -117,17 +117,17 @@
         </div>
 
         <div class="container">
-            <h2><center>Bells & Whistles</center></h2>
-                <p><strong>Better features:</strong></p> The image <code>emir.tif</code> was especially problematic since it didn't have the same brightness values (i.e., "different color channels"). Inspired by this headache, I modified the NCC metric function to incorporate Sobel edge maps. 
-                    By applying Sobel filters before NCC, the metric focuses on comparing structural edge features (i.e., high-contrast/rapid-change regions) instead of brightness and color intensity between pixels. This addition finally enabled <code>emir.tif</code> to be recovered in all its beauty!
+            <h2><center>Bells & Whistles (Extra) and Problems Encountered</center></h2>
+                <p><strong>Better features:</strong>The image <code>emir.tif</code> was especially problematic since it didn't have the same brightness values (i.e., "different color channels"). Inspired by this headache, I modified the NCC metric function to incorporate Sobel edge maps. 
+                    By applying Sobel filters before NCC, the metric focuses on comparing structural edge features (i.e., high-contrast/rapid-change regions) instead of brightness and color intensity between pixels. This addition finally enabled <code>emir.tif</code> to be recovered in all its beauty!</p>
             <div class="image-gallery">
                 <div class="image-item">
                     <img src="media/emir_naive.jpg" alt="emir naive aligned" width="300">
-                    <p>emir.tif <strong><italics>pure NCC alignment</italics></strong><br>Green displacement: (dx=24, dy=49)<br>Red displacement: (dx=-542, dy=118)</p>
+                    <p><strong>Pure NCC</strong><br>emir.tif<br>Green displacement: (dx=24, dy=49)<br>Red displacement: (dx=-542, dy=118)</p>
                 </div>
                 <div class="image-item">
                     <img src="media/emir_aligned.jpg" alt="emir Sobel aligned" width="300">
-                    <p>emir.tif <strong><italics>Edge map NCC alignment</italics></strong><br>Green displacement: (dx=24, dy=49)<br>Red displacement: (dx=40, dy=107</p>
+                    <p><strong>Edge Map + NCC</strong><br>emir.tif<br>Green displacement: (dx=24, dy=49)<br>Red displacement: (dx=40, dy=107</p>
                 </div>
             </div>
         </div>
