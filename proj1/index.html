@@ -95,13 +95,13 @@
             <h2>Images of the Russian Empire</h2>
     </header>
         <div class="container">
-            <h2>Project Overview</h2>
+            <h2><center>Project Overview</center></h2>
             <p>Objective: Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
                       Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty!</p>
         </div>
     
         <div class="container">
-            <h2>Algorithm Overview & Problems Encountered</h2>
+            <h2><center>Algorithm Overview & Problems Encountered</center></h2>
                 <p><strong>Preprocessing:</strong> After cropping out the B, G, and R images from the original triplet, my pipeline cropps 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
                 <p><strong>Lower Resolution Images:</strong> For images with resolution below 1000 pixels in either dimension (.jpg images), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
                     The alignment is carried out using <code>_align_single_scale</code>, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
