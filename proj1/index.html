@@ -102,13 +102,12 @@
     
         <div class="container">
             <h2>Algorithm Overview & Problems Encountered</h2>
-                <h4>Proprocessing</h4>
-                    <p>After cropping out the B, G, and R images from the original triplet, my pipeline cropps 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
-                <p><strong>Low Resolution Images:</strong> For images with resolution below 1000 pixels in either dimension (.jpg images), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
+                <p><strong>Preprocessing:</strong>After cropping out the B, G, and R images from the original triplet, my pipeline cropps 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.</p>
+                <p><strong>Lower Resolution Images:</strong> For images with resolution below 1000 pixels in either dimension (.jpg images), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
                     The alignment is carried out using <code>_align_single_scale</code>, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
                     For each potential (dx, dy) shift, the source channel is spatially rolled and compared against the reference using the computed similarity score. The shift that maximizes this score is selected as the optimal alignment. This approach is both accurate and reasonably fast for small or moderately-sized images. 
                     For higher-resolution images, however, this method falls apart as it takes too long.</p>
-                <p><strong>High Resolution Images:</strong> For high-resolution images (i.e., those with either dimension greater than 1000 pixels), the alignment algorithm employs a multi-scale pyramid alignment strategy designed to handle the large search space efficiently while maintaining sub-pixel accuracy. 
+                <p><strong>Higher Resolution Images:</strong> For high-resolution images (i.e., those with either dimension greater than 1000 pixels), the alignment algorithm employs a multi-scale pyramid alignment strategy designed to handle the large search space efficiently while maintaining sub-pixel accuracy. 
                     This approach begins with recursive image downsampling, using a Gaussian pyramid scheme in the <code>_align_multiscale</code> function. The source and reference images are successively rescaled by a factor of 0.5 per level (with <code>anti_aliasing=True</code> to preserve structural integrity). 
                     At the coarsest scale (default set to 5 levels deep), the algorithm performs a coarse alignment via the <code>_align_single_scale</code> function, searching for the best (dx, dy) displacement using an image similiarity metric. 
                     After finding the best shift at the lowest resolution, the algorithm propagates this alignment up the pyramid, doubling the shift at each level to approximate the corresponding shift center in higher resolutions. At each level, the algorithm performs a local refinement step in a narrow window (default set to +-5 pixels) around the upscaled shift center.
@@ -120,86 +119,86 @@
     
         <div class="container">
             <h2>Postprocessing Results</h2>
-                <h4>Low Resolution Images</h4>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/cathedral_aligned.jpg" alt="cathedral aligned" width="300">
-                        <p>cathedral.jpg<br>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
+                <p><strong>Lower Resolution Images</strong></p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cathedral_aligned.jpg" alt="cathedral aligned" width="300">
+                            <p>cathedral.jpg<br>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
+                            <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
+                            <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                        </div>
                     </div>
-                    <div class="image-item">
-                        <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
-                        <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
-                        <p>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                    </div>
-                </div>
                 
-                <h3>High Resolution Images</h3>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/tobolsk_aligned.jpg" alt="tobolsk aligned" width="300">
-                        <p>tobolsk.jpg<br>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=6)</p>
+                <p><strong>Higher Resolution Images</strong></p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/tobolsk_aligned.jpg" alt="tobolsk aligned" width="300">
+                            <p>tobolsk.jpg<br>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=6)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/emir_aligned.jpg" alt="emir aligned" width="300">
+                            <p>emir.tif<br>Green displacement: (dx=24, dy=49)<br>Red displacement: (dx=40, dy=107)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/harvesters_aligned.jpg" alt="harvesters aligned" width="300">
+                            <p>harvesters.tif<br>Green displacement: (dx=16, dy=59)<br>Red displacement: (dx=13, dy=124)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/icon_aligned.jpg" alt="icon aligned" width="300">
+                            <p>icon.tif<br>Green displacement: (dx=16, dy=42)<br>Red displacement: (dx=22, dy=89)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/italil_aligned.jpg" alt="italil aligned" width="300">
+                            <p>italil.tif<br>Green displacement: (dx=18, dy=38)<br>Red displacement: (dx=34, dy=78)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
+                            <p>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/lugano_aligned.jpg" alt="lugano aligned" width="300">
+                            <p>lugano.tif<br>Green displacement: (dx=-16, dy=41)<br>Red displacement: (dx=-29, dy=92)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
+                            <p>melons.tif<br>Green displacement: (dx=10, dy=81)<br>Red displacement: (dx=13, dy=178)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/self_portrait_aligned.jpg" alt="self_portrait aligned" width="300">
+                            <p>self_portrait.tif<br>Green displacement: (dx=29, dy=78)<br>Red displacement: (dx=37, dy=176)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/siren_aligned.jpg" alt="siren aligned" width="300">
+                            <p>siren.tif<br>Green displacement: (dx=-7, dy=48)<br>Red displacement: (dx=-21, dy=96)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/three_generations_aligned.jpg" alt="three_generations aligned" width="300">
+                            <p>three_generations.tif<br>Green displacement: (dx=14, dy=53)<br>Red displacement: (dx=11, dy=112)</p>
+                        </div>
                     </div>
-                    <div class="image-item">
-                        <img src="media/emir_aligned.jpg" alt="emir aligned" width="300">
-                        <p>emir.tif<br>Green displacement: (dx=24, dy=49)<br>Red displacement: (dx=40, dy=107)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/harvesters_aligned.jpg" alt="harvesters aligned" width="300">
-                        <p>harvesters.tif<br>Green displacement: (dx=16, dy=59)<br>Red displacement: (dx=13, dy=124)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/icon_aligned.jpg" alt="icon aligned" width="300">
-                        <p>icon.tif<br>Green displacement: (dx=16, dy=42)<br>Red displacement: (dx=22, dy=89)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/italil_aligned.jpg" alt="italil aligned" width="300">
-                        <p>italil.tif<br>Green displacement: (dx=18, dy=38)<br>Red displacement: (dx=34, dy=78)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
-                        <p>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/lugano_aligned.jpg" alt="lugano aligned" width="300">
-                        <p>lugano.tif<br>Green displacement: (dx=-16, dy=41)<br>Red displacement: (dx=-29, dy=92)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/melons_aligned.jpg" alt="melons aligned" width="300">
-                        <p>melons.tif<br>Green displacement: (dx=10, dy=81)<br>Red displacement: (dx=13, dy=178)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/self_portrait_aligned.jpg" alt="self_portrait aligned" width="300">
-                        <p>self_portrait.tif<br>Green displacement: (dx=29, dy=78)<br>Red displacement: (dx=37, dy=176)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/siren_aligned.jpg" alt="siren aligned" width="300">
-                        <p>siren.tif<br>Green displacement: (dx=-7, dy=48)<br>Red displacement: (dx=-21, dy=96)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/three_generations_aligned.jpg" alt="three_generations aligned" width="300">
-                        <p>three_generations.tif<br>Green displacement: (dx=14, dy=53)<br>Red displacement: (dx=11, dy=112)</p>
-                    </div>
-                </div>
                 
-                <h3>My Own Examples</h3>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/Detali_sobora_v_Milanie_aligned.jpg" alt="Detali_sobora_v_Milanie aligned" width="300">
-                        <p>Detali_sobora_v_Milanie.tif<br>Green displacement: (dx=-18, dy=-10)<br>Red displacement: (dx=-52, dy=0)</p>
+                <p><strong>My Own Examples</strong></p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/Detali_sobora_v_Milanie_aligned.jpg" alt="Detali_sobora_v_Milanie aligned" width="300">
+                            <p>Detali_sobora_v_Milanie.tif<br>Green displacement: (dx=-18, dy=-10)<br>Red displacement: (dx=-52, dy=0)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/V_oranzhereie_aligned.jpg" alt="V_oranzhereie aligned" width="300">
+                            <p>V_oranzhereie.tif<br>Green displacement: (dx=27, dy=59)<br>Red displacement: (dx=34, dy=126)</p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/woman_yurt_aligned.jpg" alt="woman_yurt aligned" width="300">
+                            <p>woman_yurt.tif<br>Green displacement: (dx=38, dy=49)<br>Red displacement: (dx=56, dy=107)</p>
+                        </div>
                     </div>
-                    <div class="image-item">
-                        <img src="media/V_oranzhereie_aligned.jpg" alt="V_oranzhereie aligned" width="300">
-                        <p>V_oranzhereie.tif<br>Green displacement: (dx=27, dy=59)<br>Red displacement: (dx=34, dy=126)</p>
-                    </div>
-                    <div class="image-item">
-                        <img src="media/woman_yurt_aligned.jpg" alt="woman_yurt aligned" width="300">
-                        <p>woman_yurt.tif<br>Green displacement: (dx=38, dy=49)<br>Red displacement: (dx=56, dy=107)</p>
-                    </div>
-                </div>
-            
+                
         </div>
 </body>
 </html>
