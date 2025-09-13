@@ -126,13 +126,13 @@
                     At the coarsest scale (default set to 5 levels deep), the algorithm performs a coarse alignment via the <code>_align_single_scale</code> function, searching for the best (dx, dy) displacement using an image similiarity metric. 
                     After finding the best shift at the lowest resolution, the algorithm propagates this alignment up the pyramid, doubling the shift at each level to approximate the corresponding shift center in higher resolutions. At each level, the algorithm performs a local refinement step in a narrow window (default set to +-5 pixels) around the upscaled shift center.
                     This hierarchical refinement continues recursively until the full-resolution images are aligned. By combining global context from coarse levels with precision from fine levels, the multi-scale pipeline efficiently and accurately aligns the larger (.tif) images. This strategy significantly reduces computational cost compared to exhaustive full-resolution search!</p>
-                <p><strong>Image Similarity Metric:</strong> Two metrics are considered. The Euclidean Norm (L2 Similarity) metric, defined as:        
+                <p><strong>Image Similarity Metric:</strong> Two metrics are considered. The L2S (L2 Similarity) metric, defined as:        
                 <div class="math-block">
                     $$
-                    L2_{similarity}(\mathbf{I_1}, \mathbf{I_2}) = -L2(\mathbf{I_1}, \mathbf{I_2})
+                    L2S(\mathbf{I_1}, \mathbf{I_2}) = -L2(\mathbf{I_1}, \mathbf{I_2})
                     $$
                 </div>
-                <p><center>where L2 is defined as:</center></p>
+                <p><center>where L2 is the Euclidean Norm:</center></p>
                 <div class="math-block">
                     $$
                     L2(\mathbf{I_1}, \mathbf{I_2}) = \sqrt{\sum_{i,j} \left( I_1(i,j) - I_2(i,j) \right)^2}
@@ -146,10 +146,10 @@
                     $$
                 </div>
 
-                <p>After experimenting with both the L2 Similarity metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
-                    Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be a bit more robust to potentially noisier inputs.
+                <p>After experimenting with both the L2S metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
+                    Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and more robust to potentially noisier inputs.
                     
-                <p><i><strong>Note: </strong>The L2_similarity metric's subtle negation of the L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value returned from 
+                <p><i>Note: The L2S's subtle negation of the L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value returned from 
                     <code>_find_similarity</code> regardless of what metric we use inside the function (as opposed to having to find the smallest value for L2 and the largest value for NCC).</i></p>
             
             <h3>Preprocessing Importance Illustrated</h3>
