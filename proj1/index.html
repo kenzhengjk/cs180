@@ -169,7 +169,7 @@
                     $$
                 </div>
 
-                <p>After experimenting with both the L2S metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
+                <p>After experimenting with both the L2S metric and the NCC metric, both produced similar results (i.e., similar dx dy offsets). I still opted for the NCC metric because it felt generally more robust. 
                     Since NCC normalizes each image first, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be more robust to potentially noisier inputs.
                     
                 <p><i>Note: The L2S's subtle negation of the L2 norm value is a design choice that helps simplify the <code>_align_single_scale</code> function's logic because now we always look for the largest value returned from 
