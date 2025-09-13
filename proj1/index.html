@@ -90,10 +90,9 @@
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
       
-        /* Style for the centered math block */
         .math-block {
           text-align: center;         /* Center content */
-          padding: 10px;              /* Spacing inside the block */
+          padding: 5px 10px;              /* Spacing inside the block */
           border-radius: 5px;         /* Rounded corners */
           margin: 20px auto;          /* Center the block horizontally */
           max-width: 80%;             /* Optional: limit width */
@@ -109,7 +108,7 @@
             <h2>Images of the Russian Empire</h2>
     </header>
         <div class="container">
-            <h2><center>Project Overview</center></h2>
+            <h2><center>Project Overview & Implementation Details</center></h2>
             <p><strong>Objective:</strong> Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
                       Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty!</p>
         </div>
@@ -130,27 +129,28 @@
                 <p><strong>Image Similarity Metric:</strong> Two metrics are considered. The Euclidean Norm (L2 Similarity) metric, defined as:        
                 <div class="math-block">
                     $$
-                    \text{L2_similarity}(\mathbf{I_1}, \mathbf{I_2}) = -\text{L2}(\mathbf{I_1}, \mathbf{I_2})
+                    L2_similarity(\mathbf{I_1}, \mathbf{I_2}) = -\text{L2}(\mathbf{I_1}, \mathbf{I_2})
                     $$
                 </div>
-                <p>where L2 is defined as:</p>
+                <p><center>where L2 is defined as:</center></p>
                 <div class="math-block">
                     $$
-                    \text{L2}(\mathbf{I_1}, \mathbf{I_2}) = -\sqrt{\sum_{i,j} \left( I_1(i,j) - I_2(i,j) \right)^2}
+                    L2(\mathbf{I_1}, \mathbf{I_2}) = \sqrt{\sum_{i,j} \left( I_1(i,j) - I_2(i,j) \right)^2}
                     $$
                 </div>
-                <p><strong>Note: </strong><i>The subtle negation of the standard L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value regardless of what
-                    similarity score we use (instead of having to look for the minimum value for L2 and the largest value for NCC).</i></p>
             
-                and the Normalized Cross-Correlation (NCC) metric, defined as:
+                And the Normalized Cross-Correlation (NCC) metric, defined as:
                 <div class="math-block">
                     $$
-                    \text{NCC}(\mathbf{I_1}, \mathbf{I_2}) = \sum_{i,j} \left( \frac{I_1(i,j)}{\| \mathbf{I_1} \|} \cdot \frac{I_2(i,j)}{\| \mathbf{I_2} \|} \right)
+                    NCC(\mathbf{I_1}, \mathbf{I_2}) = \sum_{i,j} \left( \frac{I_1(i,j)}{\| \mathbf{I_1} \|} \cdot \frac{I_2(i,j)}{\| \mathbf{I_2} \|} \right)
                     $$
                 </div>
 
                 <p>After experimenting with both the L2 Similarity metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
                     Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be a bit more robust to potentially noisier inputs.
+                    
+                <p><i><strong>Note: </strong>The L2_similarity metric's subtle negation of the L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value regardless of what
+                    similarity score we use (instead of having to look for the smallest value for L2 and the largest value for NCC).</i></p>
             
             <h3>Preprocessing Importance Illustrated</h3>
                 <div class="image-gallery">
