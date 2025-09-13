@@ -129,7 +129,7 @@
                 <p><strong>Image Similarity Metric:</strong> Two metrics are considered. The Euclidean Norm (L2 Similarity) metric, defined as:        
                 <div class="math-block">
                     $$
-                    L2_similarity(\mathbf{I_1}, \mathbf{I_2}) = -\text{L2}(\mathbf{I_1}, \mathbf{I_2})
+                    L2_{similarity}(\mathbf{I_1}, \mathbf{I_2}) = -L2(\mathbf{I_1}, \mathbf{I_2})
                     $$
                 </div>
                 <p><center>where L2 is defined as:</center></p>
@@ -149,8 +149,8 @@
                 <p>After experimenting with both the L2 Similarity metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
                     Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be a bit more robust to potentially noisier inputs.
                     
-                <p><i><strong>Note: </strong>The L2_similarity metric's subtle negation of the L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value regardless of what
-                    similarity score we use (instead of having to look for the smallest value for L2 and the largest value for NCC).</i></p>
+                <p><i><strong>Note: </strong>The L2_similarity metric's subtle negation of the L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value returned from 
+                    <code>_find_similarity</code> regardless of what metric we use inside the function (as opposed to having to find the smallest value for L2 and the largest value for NCC).</i></p>
             
             <h3>Preprocessing Importance Illustrated</h3>
                 <div class="image-gallery">
