@@ -188,7 +188,7 @@
                 <h3>Better Features</h3>
                     <p>The image <code>emir.tif</code> was especially problematic since it didn't have the same brightness values (i.e., had different color channels). Inspired by this headache, I modified the NCC metric function to incorporate Sobel edge maps. 
                         By applying Sobel filters before NCC, the metric focuses on comparing structural edge features (i.e., high-contrast/rapid-change regions) instead of brightness and color intensity. This addition finally enabled <code>emir.tif</code> to be recovered in all its beauty!</p>
-                    <p>Interestingly, from experimental trail and error, the best raw alignment for <code>emir.tif</code> using pure NCC happened without preprocessing. It seems the border noise actually helped a bit in this case, 
+                    <p>Interestingly, from experimental trail and error, the best naive alignment for <code>emir.tif</code> using pure NCC happened without preprocessing. It seems the border noise actually helped a bit in this case, 
                         but not enough to achieve good alignment.</p>
                     
                     <div class="image-gallery">
