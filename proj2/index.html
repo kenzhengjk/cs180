@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Portfolio</title>
+            <!-- MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {   
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #2e2e2d; /* Slightly grey background for the page */
+        }
+        
+        header {
+          background-color: #f2f2f0; /* Dark grey top banner */
+          color: white;
+          text-align: center;
+          padding: 2rem 1rem; /* Spacing to make the banner large */
+          color: black;
+        }
+        
+        header h1 {
+          margin: 0;
+          font-size: 2rem;
+        }
+        
+        header h2 {
+          margin: 1rem 0 0 0;
+          font-size: 1.5rem;
+        }
+        
+        .big_container {
+          max-width: 1200px;
+          margin: 1rem auto; /* Centers the container */
+          background-color: silver; /* White background for content */
+          padding: 1rem;
+          border-radius: 5px;
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          color: white;   
+        }
+            
+        .container {
+          max-width: 1100px;
+          margin: 2rem auto; /* Centers the container */
+          background-color: #f2f2f0; /* White background for content */
+          padding: 2rem;
+          border-radius: 5px;
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          color: black;
+        }
+        
+        .container a {
+          color: #007bff; /* Blue link for "Back to Home" */
+          text-decoration: none;
+        }
+        
+        .container a:hover {
+          text-decoration: underline;
+        }
+        
+        .container h3 {
+          font-size: 1.5rem;
+          margin-top: 2rem;
+        }
+        
+        .container p {
+          line-height: 1.6; /* Improved readability for paragraphs */
+        }
+
+        .image-gallery {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: flex-start;
+          margin-top: 1rem;
+        }
+        
+        .image-item {
+          width: 300px;
+          text-align: center;
+        }
+        
+        .image-item img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+      
+        .math-block {
+          text-align: center;         /* Center content */
+          padding: 5px 10px;              /* Spacing inside the block */
+          border-radius: 5px;         /* Rounded corners */
+          margin: 20px auto;          /* Center the block horizontally */
+          max-width: 80%;             /* Optional: limit width */
+        }
+        
+  </style>
+    </style>  
+</head>
+    
+<body>
+    <header>
+        <h1>CS 180 Project 2</h1>
+            <h2>Fun with Filters and Frequencies</h2>
+    </header>
+        <div class="container">
+            <h2><center>Project Overview & Implementation Details</center></h2>
+                <h3>Objective</h3> 
+                    <p>Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
+                          Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty!</p>
+        </div>
+    
+        <div class="container">
+            <h2><center>Algorithm Overview</center></h2>
+                <h3>Preprocessing</h3>
+                    <p>After cropping out the B, G, and R images from the original triplet, my pipeline crops 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.
+                        The comparisons below illustrate the crucialness of cropping: the absence of this preprocessing step can adversely impact alignment!</p>
+                
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/monastery_no_crop.jpg" alt="monastery no crop alignment" width="300">
+                            <p><strong>No Border Cropping</strong><br>monastery.jpg<br>Green displacement: (dx=0, dy=-6)<br>Red displacement: (dx=1, dy=9)</p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
+                            <p><strong>Border Cropped</strong><br>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                        </div>     
+                    </div>
+                
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/lastochikino_no_crop.jpg" alt="lastochikino no crop alignment" width="300">
+                            <p><strong>No Border Cropping</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-4)<br>Red displacement: (dx=-3, dy=144)</p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
+                            <p><strong>Border Cropped</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
+                        </div>
+                    </div>
+                <h3>Single-scale Alignment</h3>
+                    <p>For images with resolution below 1000 pixels in either dimension (a threshold that nicely separates the .jpg images from the .tif images in this assignment), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
+                        The alignment is carried out using the <code>_align_single_scale</code> function, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
+                        For each potential (dx, dy) shift, the source channel is spatially rolled and compared against the reference using the computed similarity score. The shift that maximizes this score is selected as the optimal alignment. This approach is both accurate and reasonably fast for small or moderately-sized images. 
+                        For higher-resolution images, however, this method falls apart as processing takes too long.</p>
+                <h3>Multi-scale Alignment</h3>
+                    <p>For high-resolution images (i.e., those with either dimension greater than 1000 pixels), the alignment algorithm employs a multi-scale pyramid alignment strategy designed to handle the large search space efficiently while maintaining sub-pixel accuracy. 
+                        This approach begins with recursive image downsampling, using a Gaussian pyramid scheme in the <code>_align_multi_scale</code> function. The source and reference images are successively rescaled by a factor of 0.5 per level (with <code>anti_aliasing=True</code> to preserve structural integrity). 
+                        At the coarsest scale (default set to 5 levels deep), the algorithm performs a coarse alignment via the <code>_align_single_scale</code> function, searching for the best (dx, dy) displacement using an image similiarity metric (more on this below). 
+                        After finding the best shift at the lowest resolution, the algorithm propagates this alignment up the pyramid, doubling the shift at each level to approximate the corresponding shift center in higher resolutions. At each level, the algorithm performs a local refinement step in a narrow window (default set to +-5 pixels) around the upscaled shift center.
+                        This hierarchical refinement continues recursively until the full-resolution images are aligned. By combining global context from coarse levels with precision from fine levels, the multi-scale pipeline efficiently and accurately aligns the larger (.tif) images. This strategy significantly reduces computational cost compared to exhaustive full-resolution search!</p>
+                <h3>Image Similarity Metric</h3>
+                    <p>Two metrics are considered. The L2S (L2 Similarity) metric, defined as:        
+                    <div class="math-block">
+                        $$
+                        L2S(\mathbf{I_1}, \mathbf{I_2}) = -L2(\mathbf{I_1}, \mathbf{I_2})
+                        $$
+                    </div>
+                    <p><center>where L2 is the Euclidean Norm:</center></p>
+                    <div class="math-block">
+                        $$
+                        L2(\mathbf{I_1}, \mathbf{I_2}) = \sqrt{\sum_{i,j} \left( I_1(i,j) - I_2(i,j) \right)^2}
+                        $$
+                    </div>
+                
+                    And the Normalized Cross-Correlation (NCC) metric, defined as:
+                    <div class="math-block">
+                        $$
+                        NCC(\mathbf{I_1}, \mathbf{I_2}) = \sum_{i,j} \left( \frac{I_1(i,j)}{\| \mathbf{I_1} \|} \cdot \frac{I_2(i,j)}{\| \mathbf{I_2} \|} \right)
+                        $$
+                    </div>
+    
+                    <p>After experimenting with both the L2S metric and the NCC metric, both produced similar results (i.e., similar dx dy offsets). I still opted for the NCC metric because it felt generally more robust. 
+                        Since NCC normalizes each image first, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be more robust to potentially noisier inputs.
+                        
+                    <p><i><strong>Note: </strong>The L2S's subtle negation of the L2 norm value is a design choice that helps simplify the <code>_align_single_scale</code> function's logic because now we always look for the largest value returned from 
+                        <code>_find_similarity</code> regardless of what similarity metric we use inside it (as opposed to having to find the smallest value for L2 and the largest value for NCC).</i></p>
+        
+        </div> 
+
+</body>
+</html>
