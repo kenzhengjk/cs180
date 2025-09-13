@@ -93,8 +93,7 @@
         /* Style for the centered math block */
         .math-block {
           text-align: center;         /* Center content */
-          background-color: #f0f9f0;  /* Light green background (match example) */
-          padding: 20px;              /* Spacing inside the block */
+          padding: 10px;              /* Spacing inside the block */
           border-radius: 5px;         /* Rounded corners */
           margin: 20px auto;          /* Center the block horizontally */
           max-width: 80%;             /* Optional: limit width */
@@ -128,14 +127,31 @@
                     At the coarsest scale (default set to 5 levels deep), the algorithm performs a coarse alignment via the <code>_align_single_scale</code> function, searching for the best (dx, dy) displacement using an image similiarity metric. 
                     After finding the best shift at the lowest resolution, the algorithm propagates this alignment up the pyramid, doubling the shift at each level to approximate the corresponding shift center in higher resolutions. At each level, the algorithm performs a local refinement step in a narrow window (default set to +-5 pixels) around the upscaled shift center.
                     This hierarchical refinement continues recursively until the full-resolution images are aligned. By combining global context from coarse levels with precision from fine levels, the multi-scale pipeline efficiently and accurately aligns the larger (.tif) images. This strategy significantly reduces computational cost compared to exhaustive full-resolution search!</p>
-                <p><strong>Image Similarity Metric:</strong> After experimenting with both the Euclidean Distance (L2 Norm) metric and the Normalized Cross-Correlation (NCC) metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
-                    Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be a bit more robust to potentially noisier inputs.
-
+                <p><strong>Image Similarity Metric:</strong> Two metrics are considered. The Euclidean Norm (L2 Similarity) metric, defined as:        
                 <div class="math-block">
                     $$
-                    \text{NCC}(I_1, I_2) = \frac{\sum_{i,j} \left( I_1(i,j) - \mu_1 \right) \left( I_2(i,j) - \mu_2 \right)}{\sqrt{\sum_{i,j} \left( I_1(i,j) - \mu_1 \right)^2 \sum_{i,j} \left( I_2(i,j) - \mu_2 \right)^2}}
+                    \text{L2_similarity}(\mathbf{I_1}, \mathbf{I_2}) = -\text{L2}(\mathbf{I_1}, \mathbf{I_2})
                     $$
                 </div>
+                <p>where L2 is defined as:</p>
+                <div class="math-block">
+                    $$
+                    \text{L2}(\mathbf{I_1}, \mathbf{I_2}) = -\sqrt{\sum_{i,j} \left( I_1(i,j) - I_2(i,j) \right)^2}
+                    $$
+                </div>
+                <p><strong>Note: </strong><i>The subtle negation of the standard L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value regardless of what
+                    similarity score we use (instead of having to look for the minimum value for L2 and the largest value for NCC).</i></p>
+            
+                and the Normalized Cross-Correlation (NCC) metric, defined as:
+                <div class="math-block">
+                    $$
+                    \text{NCC}(\mathbf{I_1}, \mathbf{I_2}) = \sum_{i,j} \left( \frac{I_1(i,j)}{\| \mathbf{I_1} \|} \cdot \frac{I_2(i,j)}{\| \mathbf{I_2} \|} \right)
+                    $$
+                </div>
+
+                <p>After experimenting with both the L2 Similarity metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
+                    Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be a bit more robust to potentially noisier inputs.
+            
             <h3>Preprocessing Importance Illustrated</h3>
                 <div class="image-gallery">
                     <div class="image-item">
