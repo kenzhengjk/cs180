@@ -183,7 +183,7 @@
             <h2><center>Bells & Whistles (Extra) and Problems Encountered</center></h2>
                 <p><strong>Better Features:</strong> The image <code>emir.tif</code> was especially problematic since it didn't have the same brightness values (i.e., had different color channels). Inspired by this headache, I modified the NCC metric function to incorporate Sobel edge maps. 
                     By applying Sobel filters before NCC, the metric focuses on comparing structural edge features (i.e., high-contrast/rapid-change regions) instead of brightness and color intensity between pixels. This addition finally enabled <code>emir.tif</code> to be recovered in all its beauty!</p>
-                <p>Note: Interestingly, from experimental trail and error, the best raw alignment for <code>emir.tif</code> using pure NCC happens without preprocessing. It seems the border noise actually helps a bit in this case, 
+                <p>Interestingly, from experimental trail and error, the best raw alignment for <code>emir.tif</code> using pure NCC happens without preprocessing. It seems the border noise actually helps a bit in this case, 
                     but not enough to achieve good alignment.</p>
                 
                 <div class="image-gallery">
@@ -206,7 +206,7 @@
     
         <div class="container">
             <h2><center>Final Postprocessing Results</h2></center>
-                <p><center>Note: Every image displayed below is aligned using the pure NCC similarity metric except for one image: <code>emir.tif</code>, where Edge Map + NCC was used (see Bells & Whistles for
+                <p><center>Every image displayed below is aligned using the pure NCC similarity metric except for one image: <code>emir.tif</code>, where Edge Map + NCC was used (see Bells & Whistles for
                     <code>emir.tif</code> aligned using pure NCC)!</center></p>
                 <h3>Lower Resolution Images (Single-scale)</h3>
                     <div class="image-gallery">
