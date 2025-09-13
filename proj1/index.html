@@ -117,6 +117,30 @@
             <h2><center>Algorithm Overview</center></h2>
                 <p><strong>Preprocessing:</strong> After cropping out the B, G, and R images from the original triplet, my pipeline crops 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.
                     The comparison examples below illustrate the crucialness of cropping: the absence of this preprocessing step adversely impacts final results!</p>
+
+                <p>Preprocessing Importance Illustrated</p>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/monastery_no_crop.jpg" alt="monastery no crop alignment" width="300">
+                        <p><strong>No Border Cropping</strong><br>monastery.jpg<br>Green displacement: (dx=0, dy=-6)<br>Red displacement: (dx=1, dy=9)</p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
+                        <p><strong>Border Cropped</strong><br>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                    </div>     
+                </div>
+            
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/lastochikino_no_crop.jpg" alt="lastochikino no crop alignment" width="300">
+                        <p><strong>No Border Cropping</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-4)<br>Red displacement: (dx=-3, dy=144)</p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
+                        <p><strong>Border Cropped</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
+                    </div>
+                </div>
+            
                 <p><strong>Single-scale Alignment:</strong> For images with resolution below 1000 pixels in either dimension (a threshold that nicely separates the .jpg images from the .tif images in this assignment), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
                     The alignment is carried out using the <code>_align_single_scale</code> function, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
                     For each potential (dx, dy) shift, the source channel is spatially rolled and compared against the reference using the computed similarity score. The shift that maximizes this score is selected as the optimal alignment. This approach is both accurate and reasonably fast for small or moderately-sized images. 
@@ -147,35 +171,10 @@
                 </div>
 
                 <p>After experimenting with both the L2S metric and the NCC metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
-                    Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and more robust to potentially noisier inputs.
+                    Since NCC normalizes each image first, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be more robust to potentially noisier inputs.
                     
                 <p><i>Note: The L2S's subtle negation of the L2 norm value helps simplify the <code>_align_single_scale</code> logic as now we always look for the largest value returned from 
                     <code>_find_similarity</code> regardless of what metric we use inside the function (as opposed to having to find the smallest value for L2 and the largest value for NCC).</i></p>
-            
-            <h3>Preprocessing Importance Illustrated</h3>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/monastery_no_crop.jpg" alt="monastery no crop alignment" width="300">
-                        <p><strong>No Border Cropping</strong><br>monastery.jpg<br>Green displacement: (dx=0, dy=-6)<br>Red displacement: (dx=1, dy=9)</p>
-                    </div>       
-                    <div class="image-item">
-                        <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
-                        <p><strong>Border Cropped</strong><br>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                    </div>     
-                </div>
-            
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/lastochikino_no_crop.jpg" alt="lastochikino no crop alignment" width="300">
-                        <p><strong>No Border Cropping</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-4)<br>Red displacement: (dx=-3, dy=144)</p>
-                    </div>       
-                    <div class="image-item">
-                        <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
-                        <p><strong>Border Cropped</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
-                    </div>
-                </div>
-                    
-        
         
         </div> 
 
