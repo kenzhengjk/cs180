@@ -86,6 +86,23 @@
           border-radius: 5px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
+        
+        <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+      <style>
+        /* Style for the centered math block */
+        .math-block {
+          text-align: center;         /* Center content */
+          background-color: #f0f9f0;  /* Light green background (match example) */
+          padding: 20px;              /* Spacing inside the block */
+          border-radius: 5px;         /* Rounded corners */
+          margin: 20px auto;          /* Center the block horizontally */
+          max-width: 80%;             /* Optional: limit width */
+        }
+        
+  </style>
     </style>  
 </head>
     
@@ -115,27 +132,32 @@
                     This hierarchical refinement continues recursively until the full-resolution images are aligned. By combining global context from coarse levels with precision from fine levels, the multi-scale pipeline efficiently and accurately aligns the larger (.tif) images. This strategy significantly reduces computational cost compared to exhaustive full-resolution search!</p>
                 <p><strong>Image Similarity Metric:</strong> After experimenting with both the Euclidean Distance (L2 Norm) metric and the Normalized Cross-Correlation (NCC) metric, both produced very similar results (often with the same dx dy offsets too). I still opted for the NCC metric because it felt generally more robust. 
                     Since NCC effectively "de-means" (normalizes) the data, it should be mathematically more resistant to "uniform" pixel intensity shifts across images and be a bit more robust to potentially noisier inputs.
-                
-            
+
+                <div class="math-block">
+                    $$
+                    \text{NCC}(I_1, I_2) = \frac{\sum_{i,j} \left( I_1(i,j) - \mu_1 \right) \left( I_2(i,j) - \mu_2 \right)}{\sqrt{\sum_{i,j} \left( I_1(i,j) - \mu_1 \right)^2 \sum_{i,j} \left( I_2(i,j) - \mu_2 \right)^2}}
+                    $$
+                </div>
+            <h3>Preprocessing Importance Illustrated</h3>
                 <div class="image-gallery">
                     <div class="image-item">
                         <img src="media/monastery_no_crop.jpg" alt="monastery no crop alignment" width="300">
-                        <p><strong>No Preprocessing - No Border Cropping</strong><br>monastery.jpg<br>Green displacement: (dx=0, dy=-6)<br>Red displacement: (dx=1, dy=9)</p>
+                        <p><strong>No Border Cropping</strong><br>monastery.jpg<br>Green displacement: (dx=0, dy=-6)<br>Red displacement: (dx=1, dy=9)</p>
                     </div>       
                     <div class="image-item">
                         <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
-                        <p><strong>With Preprocessing - Border Cropped</strong><br>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                        <p><strong>Border Cropped</strong><br>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
                     </div>     
                 </div>
             
                 <div class="image-gallery">
                     <div class="image-item">
                         <img src="media/lastochikino_no_crop.jpg" alt="lastochikino no crop alignment" width="300">
-                        <p><strong>No Processing - No Border Cropping</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-4)<br>Red displacement: (dx=-3, dy=144)</p>
+                        <p><strong>No Border Cropping</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-4)<br>Red displacement: (dx=-3, dy=144)</p>
                     </div>       
                     <div class="image-item">
                         <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
-                        <p><strong>With Preprocessing - Border Cropped</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
+                        <p><strong>Border Cropped</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
                     </div>
                 </div>
                     
