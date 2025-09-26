@@ -110,27 +110,52 @@
         <div class="container">
             <h2><center>Part 1.1: Convolutions From Scratch!</center></h2>
                 <h3>Convolution with 4 Loops</h3> 
-                    <code>def convolve_4loops(image, kernel, padding=True):
-                        """Convolution with 4 nested loops with padding"""
-                        if padding:
-                            pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
-                            padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
-                        else:
-                            padded = image
-                        
-                        k_h, k_w = kernel.shape
-                        i_h, i_w = padded.shape
-                        output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
-                        
-                        for i in range(output.shape[0]):
-                            for j in range(output.shape[1]):
-                                for ki in range(k_h):
-                                    for kj in range(k_w):
-                                        output[i, j] += padded[i + ki, j + kj] * kernel[ki, kj]
-                        
-                        return output</code>
-                    <p>Process Prokudin-Gorskii’s digitized glass plate images to reconstruct full-color photos.
-                          Images were split into three grayscale channels (R, G, B), aligned using an x, y translation model, and stacked to form a single RGB image that best captures the original scene's true beauty!</p>
+                    <pre><code>def convolve_4loops(image, kernel, padding=True):
+                                """Convolution with 4 nested loops with padding"""
+                                if padding:
+                                    pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
+                                    padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
+                                else:
+                                    padded = image
+                                
+                                k_h, k_w = kernel.shape
+                                i_h, i_w = padded.shape
+                                output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
+                                
+                                for i in range(output.shape[0]):
+                                    for j in range(output.shape[1]):
+                                        for ki in range(k_h):
+                                            for kj in range(k_w):
+                                                output[i, j] += padded[i + ki, j + kj] * kernel[ki, kj]
+                                
+                                return output
+                    </code></pre>
+                <h3>Convolution with 2 Loops</h3>
+                    <pre><code>def convolve_2loops(image, kernel, pad=True):
+                                """Convolution with 2 nested loops with padding"""
+                                if pad:
+                                    pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
+                                    padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
+                                else:
+                                    padded = image
+                                
+                                k_h, k_w = kernel.shape
+                                i_h, i_w = padded.shape
+                                output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
+                                
+                                for i in range(output.shape[0]):
+                                    for j in range(output.shape[1]):
+                                        output[i, j] = np.sum(padded[i:i+k_h, j:j+k_w] * kernel)
+                                
+                                return output
+                    </code></pre>
+                <h3>Runtime Comparison and Boundary Handling</h3>
+                    <p>The 4 loop convolution function runs in <code>O(N^4)</code> time and the 2 loop convolution function runs in <code>O(N^2)</code> time, both significantly
+                    slower than <code>scipy.signal.convolve2d</code>. From empirical testing, double loop convolution took on average 11.98 seconds to convolve my selfie
+                    with the 9x9 box filter, while <code>scipy.signal.convolve2d</code> only took 0.44 seconds!</p>
+                    <p>Boundary handling relates closely to padding. My implementations explicitly 0-pad if the <code>pad</code> argument is <code>True</code>. For <code>scipy.signal.convolve2d</code>,
+                    padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>, while <code>"wrap"</code> uses periodic 
+                    and <code>"symm"</code> uses symmetric boundary conditions.</p>
         </div>
     
         <div class="container">
