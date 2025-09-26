@@ -108,6 +108,7 @@
             <h2>Fun with Filters and Frequencies</h2>
     </header>
         <div class="container">
+            <h1><center>Part 1: Fun with Filters</center></h1>
             <h2><center>Part 1.1: Convolutions From Scratch!</center></h2>
                 <h3>Convolution with 4 Loops</h3> 
                     <pre><code>def convolve_4loops(image, kernel, padding=True):
@@ -293,8 +294,16 @@
                 <h3>Comments on Differences and Results</h3>
                     <p>Both results from this part are less noisy than the result from the previous part. This makes sense since for both approaches in this part we convolved the image with the 2D Gaussian Kernel,
                     which smoothens our image (i.e., low-pass filter), getting rid of high-frequency noise. This can be seen in the edge images. Both edge images have much less background noise than
-                    the one from the previous section! </p>
-            
+                    the one from the previous section! As the two new edge images show, we indeed get the same results from both approaches: 1. convolving the image with the Gaussian Kernel and 
+                    then convolving with the finite difference filters and 2. convolving the Gaussian Kernel with the finite difference filters first then convolving it with the image.
+                    </p>            
+        </div>
+
+        <div class="container">
+            <h1><center>Part 2: Fun with Frequencies</center></h1>
+            <h2><center>Part 2.1: Image "Sharpening" </center></h2>
+                
+
             
         </div>
             
