@@ -154,7 +154,7 @@
                     slower than <code>scipy.signal.convolve2d</code>. From empirical testing, double loop convolution took on average 11.98 seconds to convolve my selfie
                     with the 9x9 box filter, while <code>scipy.signal.convolve2d</code> only took 0.44 seconds!</p>
                     <p>Boundary handling relates closely to padding. My implementations explicitly 0-pad if the <code>pad</code> argument is <code>True</code>. For <code>scipy.signal.convolve2d</code>,
-                    padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>, while <code>"wrap"</code> uses periodic 
+                    padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>), while <code>"wrap"</code> uses periodic 
                     and <code>"symm"</code> uses symmetric boundary conditions.</p>
                 <h3>Image Results</h3>
                 <div class="image-gallery">
@@ -229,6 +229,71 @@
 
         <div class="container">
             <h2><center>Part 1.3: Derivative of Gaussian (DoG) Filter</center></h2>
+                <h3>Blurred Cameraman Results</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cameraman_blur.jpg" alt="cameraman blurred" width="300">
+                            <p><strong>Blurred Cameraman</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dx_blur.jpg" alt="cameraman dx blur" width="300">
+                            <p><strong>Blurred Cameraman Convolved with D_x</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dy_blur.jpg" alt="cameraman dy_blur" width="300">
+                            <p><strong>Blurred Cameraman Convolved with D_y</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_grad_blur.jpg" alt="cameraman grad blur" width="300">
+                            <p><strong>Blurred Cameraman Gradient Magnitude</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_blur.jpg" alt="cameraman edge blur" width="300">
+                            <p><strong>Blurred Cameraman Edge Image<br>(Threshold = 25)</strong></p>
+                        </div>          
+                    </div>
+                <h3>DoG Filters</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/gaussian_2d.jpg" alt="2d gaussian" width="300">
+                            <p><strong>2D Gaussian Kernel</strong></p>
+                        </div>          
+                        <div class="image-item">
+                            <img src="media/dog_x.jpg" alt="dog x" width="300">
+                            <p><strong>DoG_x Filter</strong></p>
+                        </div>          
+                        <div class="image-item">
+                            <img src="media/dog_y.jpg" alt="dog y" width="300">
+                            <p><strong>DoG_y Filter</strong></p>
+                        </div>              
+                    </div>
+                <h3>DoG Cameraman Results</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cameraman.jpg" alt="original cameraman" width="300">
+                            <p><strong>Original Cameraman</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dx_dog.jpg" alt="cameraman dx dog" width="300">
+                            <p><strong>Cameraman Convolved with DoG_x</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dy_dog.jpg" alt="cameraman dy dog" width="300">
+                            <p><strong>Cameraman Convolved with DoG_y</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_grad_dog.jpg" alt="cameraman grad dog" width="300">
+                            <p><strong>Cameraman DoG Gradient Magnitude</strong></p>
+                        </div>              
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_dog.jpg" alt="cameraman edge dog" width="300">
+                            <p><strong>Cameraman DoG Edge Image<br>(Threshold = 22)</strong></p>
+                        </div>              
+                    </div>
+                <h3>Comments on Differences and Results</h3>
+                    <p>Both results from this part are less noisy than the result from the previous part. This makes sense since for both approaches in this part we convolved the image with the 2D Gaussian Kernel,
+                    which smoothens our image (i.e., low-pass filter), getting rid of high-frequency noise. This can be seen in the edge images. Both edge images have much less background noise than
+                    the one from the previous section! </p>
             
             
         </div>
