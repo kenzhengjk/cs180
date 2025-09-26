@@ -111,43 +111,43 @@
             <h2><center>Part 1.1: Convolutions From Scratch!</center></h2>
                 <h3>Convolution with 4 Loops</h3> 
                     <pre><code>def convolve_4loops(image, kernel, padding=True):
-"""Convolution with 4 nested loops with padding"""
-if padding:
-    pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
-    padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
-else:
-    padded = image
-
-k_h, k_w = kernel.shape
-i_h, i_w = padded.shape
-output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
-
-for i in range(output.shape[0]):
-    for j in range(output.shape[1]):
-        for ki in range(k_h):
-            for kj in range(k_w):
-                output[i, j] += padded[i + ki, j + kj] * kernel[ki, kj]
-
-return output
+    """Convolution with 4 nested loops with padding"""
+    if padding:
+        pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
+        padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
+    else:
+        padded = image
+    
+    k_h, k_w = kernel.shape
+    i_h, i_w = padded.shape
+    output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
+    
+    for i in range(output.shape[0]):
+        for j in range(output.shape[1]):
+            for ki in range(k_h):
+                for kj in range(k_w):
+                    output[i, j] += padded[i + ki, j + kj] * kernel[ki, kj]
+    
+    return output
                     </code></pre>
                 <h3>Convolution with 2 Loops</h3>
                     <pre><code>def convolve_2loops(image, kernel, pad=True):
-"""Convolution with 2 nested loops with padding"""
-if pad:
-    pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
-    padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
-else:
-    padded = image
-
-k_h, k_w = kernel.shape
-i_h, i_w = padded.shape
-output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
-
-for i in range(output.shape[0]):
-    for j in range(output.shape[1]):
-        output[i, j] = np.sum(padded[i:i+k_h, j:j+k_w] * kernel)
-
-return output
+    """Convolution with 2 nested loops with padding"""
+    if pad:
+        pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
+        padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
+    else:
+        padded = image
+    
+    k_h, k_w = kernel.shape
+    i_h, i_w = padded.shape
+    output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
+    
+    for i in range(output.shape[0]):
+        for j in range(output.shape[1]):
+            output[i, j] = np.sum(padded[i:i+k_h, j:j+k_w] * kernel)
+    
+    return output
                     </code></pre>
                 <h3>Runtime Comparison and Boundary Handling</h3>
                     <p>The 4 loop convolution function runs in <code>O(N^4)</code> time and the 2 loop convolution function runs in <code>O(N^2)</code> time, both significantly
@@ -156,49 +156,77 @@ return output
                     <p>Boundary handling relates closely to padding. My implementations explicitly 0-pad if the <code>pad</code> argument is <code>True</code>. For <code>scipy.signal.convolve2d</code>,
                     padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>, while <code>"wrap"</code> uses periodic 
                     and <code>"symm"</code> uses symmetric boundary conditions.</p>
-                <h3>Results</h3>
+                <h3>Image Results</h3>
                 <div class="image-gallery">
                     <div class="image-item">
                         <img src="media/selfie_box.jpg" alt="grayscale 9x9 box filtered selfie" width="300">
-                        <p><strong>Selfie (Grayscale) Convolved w/ 9x9 Box Filter</strong></p>
+                        <p><strong>Selfie (Grayscale) Convolved with 9x9 Box Filter</strong></p>
                     </div>       
                     <div class="image-item">
                         <img src="media/selfie_dx.jpg" alt="grayscale dx filtered selfie" width="300">
-                        <p><strong>Selfie (Grayscale) Convolved w/ Dx Filter</strong></p>
+                        <p><strong>Selfie (Grayscale) Convolved with D_x Filter</strong></p>
                     </div>       
                     <div class="image-item">
                         <img src="media/selfie_dy.jpg" alt="grayscale dy filtered selfie" width="300">
-                        <p><strong>Selfie (Grayscale) Convolved w/ Dy Filter</strong></p>
-                    </div>       
+                        <p><strong>Selfie (Grayscale) Convolved with D_y Filter</strong></p>
+                    </div> 
+                </div>
         </div>
+            
     
         <div class="container">
-            <h2><center>Algorithm Overview</center></h2>
-                <h3>Preprocessing</h3>
-                    <p>After cropping out the B, G, and R images from the original triplet, my pipeline crops 10% of the image borders to eliminate potential alignment noise caused by marginal artifacts, uneven exposure, or border effects. This pre-processing step ensures that the alignment focuses on the central and structurally significant portion of the image.
-                        The comparisons below illustrate the crucialness of cropping: the absence of this preprocessing step can adversely impact alignment!</p>
-                
+            <h2><center>Part 1.2: Finite Difference Operator</center></h2>
+                <h3>Image Results</h3>
                     <div class="image-gallery">
                         <div class="image-item">
-                            <img src="media/monastery_no_crop.jpg" alt="monastery no crop alignment" width="300">
-                            <p><strong>No Border Cropping</strong><br>monastery.jpg<br>Green displacement: (dx=0, dy=-6)<br>Red displacement: (dx=1, dy=9)</p>
+                            <img src="media/cameraman.jpg" alt="cameraman" width="300">
+                            <p><strong>Original Cameraman</strong></p>
                         </div>       
                         <div class="image-item">
-                            <img src="media/monastery_aligned.jpg" alt="monastery aligned" width="300">
-                            <p><strong>Border Cropped</strong><br>monastery.jpg<br>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                        </div>     
+                            <img src="media/cameraman_dx.jpg" alt="cameraman dx" width="300">
+                            <p><strong>Cameraman Convolved with D_x</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dy.jpg" alt="cameraman dy" width="300">
+                            <p><strong>Cameraman Convolved with D_y</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_grad.jpg" alt="cameraman grad" width="300">
+                            <p><strong>Cameraman Gradient Magnitude</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_edge.jpg" alt="cameraman edge" width="300">
+                            <p><strong>Cameraman Edge Image (Threshold = 80)</strong></p>
+                        </div>          
                     </div>
-                
+                <h3>Threshold Justification</h3>
+                    <p>I determined through trial and error that a threshold of 80 achieved the best balance between being able to capture the outline of the subject (i.e., cameraman) 
+                        and his tripod in its entirety (without too many breaks in the traces) and not including too much of the background edges, mainly the bridge's outline. Some comparison
+                        images are shown below:
+                    </p>
                     <div class="image-gallery">
                         <div class="image-item">
-                            <img src="media/lastochikino_no_crop.jpg" alt="lastochikino no crop alignment" width="300">
-                            <p><strong>No Border Cropping</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-4)<br>Red displacement: (dx=-3, dy=144)</p>
+                            <img src="media/cameraman_edge_70.jpg" alt="cameraman edge thresh = 70" width="300">
+                            <p><strong>Cameraman Edge Image (Threshold = 70)</strong></p>
                         </div>       
                         <div class="image-item">
-                            <img src="media/lastochikino_aligned.jpg" alt="lastochikino aligned" width="300">
-                            <p><strong>Border Cropped</strong><br>lastochikino.tif<br>Green displacement: (dx=-2, dy=-2)<br>Red displacement: (dx=-8, dy=75)</p>
-                        </div>
+                            <img src="media/cameraman_edge.jpg" alt="cameraman edge" width="300">
+                            <p><strong>Cameraman Edge Image (Threshold = 80)</strong></p>
+                        </div>          
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_90.jpg" alt="cameraman edge thresh = 90" width="300">
+                            <p><strong>Cameraman Edge Image (Threshold = 90)</strong></p>
+                        </div>       
                     </div>
+
+        </div>
+
+        <div class="container">
+            <h2><center>Part 1.3: Derivative of Gaussian (DoG) Filter</center></h2>
+            
+            
+        </div>
+            
                 <h3>Single-scale Alignment</h3>
                     <p>For images with resolution below 1000 pixels in either dimension (a threshold that nicely separates the .jpg images from the .tif images in this assignment), my alignment algorithm follows a single-scale alignment strategy, which is optimized for accuracy at the cost of computational efficiency since it is a brute force approach.
                         The alignment is carried out using the <code>_align_single_scale</code> function, which performs an exhaustive search over a defined window (default is +-15 pixels) around a shift center (default is 0 shift), evaluating candidate displacements via an image similarity metric (more on this below).
