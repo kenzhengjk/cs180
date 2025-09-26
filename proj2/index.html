@@ -302,7 +302,105 @@
         <div class="container">
             <h1><center>Part 2: Fun with Frequencies</center></h1>
             <h2><center>Part 2.1: Image "Sharpening" </center></h2>
-                
+                <h3>Unsharp Mask Filter</h3>
+                    <p>The unsharp mask filter works by combining the steps detailed for sharpening into one operation. Specifically, in the step by step process, we first blur the image by convolving with the
+                    2D Gaussian kernel to obtain a low-passed version of the image. Then, we subtract this blurred version from the original to retain the high frequencies. Then we add this high-frequency
+                    image to the original image, effectively adding in high-frequencies to the image, making the image look sharper. </p>
+                    <p>The unsharp mask filter first initializes a kernel of 0 of same shape as the 2D
+                    Gaussian kernel. Then, we set the center of the kernel to be <code>1 + sharpening_factor</code> to apply the sharpening effect to each pixel when convolving. The plus 1 accounts for the next step where we
+                    subtract from this kernel <code>sharpening_factor * gaussian_2d</code>, which takes care of the blurring. Altogether, this filter blurs, finds and adds high frequencies to the original image in one go!</p>
+                <h3>Taj Mahal Sharpening</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/taj.jpg" alt="original taj" width="300">
+                            <p><strong>Original Taj Mahal</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_blurred.jpg" alt="taj blurred" width="300">
+                            <p><strong>Taj Mahal Blurred</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_high_freq.jpg" alt="taj high freq" width="300">
+                            <p><strong>Taj Mahal High Frequencies</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
+                            <p><strong>Taj Mahal Sharpened (Step by Step)<br>(sharpening_factor = 3)</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_umf_3.jpg" alt="taj sharpened umf 3" width="300">
+                            <p><strong>Taj Mahal Sharpened (Unsharp Mask Filter)<br>(sharpening_factor = 3)</strong></p>
+                        </div>
+                    </div>
+                <h3>Taj Mahal Resharpening</h3>
+                    <p>After trying to resharpen an already sharpened image, I see that the new resharpened image looks more granular (artificially sharper) than before. This makes sense because we are
+                    essentially further sharpening the image. When we reblur it and subtract it from the image, we recover a lot of the high frequencies we added on in the first time round. Since we are
+                    then readding these high frequencies onto the image again, we are adding on even more high frequencies after the second round of sharpening! See results below:</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
+                            <p><strong>Sharpened Taj Mahal<br>(sharpening_factor = 3)</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_blurred_resharp.jpg" alt="taj blurred resharp" width="300">
+                            <p><strong>Taj Mahal Blurred</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_high_freq_resharp.jpg" alt="taj high freq resharp" width="300">
+                            <p><strong>Taj Mahal High Frequencies</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3_resharp.jpg" alt="taj resharpened 3" width="300">
+                            <p><strong>Taj Mahal Resharpened (Step by Step)<br>(Sharpening factor = 3)</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_umf_3_resharp.jpg" alt="taj resharpened umf 3" width="300">
+                            <p><strong>Taj Mahal Resharpened (Unsharp Mask Filter)<br>(Sharpening factor = 3)</strong></p>
+                        </div> 
+                    </div>
+                <h3>Varying Sharpening Factors</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_1.jpg" alt="taj sharpened 1" width="300">
+                            <p><strong>Taj Mahal Sharpened<br>(sharpening_factor = 1)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
+                            <p><strong>Taj Mahal Sharpened<br>(sharpening_factor = 3)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_10.jpg" alt="taj sharpened 10" width="300">
+                            <p><strong>Taj Mahal Sharpened<br>(sharpening_factor = 10)</strong></p>
+                        </div>  
+                    </div>
+                <h3>My Own Image</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/oski.jpg" alt="oski" width="300">
+                            <p><strong>Oski!</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_blurred.jpg" alt="oski" width="300">
+                            <p><strong>Oski Blurred</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_high_freq.jpg" alt="oski" width="300">
+                            <p><strong>Oski High Frequencies</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_sharpened_1.jpg" alt="oski sharpened 1" width="300">
+                            <p><strong>Oski Sharpened<br>(sharpening_factor = 1)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_sharpened_3.jpg" alt="oski sharpened 3" width="300">
+                            <p><strong>Oski Sharpened<br>(sharpening_factor = 3)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_sharpened_5.jpg" alt="oski sharpened 5" width="300">
+                            <p><strong>Oski Sharpened<br>(sharpening_factor = 5)</strong></p>
+                        </div>  
+                    </div>
+            
 
             
         </div>
