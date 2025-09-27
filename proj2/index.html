@@ -306,7 +306,7 @@
                     <p>The unsharp mask filter works by combining the steps detailed for sharpening into one operation. Specifically, in the step by step process, we first blur the image by convolving with the
                     2D Gaussian kernel to obtain a low-passed version of the image. Then, we subtract this blurred version from the original to retain the high frequencies. Then we add this high-frequency
                     image to the original image, effectively adding in high-frequencies to the image, making the image look sharper. </p>
-                    <p>The unsharp mask filter first initializes a kernel of 0 of same shape as the 2D
+                    <p>The unsharp mask filter first initializes a kernel of 0's of the same shape as the 2D
                     Gaussian kernel. Then, we set the center of the kernel to be <code>1 + sharpening_factor</code> to apply the sharpening effect to each pixel when convolving. The plus 1 accounts for the next step where we
                     subtract from this kernel <code>sharpening_factor * gaussian_2d</code>, which takes care of the blurring. Altogether, this filter blurs, finds and adds high frequencies to the original image in one go!</p>
                 <h3>Taj Mahal Sharpening</h3>
@@ -334,12 +334,12 @@
                     </div>
                 <h3>Taj Mahal Resharpening</h3>
                     <p>After trying to resharpen an already sharpened image, I see that the new resharpened image looks more granular (artificially sharper) than before. This makes sense because we are
-                    essentially further sharpening the image. When we reblur it and subtract it from the image, we recover a lot of the high frequencies we added on in the first time round. Since we are
-                    then readding these high frequencies onto the image again, we are adding on even more high frequencies after the second round of sharpening! See results below:</p>
+                    essentially further sharpening the image. When we reblur it and subtract that from the image, we recover a lot of the high frequencies we added on after the first round of sharpening. Since we are
+                    then readding these high frequencies onto the image again, we are adding on even more high frequencies after this second round of sharpening! See results below:</p>
                     <div class="image-gallery">
                         <div class="image-item">
                             <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
-                            <p><strong>Sharpened Taj Mahal<br>(sharpening_factor = 3)</strong></p>
+                            <p><strong>Sharpened Taj Mahal</strong></p>
                         </div>       
                         <div class="image-item">
                             <img src="media/taj_blurred_resharp.jpg" alt="taj blurred resharp" width="300">
@@ -351,14 +351,15 @@
                         </div>       
                         <div class="image-item">
                             <img src="media/taj_sharpened_3_resharp.jpg" alt="taj resharpened 3" width="300">
-                            <p><strong>Taj Mahal Resharpened (Step by Step)<br>(Sharpening factor = 3)</strong></p>
+                            <p><strong>Taj Mahal Resharpened (Step by Step)<br>(sharpening_factor = 3)</strong></p>
                         </div>       
                         <div class="image-item">
                             <img src="media/taj_sharpened_umf_3_resharp.jpg" alt="taj resharpened umf 3" width="300">
-                            <p><strong>Taj Mahal Resharpened (Unsharp Mask Filter)<br>(Sharpening factor = 3)</strong></p>
+                            <p><strong>Taj Mahal Resharpened (Unsharp Mask Filter)<br>(sharpening_factor = 3)</strong></p>
                         </div> 
                     </div>
                 <h3>Varying Sharpening Factors</h3>
+                    <p>Higher sharpening factors create "sharper" images:</p>
                     <div class="image-gallery">
                         <div class="image-item">
                             <img src="media/taj_sharpened_1.jpg" alt="taj sharpened 1" width="300">
