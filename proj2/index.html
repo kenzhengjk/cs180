@@ -687,5 +687,12 @@
                             </div>
                         </div>
         </div>
+        <div class="container">
+            <h2><center>Most Important Learning</center></h2>
+                <p>Clipping images to the correct ranges is crucial! I spent way too long struggling to get my images (post merging) to appear correct (i.e., either the surrounding image got brightness
+                overdose or the center image got banished to the shadow realm) because I had written my custom filter incorrectly. Since I at first didn't clip the values to be within [0, 1], the pixels
+                of the images being masked by it were being scaled uncontrollably. I also learned a good news which is when images look correct in terms of where things are and it's only the color that seems
+                to be off, the debugging job is simplified since most of the time the problem stems from how pixel values are clipped after each filter/mask/convolution/etc. procedure. </p>
+        </div>
 </body>
 </html>
