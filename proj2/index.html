@@ -149,9 +149,9 @@
     return output
                     </code></pre>
                 <h3>Runtime Comparison and Boundary Handling</h3>
-                    <p>The 4 loop convolution function runs in <code>O(N^4)</code> time and the 2 loop convolution function runs in <code>O(N^2)</code> time, both significantly
-                    slower than <code>scipy.signal.convolve2d</code>. From empirical testing, double loop convolution took on average 11.98 seconds to convolve my selfie
-                    with the 9x9 box filter, while <code>scipy.signal.convolve2d</code> only took 0.44 seconds!</p>
+                    <p>The 4 loop convolution function runs in <code>O(N^4)</code> time (assuming worst case where kernel dimensions can get as large as image dimensions NxN) and the 2 loop convolution function runs in <code>O(N^2)</code> time, both significantly
+                    slower than <code>scipy.signal.convolve2d</code>. From empirical testing, 4 loop convolution took on average 154.15 seconds to convolve my selfie with the 9x9 box filter, 2 loop convolution took on 
+                    average 11.98 seconds, while <code>scipy.signal.convolve2d</code> only took 0.44 seconds!</p>
                     <p>Boundary handling relates closely to padding. My implementations explicitly 0-pad if the <code>pad</code> argument is <code>True</code>. For <code>scipy.signal.convolve2d</code>,
                     padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>), while <code>"wrap"</code> uses periodic 
                     and <code>"symm"</code> uses symmetric boundary conditions.</p>
@@ -207,7 +207,7 @@
                 <h3>Threshold Justification</h3>
                     <p>I determined through trial and error that a threshold of 80 achieved the best balance between being able to capture the outline of the subject (i.e., cameraman) 
                         and his tripod in its entirety (without too many breaks in the traces) and not including too much of the background edges, mainly the bridge's outline. Some comparison
-                        images are shown below:
+                        images are shown below, where we see more outlines of the background bridge for 70 and too much breakage in the legs' outline for 90:
                     </p>
                     <div class="image-gallery">
                         <div class="image-item">
