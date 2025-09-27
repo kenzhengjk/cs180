@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Portfolio</title>
+            <!-- MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {   
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #2e2e2d; /* Slightly grey background for the page */
+        }
+        
+        header {
+          background-color: #f2f2f0; /* Dark grey top banner */
+          color: white;
+          text-align: center;
+          padding: 2rem 1rem; /* Spacing to make the banner large */
+          color: black;
+        }
+        
+        header h1 {
+          margin: 0;
+          font-size: 2rem;
+        }
+        
+        header h2 {
+          margin: 1rem 0 0 0;
+          font-size: 1.5rem;
+        }
+        
+        .big_container {
+          max-width: 1200px;
+          margin: 1rem auto; /* Centers the container */
+          background-color: silver; /* White background for content */
+          padding: 1rem;
+          border-radius: 5px;
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          color: white;   
+        }
+            
+        .container {
+          max-width: 1100px;
+          margin: 2rem auto; /* Centers the container */
+          background-color: #f2f2f0; /* White background for content */
+          padding: 2rem;
+          border-radius: 5px;
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          color: black;
+        }
+        
+        .container a {
+          color: #007bff; /* Blue link for "Back to Home" */
+          text-decoration: none;
+        }
+        
+        .container a:hover {
+          text-decoration: underline;
+        }
+        
+        .container h3 {
+          font-size: 1.5rem;
+          margin-top: 2rem;
+        }
+        
+        .container p {
+          line-height: 1.6; /* Improved readability for paragraphs */
+        }
+
+        .image-gallery {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: flex-start;
+          margin-top: 1rem;
+        }
+        
+        .image-item {
+          width: 300px;
+          text-align: center;
+        }
+        
+        .image-item img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+      
+        .math-block {
+          text-align: center;         /* Center content */
+          padding: 5px 10px;              /* Spacing inside the block */
+          border-radius: 5px;         /* Rounded corners */
+          margin: 20px auto;          /* Center the block horizontally */
+          max-width: 80%;             /* Optional: limit width */
+        }
+        
+  </style>
+    </style>  
+</head>
+    
+<body>
+    <header>
+        <h1>CS 180 Project 2</h1>
+            <h2>Fun with Filters and Frequencies!</h2>
+    </header>
+        <div class="container">
+            <h1><center>Part 1: Fun with Filters</center></h1>
+            <h2><center>Part 1.1: Convolutions From Scratch!</center></h2>
+                <h3>Convolution with 4 Loops</h3> 
+                    <pre><code>def convolve_4loops(image, kernel, padding=True):
+    if padding:
+        pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
+        padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
+    else:
+        padded = image
+    
+    k_h, k_w = kernel.shape
+    i_h, i_w = padded.shape
+    output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
+    
+    for i in range(output.shape[0]):
+        for j in range(output.shape[1]):
+            for ki in range(k_h):
+                for kj in range(k_w):
+                    output[i, j] += padded[i + ki, j + kj] * kernel[ki, kj]
+    
+    return output
+                    </code></pre>
+                <h3>Convolution with 2 Loops</h3>
+                    <pre><code>def convolve_2loops(image, kernel, pad=True):
+    if pad:
+        pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
+        padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
+    else:
+        padded = image
+    
+    k_h, k_w = kernel.shape
+    i_h, i_w = padded.shape
+    output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
+    
+    for i in range(output.shape[0]):
+        for j in range(output.shape[1]):
+            output[i, j] = np.sum(padded[i:i+k_h, j:j+k_w] * kernel)
+    
+    return output
+                    </code></pre>
+                <h3>Runtime Comparison and Boundary Handling</h3>
+                    <p>The 4 loop convolution function runs in <code>O(N^4)</code> time (assuming worst case where kernel dimensions can get as large as image dimensions NxN) and the 2 loop convolution function runs in <code>O(N^2)</code> time, both significantly
+                    slower than <code>scipy.signal.convolve2d</code>. From empirical testing, 4 loop convolution took on average 154.15 seconds to convolve my selfie with the 9x9 box filter, 2 loop convolution took on 
+                    average 11.98 seconds, while <code>scipy.signal.convolve2d</code> only took 0.44 seconds!</p>
+                    <p>Boundary handling relates closely to padding. My implementations explicitly 0-pad if the <code>pad</code> argument is <code>True</code>. For <code>scipy.signal.convolve2d</code>,
+                    padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>), while <code>"wrap"</code> uses periodic 
+                    and <code>"symm"</code> uses symmetric boundary conditions.</p>
+                <h3>Image Results</h3>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/selfie.jpg" alt="original selfie" width="300">
+                        <p><strong>Original Selfie</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/selfie_box.jpg" alt="grayscale 9x9 box filtered selfie" width="300">
+                        <p><strong>Selfie (Grayscale) Convolved with 9x9 Box Filter</strong></p>
+                    </div>       
+                </div>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/selfie_dx.jpg" alt="grayscale dx filtered selfie" width="300">
+                        <p><strong>Selfie (Grayscale) Convolved with D_x Filter</strong></p>
+                    </div>   
+                    <div class="image-item">
+                        <img src="media/selfie_dy.jpg" alt="grayscale dy filtered selfie" width="300">
+                        <p><strong>Selfie (Grayscale) Convolved with D_y Filter</strong></p>
+                    </div> 
+                </div>
+        </div>
+            
+    
+        <div class="container">
+            <h2><center>Part 1.2: Finite Difference Operator</center></h2>
+                <h3>Image Results</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cameraman.jpg" alt="cameraman" width="300">
+                            <p><strong>Original Cameraman</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dx.jpg" alt="cameraman dx" width="300">
+                            <p><strong>Cameraman Convolved with D_x</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dy.jpg" alt="cameraman dy" width="300">
+                            <p><strong>Cameraman Convolved with D_y</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_grad.jpg" alt="cameraman grad" width="300">
+                            <p><strong>Cameraman Gradient Magnitude</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_edge.jpg" alt="cameraman edge" width="300">
+                            <p><strong>Cameraman Edge Image<br>(Threshold = 80)</strong></p>
+                        </div>          
+                    </div>
+                <h3>Threshold Justification</h3>
+                    <p>I determined through trial and error that a threshold of 80 achieved the best balance between being able to capture the outline of the subject (i.e., cameraman) 
+                        and his tripod in its entirety (without too many breaks in the traces) and not including too much of the background edges, mainly the bridge's outline. Some comparison
+                        images are shown below, where we see more outlines of the background bridge for 70 and too much breakage in the legs' outline for 90:
+                    </p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_70.jpg" alt="cameraman edge thresh = 70" width="300">
+                            <p><strong>Cameraman Edge Image<br>(Threshold = 70)</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_edge.jpg" alt="cameraman edge" width="300">
+                            <p><strong>Cameraman Edge Image<br>(Threshold = 80)</strong></p>
+                        </div>          
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_90.jpg" alt="cameraman edge thresh = 90" width="300">
+                            <p><strong>Cameraman Edge Image<br>(Threshold = 90)</strong></p>
+                        </div>       
+                    </div>
+
+        </div>
+
+        <div class="container">
+            <h2><center>Part 1.3: Derivative of Gaussian (DoG) Filter</center></h2>
+                <h3>Blurred Cameraman Results</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cameraman_blur.jpg" alt="cameraman blurred" width="300">
+                            <p><strong>Blurred Cameraman</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dx_blur.jpg" alt="cameraman dx blur" width="300">
+                            <p><strong>Blurred Cameraman Convolved with D_x</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dy_blur.jpg" alt="cameraman dy_blur" width="300">
+                            <p><strong>Blurred Cameraman Convolved with D_y</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_grad_blur.jpg" alt="cameraman grad blur" width="300">
+                            <p><strong>Blurred Cameraman Gradient Magnitude</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_blur.jpg" alt="cameraman edge blur" width="300">
+                            <p><strong>Blurred Cameraman Edge Image<br>(Threshold = 25)</strong></p>
+                        </div>          
+                    </div>
+                <h3>DoG Filters</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/gaussian_2d.jpg" alt="2d gaussian" width="300">
+                            <p><strong>2D Gaussian Kernel</strong></p>
+                        </div>          
+                        <div class="image-item">
+                            <img src="media/dog_x.jpg" alt="dog x" width="300">
+                            <p><strong>DoG_x Filter</strong></p>
+                        </div>          
+                        <div class="image-item">
+                            <img src="media/dog_y.jpg" alt="dog y" width="300">
+                            <p><strong>DoG_y Filter</strong></p>
+                        </div>              
+                    </div>
+                <h3>DoG Cameraman Results</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cameraman.jpg" alt="original cameraman" width="300">
+                            <p><strong>Original Cameraman</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dx_dog.jpg" alt="cameraman dx dog" width="300">
+                            <p><strong>Cameraman Convolved with DoG_x</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_dy_dog.jpg" alt="cameraman dy dog" width="300">
+                            <p><strong>Cameraman Convolved with DoG_y</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/cameraman_grad_dog.jpg" alt="cameraman grad dog" width="300">
+                            <p><strong>Cameraman DoG Gradient Magnitude</strong></p>
+                        </div>              
+                        <div class="image-item">
+                            <img src="media/cameraman_edge_dog.jpg" alt="cameraman edge dog" width="300">
+                            <p><strong>Cameraman DoG Edge Image<br>(Threshold = 22)</strong></p>
+                        </div>              
+                    </div>
+                <h3>Comments on Differences and Results</h3>
+                    <p>Both results from this part are less noisy than the result from the previous part. This makes sense since for both approaches in this part we convolved the image with the 2D Gaussian Kernel,
+                    which smoothens our image (i.e., low-pass filter), getting rid of high-frequency noise. This can be seen in the edge images. Both edge images have much less background noise than
+                    the one from the previous section! As the two new edge images show, we indeed get the same results from both approaches: 1. convolving the image with the Gaussian Kernel and 
+                    then convolving with the finite difference filters and 2. convolving the Gaussian Kernel with the finite difference filters first then convolving it with the image.
+                    </p>            
+        </div>
+
+        <div class="container">
+            <h1><center>Part 2: Fun with Frequencies</center></h1>
+            <h2><center>Part 2.1: Image "Sharpening" </center></h2>
+                <h3>Unsharp Mask Filter</h3>
+                    <p>The unsharp mask filter works by combining the steps detailed for sharpening into one operation. Specifically, in the step by step process, we first blur the image by convolving with the
+                    2D Gaussian kernel to obtain a low-passed version of the image. Then, we subtract this blurred version from the original to retain the high frequencies. Then we add this high-frequency
+                    image to the original image, effectively adding in high-frequencies to the image, making the image look sharper. </p>
+                    <p>The unsharp mask filter first initializes a kernel of 0's of the same shape as the 2D
+                    Gaussian kernel. Then, we set the center of the kernel to be <code>1 + sharpening_factor</code> to apply the sharpening effect to each pixel when convolving. The plus 1 accounts for the next step where we
+                    subtract from this kernel <code>sharpening_factor * gaussian_2d</code>, which takes care of the blurring. Altogether, this filter blurs, finds and adds high frequencies to the original image in one go!</p>
+                <h3>Taj Mahal Sharpening</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/taj.jpg" alt="original taj" width="300">
+                            <p><strong>Original Taj Mahal</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_blurred.jpg" alt="taj blurred" width="300">
+                            <p><strong>Taj Mahal Blurred</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_high_freq.jpg" alt="taj high freq" width="300">
+                            <p><strong>Taj Mahal High Frequencies</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
+                            <p><strong>Taj Mahal Sharpened (Step by Step)<br>(sharpening_factor = 3)</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_umf_3.jpg" alt="taj sharpened umf 3" width="300">
+                            <p><strong>Taj Mahal Sharpened (Unsharp Mask Filter)<br>(sharpening_factor = 3)</strong></p>
+                        </div>
+                    </div>
+                <h3>Taj Mahal Resharpening</h3>
+                    <p>After trying to resharpen an already sharpened image, I see that the new resharpened image looks more granular (artificially sharper) than before. This makes sense because we are
+                    essentially further sharpening the image. When we reblur it and subtract that from the image, we recover a lot of the high frequencies we added on after the first round of sharpening. Since we are
+                    then readding these high frequencies onto the image again, we are adding on even more high frequencies after this second round of sharpening! See results below:</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
+                            <p><strong>Sharpened Taj Mahal</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_blurred_resharp.jpg" alt="taj blurred resharp" width="300">
+                            <p><strong>Taj Mahal Blurred</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_high_freq_resharp.jpg" alt="taj high freq resharp" width="300">
+                            <p><strong>Taj Mahal High Frequencies</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3_resharp.jpg" alt="taj resharpened 3" width="300">
+                            <p><strong>Taj Mahal Resharpened (Step by Step)<br>(sharpening_factor = 3)</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_umf_3_resharp.jpg" alt="taj resharpened umf 3" width="300">
+                            <p><strong>Taj Mahal Resharpened (Unsharp Mask Filter)<br>(sharpening_factor = 3)</strong></p>
+                        </div> 
+                    </div>
+                <h3>Varying Sharpening Factors</h3>
+                    <p>Higher sharpening factors create "sharper" images:</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_1.jpg" alt="taj sharpened 1" width="300">
+                            <p><strong>Taj Mahal Sharpened<br>(sharpening_factor = 1)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_3.jpg" alt="taj sharpened 3" width="300">
+                            <p><strong>Taj Mahal Sharpened<br>(sharpening_factor = 3)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/taj_sharpened_10.jpg" alt="taj sharpened 10" width="300">
+                            <p><strong>Taj Mahal Sharpened<br>(sharpening_factor = 10)</strong></p>
+                        </div>  
+                    </div>
+                <h3>My Own Image</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/oski.jpg" alt="oski" width="300">
+                            <p><strong>Oski!</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_blurred.jpg" alt="oski" width="300">
+                            <p><strong>Oski Blurred</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_high_freq.jpg" alt="oski" width="300">
+                            <p><strong>Oski High Frequencies</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_sharpened_1.jpg" alt="oski sharpened 1" width="300">
+                            <p><strong>Oski Sharpened<br>(sharpening_factor = 1)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_sharpened_3.jpg" alt="oski sharpened 3" width="300">
+                            <p><strong>Oski Sharpened<br>(sharpening_factor = 3)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/oski_sharpened_5.jpg" alt="oski sharpened 5" width="300">
+                            <p><strong>Oski Sharpened<br>(sharpening_factor = 5)</strong></p>
+                        </div>  
+                    </div>    
+        </div>
+
+        <div class="container">
+            <h2><center>Part 2.2: Hybrid Images</center></h2>
+                <h3>Derek + Nutmeg Hybrid</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/DerekPicture.jpg" alt="derek" width="300">
+                            <p><strong>Derek</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/nutmeg.jpg" alt="nutmeg" width="300">
+                            <p><strong>Nutmeg</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/derek_nutmeg_hybrid.jpg" alt="derek + nutmeg" width="300">
+                            <p><strong>Dermeg Hybrid</strong></p>
+                        </div>  
+                    </div>
+                <h3>Ironman + Tony Stark Hybrid</h3>
+                    <p>Cutoff frequency choices: for Tony Stark I set <code>sigma = 3</code> (where cutoff frequency is inversely related to the sigma, "spread", of the Gaussian). This is for the low pass filter.
+                    For the high pass filter (applied on Iron Man), I set <code>sigma = 10</code>. Through empirical observation, these provided the most pleasing results, where Stark is visible in the 
+                    background yet upon closer look Iron Man's sharp edges subtly dominate the facial area!</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/stark.jpg" alt="stark" width="300">
+                            <p><strong>Tony Stark</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/iron.jpg" alt="iron" width="300">
+                            <p><strong>Iron Man</strong></p>
+                        </div>  
+                    </div>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/im1_fft.jpg" alt="fft" width="300">
+                            <p><strong>Tony Stark FFT</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/im2_fft.jpg" alt="fft" width="300">
+                            <p><strong>Iron Man FFT</strong></p>
+                        </div>  
+                    </div>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/im1_low_freq.jpg" alt="fft" width="300">
+                            <p><strong>Tony Stark Low Frequencies</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/im2_high_freq.jpg" alt="fft" width="300">
+                            <p><strong>Iron Man High Frequencies</strong></p>
+                        </div>  
+                    </div>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/im1_low_freq_fft.jpg" alt="fft" width="300">
+                            <p><strong>Tony Stark Low Frequencies FFT</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/im2_high_freq_fft.jpg" alt="fft" width="300">
+                            <p><strong>Iron Man High Frequencies FFT</strong></p>
+                        </div>  
+                    </div>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/iron_stark_hybrid.jpg" alt="fft" width="300">
+                            <p><strong>Iron Stark Hybrid</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/hybrid_fft.jpg" alt="fft" width="300">
+                            <p><strong>Iron Stark Hybrid FFT</strong></p>
+                        </div>  
+                    </div>
+                <h3>Jack + Rose Hybrid</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/leo.jpg" alt="leo" width="300">
+                            <p><strong>Leonardo DiCaprio (Jack)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/kate.jpg" alt="kate" width="300">
+                            <p><strong>Kate Winslet (Rose)</strong></p>
+                        </div>  
+                        <div class="image-item">
+                            <img src="media/jack_rose_hybrid.jpg" alt="leo + kate" width="300">
+                            <p><strong>Jack & Rose</strong></p>
+                        </div>  
+                    </div>
+        </div>
+
+
+        <div class="container">
+            <h2><center>Part 2.3 & 2.4: Multiresolution Blending</center></h2>
+                <h3>Oraple!</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/apple.jpg" alt="image" width="300">
+                            <p><strong>Apple</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/orange.jpg" alt="image" width="300">
+                            <p><strong>Orange</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple.jpg" alt="image" width="300">
+                            <p><strong>Oraple</strong></p>
+                        </div>
+                    </div>
+            
+                <h3>Gaussian Stack For Apple + Orange Images</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/oraple_gauss_0.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 0</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_gauss_1.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 1</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_gauss_2.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 2</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_gauss_3.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 3</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_gauss_4.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 4</strong></p>
+                        </div>
+                    </div>
+                <h3>Laplacian Stack For Apple + Orange Images</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/oraple_lap_0.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 0</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_lap_1.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 1</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_lap_2.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 2</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_lap_3.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 3</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple_lap_4.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Level 4</strong></p>
+                        </div>
+                    </div>
+                <h3>Outcomes Recreated (Ref: Figure 3.42)</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/im1_masked_level_0.jpg" alt="image" width="300">
+                            <p><strong>Apple Masked Level 0</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/im2_masked_level_0.jpg" alt="image" width="300">
+                            <p><strong>Orange Masked Level 0</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/blended_masks_level_0.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Masked Level 0</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/im1_masked_level_2.jpg" alt="image" width="300">
+                            <p><strong>Apple Masked Level 2</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/im2_masked_level_2.jpg" alt="image" width="300">
+                            <p><strong>Orange Masked Level 2</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/blended_masks_level_2.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Masked Level 2</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/im1_masked_level_4.jpg" alt="image" width="300">
+                            <p><strong>Apple Masked Level 4</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/im2_masked_level_4.jpg" alt="image" width="300">
+                            <p><strong>Orange Masked Level 4</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/blended_masks_level_4.jpg" alt="image" width="300">
+                            <p><strong>Apple + Orange Masked Level 4</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/apple_masked.jpg" alt="image" width="300">
+                            <p><strong>Apple Masked</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/orange_masked.jpg" alt="image" width="300">
+                            <p><strong>Orange Masked</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/oraple2.jpg" alt="image" width="300">
+                            <p><strong>Oraple</strong></p>
+                        </div>
+                    </div>
+                <h3>My Example No.1 (Horizontal Mask)</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/sea.jpg" alt="image" width="800" height="500">
+                            <p><strong>Sea</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/future.jpg" alt="image" width="800">
+                            <p><strong>Futuristic City</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/future_sea.jpg" alt="image" width="800">
+                            <p><strong>Futuristic City Growing out of the Sea at the Horizon</strong></p>
+                        </div>
+                    </div>
+                <h3>My Example No.2 (Irregular Mask)</h3>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/cand1.jpg" alt="image" width="300">
+                            <p><strong>Me</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/pointers.jpg" alt="image" width="300">
+                            <p><strong>Meme of Pointers</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/meme_of_me.jpg" alt="image" width="300">
+                            <p><strong>Meme of Me Getting Pointed At</strong></p>
+                        </div>
+                    </div>
+                    <h4><strong>Some More Details</strong></h4>
+                        <div class="image-gallery">
+                            <div class="image-item">
+                                <img src="media/mask_level_0.jpg" alt="image" width="300">
+                                <p><strong>Mask Level 0</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/mask_level_2.jpg" alt="image" width="300">
+                                <p><strong>Mask Level 2</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/mask_level_4.jpg" alt="image" width="300">
+                                <p><strong>Mask Level 4</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_im1_masked_level_0.jpg" alt="image" width="300">
+                                <p><strong>Me Masked Level 0</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_im1_masked_level_2.jpg" alt="image" width="300">
+                                <p><strong>Me Masked Level 2</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_im1_masked_level_4.jpg" alt="image" width="300">
+                                <p><strong>Me Masked Level 4</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_im2_masked_level_0.jpg" alt="image" width="300">
+                                <p><strong>Meme Masked Level 0</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_im2_masked_level_2.jpg" alt="image" width="300">
+                                <p><strong>Meme Masked Level 2</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_im2_masked_level_4.jpg" alt="image" width="300">
+                                <p><strong>Meme Masked Level 4</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_blended_masks_level_0.jpg" alt="image" width="300">
+                                <p><strong>Meme of Me Masked Level 0</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_blended_masks_level_2.jpg" alt="image" width="300">
+                                <p><strong>Meme of Me Masked Level 2</strong></p>
+                            </div>
+                            <div class="image-item">
+                                <img src="media/meme_blended_masks_level_4.jpg" alt="image" width="300">
+                                <p><strong>Meme of Me Masked Level 4</strong></p>
+                            </div>
+                        </div>
+        </div>
+        <div class="container">
+            <h2><center>Key Takeaways</center></h2>
+                <p>Clipping images to the correct ranges is crucial! I spent way too long struggling to get my images (post merging) to appear correct (i.e., either the surrounding image got brightness
+                overdose or the center image got banished to the shadow realm) because I had written my custom filter incorrectly. Since at first I didn't "normalize" the values to be within [0, 1], the pixels
+                of the images being masked by it were being scaled uncontrollably. This is an important learning: when images look correct in terms of where things are and it's only the color that seems
+                to be off, the debugging job is simplified since usually the problem stems from how pixel values are clipped after filter/mask/convolution/etc. processing. </p>
+        </div>
+</body>
+</html>
