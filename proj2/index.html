@@ -112,7 +112,6 @@
             <h2><center>Part 1.1: Convolutions From Scratch!</center></h2>
                 <h3>Convolution with 4 Loops</h3> 
                     <pre><code>def convolve_4loops(image, kernel, padding=True):
-    """Convolution with 4 nested loops with padding"""
     if padding:
         pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
         padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
@@ -133,7 +132,6 @@
                     </code></pre>
                 <h3>Convolution with 2 Loops</h3>
                     <pre><code>def convolve_2loops(image, kernel, pad=True):
-    """Convolution with 2 nested loops with padding"""
     if pad:
         pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
         padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
