@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Project Portfolio</title>
             <!-- MathJax -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {   
           font-family: Arial, sans-serif;
@@ -96,22 +96,78 @@
           border-radius: 5px;         /* Rounded corners */
           margin: 20px auto;          /* Center the block horizontally */
           max-width: 80%;             /* Optional: limit width */
-        }
-        
-  </style>
-    </style>  
+        }    
+    </style>
 </head>
     
 <body>
     <header>
         <h1>CS 180 Project 3</h1>
-            <h2>Something something</h2>
+            <h2>[Auto]Stitching Photo Mosaics</h2>
     </header>
         <div class="container">
-            <h1><center>Part 1: Fun with Filters</center></h1>
-            <h2><center>Part 1.1: Convolutions From Scratch!</center></h2>
-                <h3>Convolution with 4 Loops</h3> 
-                    <pre><code>def convolve_4loops(image, kernel, padding=True):
+            <h1><center>Part A: Image Warping and Mosaicing</center></h1>
+            <h2><center>Part A.1: Shoot the Pictures</center></h2>
+                <h3>First Set of Images</h3> 
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/img.jpg" alt="image" width="300">
+                        <p><strong>image 1</strong></p>
+                    </div>       
+                </div>
+        </div>
+
+        <div class="container">
+            <h2><center>Part A.2: Recover Homographies</center></h2>
+                <h3>stuff</h3> 
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/img.jpg" alt="image" width="300">
+                        <p><strong>image 1</strong></p>
+                    </div>       
+                </div>
+        </div>
+
+        <div class="container">
+            <h2><center>Part A.2: Warp the Images</center></h2>
+                <h3>stuff</h3> 
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/img.jpg" alt="image" width="300">
+                        <p><strong>image 1</strong></p>
+                    </div>       
+                </div>
+        </div>
+
+        <div class="container">
+            <h2><center>Part A.2: Blend the Images into a Mosaic</center></h2>
+                <h3>stuff</h3> 
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/img.jpg" alt="image" width="300">
+                        <p><strong>image 1</strong></p>
+                    </div>       
+                </div>
+        </div>
+
+        <div class="container">
+            <h1><center>Feature Matching for Autostitching</center></h1>
+            <h2><center>Part B.1: Harris Corner Detection</center></h2>
+                <h3>stuff</h3> 
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/img.jpg" alt="image" width="300">
+                        <p><strong>image 1</strong></p>
+                    </div>       
+                </div>
+        </div>
+
+
+
+
+
+                    <pre><code>
+def convolve_4loops(image, kernel, padding=True):
     if padding:
         pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
         padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
@@ -159,6 +215,9 @@
                     </div> 
                 </div>
         </div>
-            
+       
+        
+
+
 </body>
 </html>
