@@ -109,16 +109,221 @@
             <h1><center>Part A: Image Warping and Mosaicing</center></h1>
             <h2><center>Part A.1: Shoot the Pictures</center></h2>
                 <h3>First Set of Images</h3> 
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/img.jpg" alt="image" width="300">
-                        <p><strong>image 1</strong></p>
-                    </div>       
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene1_1.jpg" alt="image" width="300">
+                            <p><strong>Scene 1 Leftmost Shot</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/scene1_2.jpg" alt="image" width="300">
+                            <p><strong>Scene 1 Center Shot</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/scene1_3.jpg" alt="image" width="300">
+                            <p><strong>Scene 1 Rightmost Shot</strong></p>
+                        </div>       
+                    </div>
+                <h3>Second Set of Images</h3> 
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene2_1.jpg" alt="image" width="300">
+                            <p><strong>Scene 2 Leftmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/scene2_2.jpg" alt="image" width="300">
+                            <p><strong>Scene 2 Rightmost Shot</strong></p>
+                        </div>        
+                    </div>
+                <h3>Third Set of Images</h3> 
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene3_1.jpg" alt="image" width="300">
+                            <p><strong>Scene 3 Leftmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/scene3_2.jpg" alt="image" width="300">
+                            <p><strong>Scene 3 Rightmost Shot</strong></p>
+                        </div>        
+                    </div>
+            </div>
+            
+            <div class="container">
+                <h2><center>Part A.2: Recover Homographies</center></h2>
+                <p>Define the homography matrix H for homogeneous coordinates as:</p>
+                <div class="math-block">
+                    $$
+                    H = \begin{bmatrix}
+                            h_1 & h_2 & h_3 \\
+                            h_4 & h_5 & h_6 \\
+                            h_7 & h_8 & h_9
+                        \end{bmatrix}, \quad h_9 = 1
+                    $$
                 </div>
+                <p>We have eight unknowns so need at least four points to be able to solve the system!</p>
+                <h3>Scene 1</h3>
+                    <h4>Correspondances</h4>
+                    <p>The 20 red point pairs represent correspondances between the leftmost image and the center image. 
+                        The 20 green point pairs represent correspondances between the center image and rightmost image.</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene1_1_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 1 Leftmost Shot</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/scene1_2_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 1 Center Shot</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/scene1_3_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 1 Rightmost Shot</strong></p>
+                        </div>       
+                    </div>
+                    <h4>System of Equations</h4>
+                    <div class="math-block">
+                    $$
+                    \begin{bmatrix}
+                        -1267 & -771 & -1 & 0 & 0 & 0 & 807079 & 491127 & 637 \\
+                        0 & 0 & 0 & -1267 & -771 & -1 & 1030071 & 626823 & 813 \\
+                        -1267 & -715 & -1 & 0 & 0 & 0 & 807079 & 455455 & 637 \\
+                        0 & 0 & 0 & -1267 & -715 & -1 & 959119 & 541255 & 757 \\
+                        -1267 & -826 & -1 & 0 & 0 & 0 & 805812 & 525336 & 636 \\
+                        0 & 0 & 0 & -1267 & -826 & -1 & 1103557 & 719446 & 871 \\
+                        -1267 & -881 & -1 & 0 & 0 & 0 & 804545 & 559435 & 635 \\
+                        0 & 0 & 0 & -1267 & -881 & -1 & 1174509 & 816687 & 927 \\
+                        -1268 & -938 & -1 & 0 & 0 & 0 & 803912 & 594692 & 634 \\
+                        0 & 0 & 0 & -1268 & -938 & -1 & 1250248 & 924868 & 986 \\
+                        -768 & -738 & -1 & 0 & 0 & 0 & 10752 & 10332 & 14 \\
+                        0 & 0 & 0 & -768 & -738 & -1 & 596736 & 573426 & 777 \\
+                        -1467 & -1278 & -1 & 0 & 0 & 0 & 1202940 & 1047960 & 820 \\
+                        0 & 0 & 0 & -1467 & -1278 & -1 & 1914435 & 1667790 & 1305 \\
+                        -810 & -790 & -1 & 0 & 0 & 0 & 59130 & 57670 & 73 \\
+                        0 & 0 & 0 & -810 & -790 & -1 & 680400 & 663600 & 840 \\
+                        -769 & -787 & -1 & 0 & 0 & 0 & 11535 & 11805 & 15 \\
+                        0 & 0 & 0 & -769 & -787 & -1 & 644422 & 659506 & 838 \\
+                        -1570 & -628 & -1 & 0 & 0 & 0 & 1438120 & 575248 & 916 \\
+                        0 & 0 & 0 & -1570 & -628 & -1 & 1069170 & 427668 & 681 \\
+                        -1834 & -1207 & -1 & 0 & 0 & 0 & 2057748 & 1354254 & 1122 \\
+                        0 & 0 & 0 & -1834 & -1207 & -1 & 2176958 & 1432709 & 1187 \\
+                        -1846 & -924 & -1 & 0 & 0 & 0 & 2089672 & 1045968 & 1132 \\
+                        0 & 0 & 0 & -1846 & -924 & -1 & 1738932 & 870408 & 942 \\
+                        -915 & -704 & -1 & 0 & 0 & 0 & 202215 & 155584 & 221 \\
+                        0 & 0 & 0 & -915 & -704 & -1 & 675270 & 519552 & 738 \\
+                        -1023 & -828 & -1 & 0 & 0 & 0 & 364188 & 294768 & 356 \\
+                        0 & 0 & 0 & -1023 & -828 & -1 & 900240 & 728640 & 880 \\
+                        -1004 & -632 & -1 & 0 & 0 & 0 & 337344 & 212352 & 336 \\
+                        0 & 0 & 0 & -1004 & -632 & -1 & 661636 & 416488 & 659 \\
+                        -1148 & -958 & -1 & 0 & 0 & 0 & 576296 & 480916 & 502 \\
+                        0 & 0 & 0 & -1148 & -958 & -1 & 1167516 & 974286 & 1017 \\
+                        -1220 & -847 & -1 & 0 & 0 & 0 & 712480 & 494648 & 584 \\
+                        0 & 0 & 0 & -1220 & -847 & -1 & 1089460 & 756371 & 893 \\
+                        -809 & -738 & -1 & 0 & 0 & 0 & 59057 & 53874 & 73 \\
+                        0 & 0 & 0 & -809 & -738 & -1 & 626975 & 571950 & 775 \\
+                        -1129 & -1184 & -1 & 0 & 0 & 0 & 536275 & 562400 & 475 \\
+                        0 & 0 & 0 & -1129 & -1184 & -1 & 1423669 & 1493024 & 1261 \\
+                        -880 & -1339 & -1 & 0 & 0 & 0 & 139920 & 212901 & 159 \\
+                        0 & 0 & 0 & -880 & -1339 & -1 & 1302400 & 1981720 & 1480 \\
+                    \end{bmatrix} 
+                    \begin{bmatrix}
+                        h_1 \\ h_2 \\ h_3 \\ h_4 \\ h_5 \\ h_6 \\ h_7 \\ h_8 \\ h_9
+                    \end{bmatrix}
+                    = 0
+                    $$
+                    </div>
+                <h3>Scene 2</h3> 
+                    <h4>Correspondances</h4>
+                    <p>The 10 red point pairs represent correspondances between the two images.</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene2_1_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 2 Leftmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/scene2_2_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 2 Rightmost Shot</strong></p>
+                        </div>        
+                    </div>
+                <h3>Scene 3</h3> 
+                    <h4>Correspondances</h4>
+                    <p>The 10 red point pairs represent correspondances between the two images.</p>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene3_1_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 3 Leftmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/scene3_2_points.jpg" alt="image" width="300">
+                            <p><strong>Scene 3 Rightmost Shot</strong></p>
+                        </div>        
+                    </div>
+                    <h4>System of Equations</h4>
+                    <p>Equations form</p>
+                    <div class="math-block">
+                        $$
+                        Eq1: -626 &times h_1 + -365 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 116436 &times h_7 + 67890 &times h_8 + 186 &times h_9 = 0
+                        $$
+                        $$
+                        Eq2: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -626 &times h_4 + -365 &times h_5 + -1 &times h_6 + 213466 &times h_7 + 124465 &times h_8 + 341 &times h_9 = 0
+                        $$
+                        $$
+                        Eq3: -545 &times h_1 + -364 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 46325 &times h_7 + 30940 &times h_8 + 85 &times h_9 = 0
+                        $$
+                        $$
+                        Eq4: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -545 &times h_4 + -364 &times h_5 + -1 &times h_6 + 181485 &times h_7 + 121212 &times h_8 + 333 &times h_9 = 0
+                        $$
+                        $$
+                        Eq5: -582 &times h_1 + -424 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 75660 &times h_7 + 55120 &times h_8 + 130 &times h_9 = 0
+                        $$
+                        $$
+                        Eq6: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -582 &times h_4 + -424 &times h_5 + -1 &times h_6 + 235710 &times h_7 + 171720 &times h_8 + 405 &times h_9 = 0
+                        $$
+                        $$
+                        Eq7: -724 &times h_1 + -409 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 209960 &times h_7 + 118610 &times h_8 + 290 &times h_9 = 0
+                        $$
+                        $$
+                        Eq8: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -724 &times h_4 + -409 &times h_5 + -1 &times h_6 + 282360 &times h_7 + 159510 &times h_8 + 390 &times h_9 = 0
+                        $$
+                        $$
+                        Eq9: -704 &times h_1 + -322 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 192896 &times h_7 + 88228 &times h_8 + 274 &times h_9 = 0
+                        $$
+                        $$
+                        Eq10: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -704 &times h_4 + -322 &times h_5 + -1 &times h_6 + 212608 &times h_7 + 97244 &times h_8 + 302 &times h_9 = 0
+                        $$
+                        $$
+                        Eq11: -745 &times h_1 + -298 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 234675 &times h_7 + 93870 &times h_8 + 315 &times h_9 = 0
+                        $$
+                        $$
+                        Eq12: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -745 &times h_4 + -298 &times h_5 + -1 &times h_6 + 210835 &times h_7 + 84334 &times h_8 + 283 &times h_9 = 0
+                        $$
+                        $$
+                        Eq13: -908 &times h_1 + -312 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 406784 &times h_7 + 139776 &times h_8 + 448 &times h_9 = 0
+                        $$
+                        $$
+                        Eq14: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -908 &times h_4 + -312 &times h_5 + -1 &times h_6 + 282388 &times h_7 + 97032 &times h_8 + 311 &times h_9 = 0
+                        $$
+                        $$
+                        Eq15: -572 &times h_1 + -353 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 69784 &times h_7 + 43066 &times h_8 + 122 &times h_9 = 0
+                        $$
+                        $$
+                        Eq16: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -572 &times h_4 + -353 &times h_5 + -1 &times h_6 + 184184 &times h_7 + 113666 &times h_8 + 322 &times h_9 = 0
+                        $$
+                        $$
+                        Eq17: -762 &times h_1 + -377 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 248412 &times h_7 + 122902 &times h_8 + 326 &times h_9 = 0
+                        $$
+                        $$
+                        Eq18: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -762 &times h_4 + -377 &times h_5 + -1 &times h_6 + 274320 &times h_7 + 135720 &times h_8 + 360 &times h_9 = 0
+                        $$
+                        $$
+                        Eq19: -653 &times h_1 + -430 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 140395 &times h_7 + 92450 &times h_8 + 215 &times h_9 = 0
+                        $$
+                        $$
+                        Eq20: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -653 &times h_4 + -430 &times h_5 + -1 &times h_6 + 268383 &times h_7 + 176730 &times h_8 + 411 &times h_9 = 0
+                        $$
+                    </div>
+
         </div>
 
         <div class="container">
-            <h2><center>Part A.2: Recover Homographies</center></h2>
+            <h2><center>Part A.3: Warp the Images</center></h2>
                 <h3>stuff</h3> 
                 <div class="image-gallery">
                     <div class="image-item">
@@ -129,18 +334,7 @@
         </div>
 
         <div class="container">
-            <h2><center>Part A.2: Warp the Images</center></h2>
-                <h3>stuff</h3> 
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/img.jpg" alt="image" width="300">
-                        <p><strong>image 1</strong></p>
-                    </div>       
-                </div>
-        </div>
-
-        <div class="container">
-            <h2><center>Part A.2: Blend the Images into a Mosaic</center></h2>
+            <h2><center>Part A.4: Blend the Images into a Mosaic</center></h2>
                 <h3>stuff</h3> 
                 <div class="image-gallery">
                     <div class="image-item">
