@@ -95,7 +95,7 @@
           padding: 5px 10px;              /* Spacing inside the block */
           border-radius: 5px;         /* Rounded corners */
           margin: 20px auto;          /* Center the block horizontally */
-          max-width: 80%;             /* Optional: limit width */
+          max-width: 100%;             /* Optional: limit width */
         }    
     </style>
 </head>
@@ -149,21 +149,10 @@
             
             <div class="container">
                 <h2><center>Part A.2: Recover Homographies</center></h2>
-                <p>Define the homography matrix H for homogeneous coordinates as:</p>
-                <div class="math-block">
-                    $$
-                    H = \begin{bmatrix}
-                            h_1 & h_2 & h_3 \\
-                            h_4 & h_5 & h_6 \\
-                            h_7 & h_8 & h_9
-                        \end{bmatrix}, \quad h_9 = 1
-                    $$
-                </div>
-                <p>We have eight unknowns so need at least four points to be able to solve the system!</p>
                 <h3>Scene 1</h3>
-                    <h4>Correspondances</h4>
-                    <p>The 20 red point pairs represent correspondances between the leftmost image and the center image. 
-                        The 20 green point pairs represent correspondances between the center image and rightmost image.</p>
+                <h4>Correspondances</h4>
+                <p>The 20 red point pairs represent correspondances between the leftmost image and the center image. 
+                    The 20 green point pairs represent correspondances between the center image and rightmost image.</p>
                     <div class="image-gallery">
                         <div class="image-item">
                             <img src="media/scene1_1_points.jpg" alt="image" width="300">
@@ -178,58 +167,7 @@
                             <p><strong>Scene 1 Rightmost Shot</strong></p>
                         </div>       
                     </div>
-                    <h4>System of Equations</h4>
-                    <div class="math-block">
-                    $$
-                    \begin{bmatrix}
-                        -1267 & -771 & -1 & 0 & 0 & 0 & 807079 & 491127 & 637 \\
-                        0 & 0 & 0 & -1267 & -771 & -1 & 1030071 & 626823 & 813 \\
-                        -1267 & -715 & -1 & 0 & 0 & 0 & 807079 & 455455 & 637 \\
-                        0 & 0 & 0 & -1267 & -715 & -1 & 959119 & 541255 & 757 \\
-                        -1267 & -826 & -1 & 0 & 0 & 0 & 805812 & 525336 & 636 \\
-                        0 & 0 & 0 & -1267 & -826 & -1 & 1103557 & 719446 & 871 \\
-                        -1267 & -881 & -1 & 0 & 0 & 0 & 804545 & 559435 & 635 \\
-                        0 & 0 & 0 & -1267 & -881 & -1 & 1174509 & 816687 & 927 \\
-                        -1268 & -938 & -1 & 0 & 0 & 0 & 803912 & 594692 & 634 \\
-                        0 & 0 & 0 & -1268 & -938 & -1 & 1250248 & 924868 & 986 \\
-                        -768 & -738 & -1 & 0 & 0 & 0 & 10752 & 10332 & 14 \\
-                        0 & 0 & 0 & -768 & -738 & -1 & 596736 & 573426 & 777 \\
-                        -1467 & -1278 & -1 & 0 & 0 & 0 & 1202940 & 1047960 & 820 \\
-                        0 & 0 & 0 & -1467 & -1278 & -1 & 1914435 & 1667790 & 1305 \\
-                        -810 & -790 & -1 & 0 & 0 & 0 & 59130 & 57670 & 73 \\
-                        0 & 0 & 0 & -810 & -790 & -1 & 680400 & 663600 & 840 \\
-                        -769 & -787 & -1 & 0 & 0 & 0 & 11535 & 11805 & 15 \\
-                        0 & 0 & 0 & -769 & -787 & -1 & 644422 & 659506 & 838 \\
-                        -1570 & -628 & -1 & 0 & 0 & 0 & 1438120 & 575248 & 916 \\
-                        0 & 0 & 0 & -1570 & -628 & -1 & 1069170 & 427668 & 681 \\
-                        -1834 & -1207 & -1 & 0 & 0 & 0 & 2057748 & 1354254 & 1122 \\
-                        0 & 0 & 0 & -1834 & -1207 & -1 & 2176958 & 1432709 & 1187 \\
-                        -1846 & -924 & -1 & 0 & 0 & 0 & 2089672 & 1045968 & 1132 \\
-                        0 & 0 & 0 & -1846 & -924 & -1 & 1738932 & 870408 & 942 \\
-                        -915 & -704 & -1 & 0 & 0 & 0 & 202215 & 155584 & 221 \\
-                        0 & 0 & 0 & -915 & -704 & -1 & 675270 & 519552 & 738 \\
-                        -1023 & -828 & -1 & 0 & 0 & 0 & 364188 & 294768 & 356 \\
-                        0 & 0 & 0 & -1023 & -828 & -1 & 900240 & 728640 & 880 \\
-                        -1004 & -632 & -1 & 0 & 0 & 0 & 337344 & 212352 & 336 \\
-                        0 & 0 & 0 & -1004 & -632 & -1 & 661636 & 416488 & 659 \\
-                        -1148 & -958 & -1 & 0 & 0 & 0 & 576296 & 480916 & 502 \\
-                        0 & 0 & 0 & -1148 & -958 & -1 & 1167516 & 974286 & 1017 \\
-                        -1220 & -847 & -1 & 0 & 0 & 0 & 712480 & 494648 & 584 \\
-                        0 & 0 & 0 & -1220 & -847 & -1 & 1089460 & 756371 & 893 \\
-                        -809 & -738 & -1 & 0 & 0 & 0 & 59057 & 53874 & 73 \\
-                        0 & 0 & 0 & -809 & -738 & -1 & 626975 & 571950 & 775 \\
-                        -1129 & -1184 & -1 & 0 & 0 & 0 & 536275 & 562400 & 475 \\
-                        0 & 0 & 0 & -1129 & -1184 & -1 & 1423669 & 1493024 & 1261 \\
-                        -880 & -1339 & -1 & 0 & 0 & 0 & 139920 & 212901 & 159 \\
-                        0 & 0 & 0 & -880 & -1339 & -1 & 1302400 & 1981720 & 1480 \\
-                    \end{bmatrix} 
-                    \begin{bmatrix}
-                        h_1 \\ h_2 \\ h_3 \\ h_4 \\ h_5 \\ h_6 \\ h_7 \\ h_8 \\ h_9
-                    \end{bmatrix}
-                    = 0
-                    $$
-                    </div>
-                <h3>Scene 2</h3> 
+                    <h3>Scene 2</h3> 
                     <h4>Correspondances</h4>
                     <p>The 10 red point pairs represent correspondances between the two images.</p>
                     <div class="image-gallery">
@@ -242,6 +180,62 @@
                             <p><strong>Scene 2 Rightmost Shot</strong></p>
                         </div>        
                     </div>
+                    <h4>System of Equations & Recovered Homography Matrix</h4>
+                    <p>Define the homography matrix H for homogeneous coordinates as:</p>
+                    <div class="math-block">
+                        $$
+                        H = \begin{bmatrix}
+                                h_1 & h_2 & h_3 \\
+                                h_4 & h_5 & h_6 \\
+                                h_7 & h_8 & h_9
+                            \end{bmatrix}, \quad h_9 = 1
+                        $$
+                    </div>
+                    <p>We have eight unknowns so need at least four points to be able to solve the system. 
+                        Our 10 correspondances give us 20 equations – we have enough information!</p>
+                    <p>System of equations in matrix vector form:</p>
+                        <div class="math-block">
+                            $$
+                            \begin{bmatrix}
+                                -713 & -311 & -1 & 0 & 0 & 0 & 104811 & 45717 & 147 \\
+                                0 & 0 & 0 & -713 & -311 & -1 & 214613 & 93611 & 301 \\
+                                -758 & -251 & -1 & 0 & 0 & 0 & 143262 & 47439 & 189 \\
+                                0 & 0 & 0 & -758 & -251 & -1 & 187226 & 61997 & 247 \\
+                                -948 & -265 & -1 & 0 & 0 & 0 & 330852 & 92485 & 349 \\
+                                0 & 0 & 0 & -948 & -265 & -1 & 258804 & 72345 & 273 \\
+                                -610 & -245 & -1 & 0 & 0 & 0 & 14030 & 5635 & 23 \\
+                                0 & 0 & 0 & -610 & -245 & -1 & 137860 & 55370 & 226 \\
+                                -800 & -110 & -1 & 0 & 0 & 0 & 179200 & 24640 & 224 \\
+                                0 & 0 & 0 & -800 & -110 & -1 & 93600 & 12870 & 117 \\
+                                -853 & -269 & -1 & 0 & 0 & 0 & 233722 & 73706 & 274 \\
+                                0 & 0 & 0 & -853 & -269 & -1 & 230310 & 72630 & 270 \\
+                                -909 & -296 & -1 & 0 & 0 & 0 & 290880 & 94720 & 320 \\
+                                0 & 0 & 0 & -909 & -296 & -1 & 267246 & 87024 & 294 \\
+                                -709 & -514 & -1 & 0 & 0 & 0 & 102805 & 74530 & 145 \\
+                                0 & 0 & 0 & -709 & -514 & -1 & 354500 & 257000 & 500 \\
+                                -898 & -146 & -1 & 0 & 0 & 0 & 277482 & 45114 & 309 \\
+                                0 & 0 & 0 & -898 & -146 & -1 & 149068 & 24236 & 166 \\
+                                -943 & -335 & -1 & 0 & 0 & 0 & 326278 & 115910 & 346 \\
+                                0 & 0 & 0 & -943 & -335 & -1 & 309304 & 109880 & 328 \\
+                            \end{bmatrix} 
+                            \begin{bmatrix}
+                            h_1 \\ h_2 \\ h_3 \\ h_4 \\ h_5 \\ h_6 \\ h_7 \\ h_8 \\ h_9
+                            \end{bmatrix}
+                            = 0
+                            $$
+                        </div>
+                        <p>Recovered Homography Matrix:</p>
+                        <div class="math-block">
+                            $$
+                            H = \begin{bmatrix}
+                                    3.310 & 1.119 & -1.987 \\
+                                    8.471 & 2.844 & -6.384 \\
+                                    2.459 & 2.052 & 1
+                                \end{bmatrix}
+                            $$
+
+                        </div>
+
                 <h3>Scene 3</h3> 
                     <h4>Correspondances</h4>
                     <p>The 10 red point pairs represent correspondances between the two images.</p>
@@ -255,96 +249,156 @@
                             <p><strong>Scene 3 Rightmost Shot</strong></p>
                         </div>        
                     </div>
-                    <h4>System of Equations</h4>
-                    <p>Equations form</p>
-                    <div class="math-block">
-                        $$
-                        Eq1: -626 &times h_1 + -365 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 116436 &times h_7 + 67890 &times h_8 + 186 &times h_9 = 0
-                        $$
-                        $$
-                        Eq2: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -626 &times h_4 + -365 &times h_5 + -1 &times h_6 + 213466 &times h_7 + 124465 &times h_8 + 341 &times h_9 = 0
-                        $$
-                        $$
-                        Eq3: -545 &times h_1 + -364 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 46325 &times h_7 + 30940 &times h_8 + 85 &times h_9 = 0
-                        $$
-                        $$
-                        Eq4: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -545 &times h_4 + -364 &times h_5 + -1 &times h_6 + 181485 &times h_7 + 121212 &times h_8 + 333 &times h_9 = 0
-                        $$
-                        $$
-                        Eq5: -582 &times h_1 + -424 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 75660 &times h_7 + 55120 &times h_8 + 130 &times h_9 = 0
-                        $$
-                        $$
-                        Eq6: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -582 &times h_4 + -424 &times h_5 + -1 &times h_6 + 235710 &times h_7 + 171720 &times h_8 + 405 &times h_9 = 0
-                        $$
-                        $$
-                        Eq7: -724 &times h_1 + -409 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 209960 &times h_7 + 118610 &times h_8 + 290 &times h_9 = 0
-                        $$
-                        $$
-                        Eq8: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -724 &times h_4 + -409 &times h_5 + -1 &times h_6 + 282360 &times h_7 + 159510 &times h_8 + 390 &times h_9 = 0
-                        $$
-                        $$
-                        Eq9: -704 &times h_1 + -322 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 192896 &times h_7 + 88228 &times h_8 + 274 &times h_9 = 0
-                        $$
-                        $$
-                        Eq10: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -704 &times h_4 + -322 &times h_5 + -1 &times h_6 + 212608 &times h_7 + 97244 &times h_8 + 302 &times h_9 = 0
-                        $$
-                        $$
-                        Eq11: -745 &times h_1 + -298 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 234675 &times h_7 + 93870 &times h_8 + 315 &times h_9 = 0
-                        $$
-                        $$
-                        Eq12: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -745 &times h_4 + -298 &times h_5 + -1 &times h_6 + 210835 &times h_7 + 84334 &times h_8 + 283 &times h_9 = 0
-                        $$
-                        $$
-                        Eq13: -908 &times h_1 + -312 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 406784 &times h_7 + 139776 &times h_8 + 448 &times h_9 = 0
-                        $$
-                        $$
-                        Eq14: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -908 &times h_4 + -312 &times h_5 + -1 &times h_6 + 282388 &times h_7 + 97032 &times h_8 + 311 &times h_9 = 0
-                        $$
-                        $$
-                        Eq15: -572 &times h_1 + -353 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 69784 &times h_7 + 43066 &times h_8 + 122 &times h_9 = 0
-                        $$
-                        $$
-                        Eq16: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -572 &times h_4 + -353 &times h_5 + -1 &times h_6 + 184184 &times h_7 + 113666 &times h_8 + 322 &times h_9 = 0
-                        $$
-                        $$
-                        Eq17: -762 &times h_1 + -377 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 248412 &times h_7 + 122902 &times h_8 + 326 &times h_9 = 0
-                        $$
-                        $$
-                        Eq18: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -762 &times h_4 + -377 &times h_5 + -1 &times h_6 + 274320 &times h_7 + 135720 &times h_8 + 360 &times h_9 = 0
-                        $$
-                        $$
-                        Eq19: -653 &times h_1 + -430 &times h_2 + -1 &times h_3 + 0 &times h_4 + 0 &times h_5 + 0 &times h_6 + 140395 &times h_7 + 92450 &times h_8 + 215 &times h_9 = 0
-                        $$
-                        $$
-                        Eq20: 0 &times h_1 + 0 &times h_2 + 0 &times h_3 + -653 &times h_4 + -430 &times h_5 + -1 &times h_6 + 268383 &times h_7 + 176730 &times h_8 + 411 &times h_9 = 0
-                        $$
-                    </div>
-
         </div>
 
         <div class="container">
             <h2><center>Part A.3: Warp the Images</center></h2>
-                <h3>stuff</h3> 
-                <div class="image-gallery">
+                <h3>Example from Scene 1</h3> 
+                <p>The tradeoff between speed and quality for Nearest Neighbor (NN) and Bilinear (BIL) warping is:
+                    NN is significantly faster and produces similar quality images as the original; BIL is slower and produces a smoother image than the original.</p>
+                <p>Specifically, on this 2000 x 1500 image, NN warping took 26.13 seconds while BIL warping took 59.95 seconds. This time different is expected since for NN we are rounding to the nearest pixel value, thus we only examine 1 nearest neighbor.
+                    On the other hand, for BIL we examine 4 neighbors in order to perform a weighted average between them. Since more work is being done for BIL,
+                    the extra time is reasonable. Closely examining the below comparison images, we can see that the BIL version produces a smoother image, again
+                    due to the weighted averaging operation for every point, which filters some high frequencies. 
+                    On the contrary, the NN doesn't perform any significant "softening" operation, so the result seems "sharper" or "noisier" as most
+                    high frequencies are kept.</p>
+                <div class="image-gallery" >
                     <div class="image-item">
-                        <img src="media/img.jpg" alt="image" width="300">
-                        <p><strong>image 1</strong></p>
+                        <img src="media/scene1_1_warped_nn.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot Warped Nearest Neighbor</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/scene1_1_warped_bil.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot Warped Bilinear</strong></p>
                     </div>       
                 </div>
+                <h3>Rectification</h3>
+                <h4>Recovering the Pop Quiz QR Code!</h4>
+                <p>On this 750 x 1000 image, NN warping took 5.38 seconds, while BIL warping took 12.53 seconds.</p>
+                <div class="image-gallery" >
+                    <div class="image-item">
+                        <img src="media/rect1.jpg" alt="image" width="300">
+                        <p><strong>Slanted Slide with QR Code</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/rect1_warped_nn.jpg" alt="image" width="300">
+                        <p><strong>QR Code Warped Nearest Neighbor</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/rect1_warped_bil.jpg" alt="image" width="300">
+                        <p><strong>QR Code Warped Bilinear</strong></p>
+                    </div>       
+                </div>
+                <h4>VLSB 2050 Periodic Table</h4>
+                <p>On this 1000 x 750 image, NN warping took 4.22 seconds, while BIL warping took 10.03 seconds.</p>
+                <div class="image-gallery" >
+                    <div class="image-item">
+                        <img src="media/rect2.jpg" alt="image" width="300">
+                        <p><strong>Angled Periodic Table</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/rect2_warped_nn.jpg" alt="image" width="300">
+                        <p><strong>Periodic Table Warped Nearest Neighbor</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/rect2_warped_bil.jpg" alt="image" width="300">
+                        <p><strong>Periodic Table Warped Bilinear</strong></p>
+                    </div>       
+                </div>
+
         </div>
 
         <div class="container">
             <h2><center>Part A.4: Blend the Images into a Mosaic</center></h2>
-                <h3>stuff</h3> 
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/img.jpg" alt="image" width="300">
-                        <p><strong>image 1</strong></p>
-                    </div>       
-                </div>
+                <h3>Procedure Description</h3>
+                    <p>The main mosaic-creating function is <code>create_mosaic(im1, im2, H)</code>, which intakes two images an a homography transformation matrix from im1 to im2. To create the mosaic, an important step is to generate weight maps for both input images, image 1 (im1) and image 2 (im2), using the <code>create_weight_map</code> function. This function assigns higher weights to the center of each image and gradually decreases the weights towards the edges, which helps reduce visible seams when blending. The weight map is calculated by measuring the Euclidean distance of each pixel from the center of the image and normalizing this distance by the maximum possible distance (from the center to a corner). This results in a map where the center has the highest weight (1) and the edges fall off to 0. Some examples shown below.</p>
+                    <p>The homography matrix <code>H</code> is computed via the <code>computeH</code> function from previous parts, which aligns im1 with im2. This matrix is used to transform the corners of im1 into the coordinate system of im2. The corners of both images were represented in homogeneous coordinates and transformed accordingly. These transformed corners, along with the original corners of im2, were then used to calculate the bounding box of the mosaic. Specifically, the minimum and maximum x and y coordinates of all corners were found, and the mosaic dimensions were set based on these values, with additional padding added to prevent clipping. The function in charge of finding this new canvas size is <code>compute_warped_bounds(im_shape, H)</code>.</p>
+                    <p>To align both images within the mosaic, we have a translation matrix T, which shifts the entire mosaic into the positive coordinate space. The homography for im1 was then combined with this translation matrix to form the composite transformation matrix <code>H_mosaic1</code>, which was used to warp im1 into the mosaic coordinate system. For im2, only the translation matrix T was needed, and it was used to warp im2 into the same space. Both images were then warped using bilinear interpolation with the <code>warpImageBilinear(im, H, output_shape)</code> function, which maps each pixel from the original image to its new location in the mosaic.</p>
+                    <p>To ensure proper blending, I also warped the weight maps for both images using the same transformations. This step ensures that the blending process takes into account the spatial alignment of both images and their respective weight maps!</p>
+                    <p>Finally, to reduce edge artifacts, the warped images are blended together using weighted averaging, where the pixel values in the final mosaic were computed as a weighted sum of the corresponding pixels from im1 and im2, with the weights derived from the warped weight maps: 
+                        $$\frac{im_1 \times w_1 + im_2 \times w_2}{w_T},\quad w_T = w_1 + w_2$$
+                        See code for more details!</p>
+                    <h4>Weight Map Visualization (for "Left + Center Mosaics") </h4>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/weight_map.jpg" alt="image" width="300">
+                            <p><strong>Weight Map</strong></p>
+                        </div>     
+                        <div class="image-item">
+                            <img src="media/warped_weight1.jpg" alt="image" width="300">
+                            <p><strong>Warped Weight Map for Image 1</strong></p>
+                        </div>     
+                        <div class="image-item">
+                            <img src="media/warped_weight2.jpg" alt="image" width="300">
+                            <p><strong>"Warped" Weight Map for Image 2</strong></p>
+                        </div>     
+                    </div>  
+                <h3>Scene 1</h3> 
+                    <h4>Source Images</h4>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene1_1.jpg" alt="image" width="300">
+                            <p><strong>Leftmost Shot</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/scene1_2.jpg" alt="image" width="300">
+                            <p><strong>Center Shot</strong></p>
+                        </div>       
+                        <div class="image-item">
+                            <img src="media/scene1_3.jpg" alt="image" width="300">
+                            <p><strong>Rightmost Shot</strong></p>
+                        </div>       
+                    </div>
+                    <h4>Mosaic Results</h4>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/mosaic1_12.jpg" alt="image" width="300">
+                            <p><strong>Left + Center Mosaic</strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/mosaic1_32.jpg" alt="image" width="300">
+                            <p><strong>Right + Center Mosaic </strong></p>
+                        </div>
+                        <div class="image-item">
+                            <img src="media/mosaic1_123.jpg" alt="image" width="300">
+                            <p><strong>Left + Center + Right Mosaic </strong></p>
+                        </div>
+                    </div>
+                <h3>Scene 2</h3> 
+                    <h4>Source Images + Mosaic Result</h4>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene2_1.jpg" alt="image" width="300">
+                            <p><strong>Leftmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/scene2_2.jpg" alt="image" width="300">
+                            <p><strong>Rightmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/mosaic2_12.jpg" alt="image" width="300">
+                            <p><strong>Left + Right Mosaic</strong></p>
+                        </div>        
+                    </div>
+                <h3>Scene 3</h3> 
+                    <h4>Source Images + Mosaic Result</h4>
+                    <div class="image-gallery">
+                        <div class="image-item">
+                            <img src="media/scene3_1.jpg" alt="image" width="300">
+                            <p><strong>Leftmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/scene3_2.jpg" alt="image" width="300">
+                            <p><strong>Rightmost Shot</strong></p>
+                        </div>        
+                        <div class="image-item">
+                            <img src="media/mosaic3_12.jpg" alt="image" width="300">
+                            <p><strong>Left + Right Mosaic</strong></p>
+                        </div>        
+                    </div>
         </div>
 
-        <div class="container">
+        <!-- <div class="container">
             <h1><center>Feature Matching for Autostitching</center></h1>
             <h2><center>Part B.1: Harris Corner Detection</center></h2>
                 <h3>stuff</h3> 
@@ -354,63 +408,7 @@
                         <p><strong>image 1</strong></p>
                     </div>       
                 </div>
-        </div>
-
-
-
-
-
-                    <pre><code>
-def convolve_4loops(image, kernel, padding=True):
-    if padding:
-        pad_h, pad_w = kernel.shape[0] // 2, kernel.shape[1] // 2
-        padded = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
-    else:
-        padded = image
-
-    k_h, k_w = kernel.shape
-    i_h, i_w = padded.shape
-    output = np.zeros((i_h - k_h + 1, i_w - k_w + 1))
-
-    for i in range(output.shape[0]):
-        for j in range(output.shape[1]):
-            for ki in range(k_h):
-                for kj in range(k_w):
-                    output[i, j] += padded[i + ki, j + kj] * kernel[ki, kj]
-
-    return output
-                    </code></pre>
-                <h3>Runtime Comparison and Boundary Handling</h3>
-                    <p>The 4 loop convolution function runs in <code>O(N^4)</code> time (assuming worst case where kernel dimensions can get as large as image dimensions NxN) and the 2 loop convolution function runs in <code>O(N^2)</code> time, both significantly
-                    slower than <code>scipy.signal.convolve2d</code>. From empirical testing, 4 loop convolution took on average 154.15 seconds to convolve my selfie with the 9x9 box filter, 2 loop convolution took on 
-                    average 11.98 seconds, while <code>scipy.signal.convolve2d</code> only took 0.44 seconds!</p>
-                    <p>Boundary handling relates closely to padding. My implementations explicitly 0-pad if the <code>pad</code> argument is <code>True</code>. For <code>scipy.signal.convolve2d</code>,
-                    padding is controlled by the <code>boundary</code> argument: <code>"fill"</code> pads with a constant value (i.e., <code>fillvalue</code>), while <code>"wrap"</code> uses periodic 
-                    and <code>"symm"</code> uses symmetric boundary conditions.</p>
-                <h3>Image Results</h3>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/selfie.jpg" alt="original selfie" width="300">
-                        <p><strong>Original Selfie</strong></p>
-                    </div>       
-                    <div class="image-item">
-                        <img src="media/selfie_box.jpg" alt="grayscale 9x9 box filtered selfie" width="300">
-                        <p><strong>Selfie (Grayscale) Convolved with 9x9 Box Filter</strong></p>
-                    </div>       
-                </div>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/selfie_dx.jpg" alt="grayscale dx filtered selfie" width="300">
-                        <p><strong>Selfie (Grayscale) Convolved with D_x Filter</strong></p>
-                    </div>   
-                    <div class="image-item">
-                        <img src="media/selfie_dy.jpg" alt="grayscale dy filtered selfie" width="300">
-                        <p><strong>Selfie (Grayscale) Convolved with D_y Filter</strong></p>
-                    </div> 
-                </div>
-        </div>
-       
-        
+        </div> -->
 
 
 </body>
