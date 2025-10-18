@@ -78,16 +78,68 @@
           margin-top: 1rem;
         }
         
-        .image-item {
-          width: 300px;
-          text-align: center;
-        }
-        
         .image-item img {
           width: 100%;
           height: auto;
           border-radius: 5px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item {
+            width: 350px;
+            text-align: center;
+        }
+        
+        .image-item2 img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .image-item2 {
+            width: 200px;
+            text-align: center;
+        }
+        
+        .image-item3 img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item3 {
+            width: 1200px;
+            text-align: center;
+        }
+
+        .image-item4 img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item4 {
+            width: 700px;
+            text-align: center;
+        }
+
+        .image-item5 img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item5 {
+            width: 500px;
+            text-align: center;
+        }
+
+        .pixelated {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges; /* fallback for some browsers */
         }
       
         .math-block {
@@ -405,80 +457,333 @@
         <div class="container">
             <h1><center>Part B: Feature Matching for Autostitching</center></h1>
             <h2><center>Part B.1: Harris Corner Detection</center></h2>
-                <h3>Scene 2</h3> 
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/B/scene2_1_points_500.jpg" alt="image" width="300">
-                        <p><strong>Leftmost Shot: First 500 Harris Corners</strong></p>
-                    </div>       
-                    <div class="image-item">
-                        <img src="media/B/scene2_2_points_500.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: First 500 Harris Corners</strong></p>
-                    </div>       
-                </div>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/B/scene2_1_points_200.jpg" alt="image" width="300">
-                        <p><strong>Leftmost Shot: First 200 Harris Corners</strong></p>
-                    </div>       
-                    <div class="image-item">
-                        <img src="media/B/scene2_2_points_200.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: First 200 Harris Corners</strong></p>
-                    </div>       
-                </div>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/B/scene2_1_points_anms.jpg" alt="image" width="300">
-                        <p><strong>Leftmost Shot: ANMS Harris Corners</strong></p>
-                    </div>       
-                    <div class="image-item">
-                        <img src="media/B/scene2_2_points_anms.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: ANMS Harris Corners</strong></p>
-                    </div>       
-                </div>
+                <p>We can see that for both sets of images it'd be overkill if we used the full set of meaningful Harris corners
+                    for alignment. Directly taking the Top N (e.g., N = 500) points, like the paper points out, also has its limitations.
+                    Since all the Top N points tend to be densely distributed in only a few areas, we would potentially achieve suboptimal alignment
+                    since the best homography matrix computed would only have access to datapoint pairs from those areas. Other areas of the image 
+                    with less/no datapoints might experience significant blurring since the homography didn't account for those regions. 
+                    Adapative Non-Maximal Suppression (ANMS) aims to achieve a balance. The resulting <code>nip</code> (e.g., <code>nip</code> = 500) points
+                    enjoy a much more uniform distrbution spatially across the image, ensuring a more balanced and robust alignment that considers diverse areas in each image.
 
+                </p>
                 <h3>Scene 4</h3> 
                 <div class="image-gallery">
                     <div class="image-item">
-                        <img src="media/B/scene4_1_points_500.jpg" alt="image" width="300">
-                        <p><strong>Leftmost Shot: First 500 Harris Corners</strong></p>
+                        <img src="media/B/scene4_1_points.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot: Harris Corners</strong></p>
                     </div>       
                     <div class="image-item">
-                        <img src="media/B/scene4_2_points_500.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: First 500 Harris Corners</strong></p>
+                        <img src="media/B/scene4_2_points.jpg" alt="image" width="300">
+                        <p><strong>Rightmost Shot: Harris Corners</strong></p>
                     </div>       
                 </div>
                 <div class="image-gallery">
                     <div class="image-item">
-                        <img src="media/B/scene4_1_points_200.jpg" alt="image" width="300">
-                        <p><strong>Leftmost Shot: First 200 Harris Corners</strong></p>
+                        <img src="media/B/scene4_1_points_500.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot: Top 500 Harris Corners</strong></p>
                     </div>       
                     <div class="image-item">
-                        <img src="media/B/scene4_2_points_200.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: First 200 Harris Corners</strong></p>
+                        <img src="media/B/scene4_2_points_500.jpg" alt="image" width="300">
+                        <p><strong>Rightmost Shot: Top 500 Harris Corners</strong></p>
                     </div>       
                 </div>
                 <div class="image-gallery">
                     <div class="image-item">
                         <img src="media/B/scene4_1_points_anms.jpg" alt="image" width="300">
-                        <p><strong>Leftmost Shot: ANMS Harris Corners</strong></p>
+                        <p><strong>Leftmost Shot: 500 Harris Corners with ANMS</strong></p>
                     </div>       
                     <div class="image-item">
                         <img src="media/B/scene4_2_points_anms.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: ANMS Harris Corners</strong></p>
+                        <p><strong>Rightmost Shot: 500 Harris Corners with ANMS</strong></p>
+                    </div>       
+                </div>
+
+
+                <h3>Scene 5</h3> 
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/B/scene5_1_points.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot: Harris Corners</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/B/scene5_2_points.jpg" alt="image" width="300">
+                        <p><strong>Rightmost Shot: Harris Corners</strong></p>
+                    </div>       
+                </div>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/B/scene5_1_points_500.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot: Top 500 Harris Corners </strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/B/scene5_2_points_500.jpg" alt="image" width="300">
+                        <p><strong>Rightmost Shot: Top 500 Harris Corners</strong></p>
+                    </div>       
+                </div>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/B/scene5_1_points_anms.jpg" alt="image" width="300">
+                        <p><strong>Leftmost Shot: 500 Harris Corners with ANMS</strong></p>
+                    </div>       
+                    <div class="image-item">
+                        <img src="media/B/scene5_2_points_anms.jpg" alt="image" width="300">
+                        <p><strong>Rightmost Shot: 500 Harris Corners with ANMS</strong></p>
                     </div>       
                 </div>
         </div>
-            <div class="container">
-                <h2><center>B.2: Feature Descriptor Extraction</center></h2>
-                <h3>Scene 2 Extracted Normalized 8x8 Feature Descriptors</h3>
-                <div class="image-gallery">
-                    <div class="image-item">
-                        <img src="media/B/scene2_1_FD_0.jpg" alt="image" width="300">
-                        <p><strong>Rightmost Shot: ANMS Harris Corners</strong></p>
-                    </div>
+
+        <div class="container">
+            <h2><center>B.2: Feature Descriptor Extraction</center></h2>
+            
+            <h3>Scene 4</h3>
+            <h4>10 Examples of Extracted Normalized 8x8 Feature Descriptors on Leftmost Shot</h4>
+            <div class="image-gallery">
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_0.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 1</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_1.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 2</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_2.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 3</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_3.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 4</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_4.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 5</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_5.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 6</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_6.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 7</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_7.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 8</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_8.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 9</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_FD_9.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Extracted Feature 10</strong></p>
                 </div>
             </div>
+
+            <h3>Scene 5</h3>
+                <h4>10 Examples of Extracted Normalized 8x8 Feature Descriptors on Leftmost Shot</h4>
+                <div class="image-gallery">
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_0.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 1</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_1.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 2</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_2.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 3</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_3.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 4</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_4.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 5</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_5.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 6</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_6.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 7</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_7.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 8</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_8.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 9</strong></p>
+                    </div>
+                    <div class="image-item2">
+                        <img src="media/B/scene5_1_FD_9.jpg" alt="image" width="300" class="pixelated">
+                        <p><strong>Extracted Feature 10</strong></p>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+        <div class="container">
+            <h2><center>B.3: Feature Matching</center></h2>
+            <p>With <code>ratio_threshold = 0.7</code>, we see in both scenes that a number of correspondances seem correct but a good number of them  are clearly incorrect.
+                E.g., those one-to-many mappings. Not to worry! It is RANSAC's job to deal with this in the next section. </p>
+            <h3>Scene 4</h3>
+            <div class="image-gallery">
+                <div class="image-item3">
+                    <img src="media/B/scene4_12_corresp.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Matched Features</strong></p>
+                </div>
+            </div>
+            <h4>5 Pairs of Matched Feature Descriptors between the Leftmost and Rightmost Shots </h4>
+            <div class="image-gallery">
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_feature_match_0.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 1</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_feature_match_1.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 2</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_feature_match_2.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 3</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_feature_match_3.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 4</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_1_feature_match_4.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 5</strong></p>
+                </div>
+            </div>
+            <div class="image-gallery">
+                <div class="image-item2">
+                    <img src="media/B/scene4_2_feature_match_0.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 1</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_2_feature_match_1.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 2</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_2_feature_match_2.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 3</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_2_feature_match_3.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 4</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene4_2_feature_match_4.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 5</strong></p>
+                </div>
+            </div>
+            <h3>Scene 5</h3>
+            <div class="image-gallery">
+                <div class="image-item3">
+                    <img src="media/B/scene5_12_corresp.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Matched Features</strong></p>
+                </div>
+            </div>
+            <h4>5 Pairs of Matched Feature Descriptors between the Leftmost and Rightmost Shots </h4>
+            <div class="image-gallery">
+                <div class="image-item2">
+                    <img src="media/B/scene5_1_feature_match_0.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 1</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_1_feature_match_1.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 2</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_1_feature_match_2.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 3</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_1_feature_match_3.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 4</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_1_feature_match_4.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Leftmost Shot Feature 5</strong></p>
+                </div>
+            </div>
+            <div class="image-gallery">
+                <div class="image-item2">
+                    <img src="media/B/scene5_2_feature_match_0.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 1</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_2_feature_match_1.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 2</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_2_feature_match_2.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 3</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_2_feature_match_3.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 4</strong></p>
+                </div>
+                <div class="image-item2">
+                    <img src="media/B/scene5_2_feature_match_4.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Rightmost Shot Feature 5</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+                <h2><center>B.4: RANSAC for Robust Homography</center></h2>
+                <p>We see for Scene 1 and 2, the difference between manual stitching and automatic stitching
+                    is not much. My manual stitching's decent performance is expected since I meticulously picked out
+                    points (and enough pairs of points) for each scene (took quite a while!). The automatic stitching's decent performance
+                    is also expected, since at every stage of processing my philosophy was keep too much rather than too little.
+                    I used ANMS to clip it down to 500 points which is still pretty generous. I then selected a rather generous threshold (mentioned above)
+                    for my feature matching stage to ensure that enough point pairs would be kept for RANSAC to work its magic.
+                    The final recomputation of the homography matrix on the refined pairs of correspondances post-RANSAC also refined the output further.
+                    Final result? A nice and (somewhat) efficient automatic image mosaicing pipeline!
+                </p>
+                <h3>Scene 1</h3>
+                <div class="image-gallery">
+                    <div class="image-item5">
+                        <img src="media/mosaic1_12.jpg" alt="image" width="300">
+                        <p><strong>Mosaic (Manual)</strong></p>
+                    </div>
+                    <div class="image-item5">
+                        <img src="media/B/mosaic1_12.jpg" alt="image" width="300">
+                        <p><strong>Mosaic (Automatic)</strong></p>
+                    </div>
+                </div>
+                <h3>Scene 2</h3>
+                <div class="image-gallery">
+                    <div class="image-item5">
+                        <img src="media/mosaic2_12.jpg" alt="image" width="300">
+                        <p><strong>Mosaic (Manual)</strong></p>
+                    </div>
+                    <div class="image-item5">
+                        <img src="media/B/mosaic2_12.jpg" alt="image" width="300">
+                        <p><strong>Mosaic (Automatic)</strong></p>
+                    </div>
+                </div>
+                <h3>Scene 4</h3>
+                <div class="image-gallery">
+                    <div class="image-item4">
+                        <img src="media/B/mosaic4_12.jpg" alt="image" width="300">
+                        <p><strong>Mosaic (Automatic)</strong></p>
+                    </div>
+                </div>
+                <h3>Scene 5</h3>
+                <div class="image-gallery">
+                    <div class="image-item4">
+                        <img src="media/B/mosaic5_12.jpg" alt="image" width="300">
+                        <p><strong>Mosaic (Automatic)</strong></p>
+                    </div>
+                </div>
         </div>
 
 
