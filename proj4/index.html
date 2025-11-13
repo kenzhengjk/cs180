@@ -74,7 +74,7 @@
           display: flex;
           flex-wrap: wrap;
           gap: 1.5rem;
-          justify-content: flex-start;
+          justify-content: center;
           margin-top: 1rem;
         }
         
@@ -91,14 +91,15 @@
         }
         
         .image-item2 img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
         }
         .image-item2 {
-            width: 200px;
-            text-align: center;
+          width: 538px;
+          text-align: center;
         }
         
         .image-item3 img {
@@ -109,10 +110,10 @@
           align: center;
         }
         .image-item3 {
-            width: 1200px;
-            text-align: center;
+          width: 1200px;
+          text-align: center;
         }
-
+        
         .image-item4 img {
           width: 100%;
           height: auto;
@@ -121,19 +122,18 @@
           align: center;
         }
         .image-item4 {
-            width: 700px;
-            text-align: center;
+          width: 700px;
+          text-align: center;
         }
-
+        
         .image-item5 img {
-          width: 100%;
-          height: auto;
-          border-radius: 5px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-          align: center;
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         .image-item5 {
-            width: 500px;
+            width: 200px;
             text-align: center;
         }
 
@@ -155,29 +155,220 @@
 <body>
     <header>
         <h1>CS 180 Project 4</h1>
-            <h2>TITLE</h2>
+            <h2>Neural Radiance Field!</h2>
     </header>
-        <div class="container">
-            <h1><center>Part A: Image Warping and Mosaicing</center></h1>
-            <h2><center>Part A.1: Shoot the Pictures</center></h2>
-                <h3>First Set of Images</h3> 
-                    <div class="image-gallery">
-                        <div class="image-item">
-                            <img src="media/scene1_1.jpg" alt="image" width="300">
-                            <p><strong>Scene 1 Leftmost Shot</strong></p>
-                        </div>       
-                        <div class="image-item">
-                            <img src="media/scene1_2.jpg" alt="image" width="300">
-                            <p><strong>Scene 1 Center Shot</strong></p>
-                        </div>       
-                        <div class="image-item">
-                            <img src="media/scene1_3.jpg" alt="image" width="300">
-                            <p><strong>Scene 1 Rightmost Shot</strong></p>
-                        </div>       
-                    </div>
+    
+    <div class="container">
+        <h1><center>Part 0: Calibrating Your Camera and Capturing a 3D Scan</center></h1>
+        <h2>Camera Frustum Visualizations</h2>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/scene1_1.jpg" alt="image" width="300">
+                    <p><strong>Scene 1 Leftmost Shot</strong></p>
+                </div>       
+                <div class="image-item">
+                    <img src="media/scene1_2.jpg" alt="image" width="300">
+                    <p><strong>Scene 1 Center Shot</strong></p>
+                </div>       
+                <div class="image-item">
+                    <img src="media/scene1_3.jpg" alt="image" width="300">
+                    <p><strong>Scene 1 Rightmost Shot</strong></p>
+                </div>       
+            </div>
+    </div>
+    
+    <div class="container">
+        <h1><center>Part 1: Fit a Neural Field to a 2D Image</center></h1>
+        <h3>Model Architecture Report</h3>
+          <p><strong>Network Architecture:</strong> <code>num_layers = 3</code> (3 hidden layers), 
+            <code>hidden_dim = 256</code> (width of hidden layers is 256)<br>
+            <strong>Training:</strong> <code>num_iterations = 2000</code>, 
+            <code>batch_size = 10000</code> (pixels sampled per iteration),
+            <code>learning_rate = 1e-2</code></p>
+
+        <h3>Training Progression & Statistics</h3> 
+          <h4>Image 1: Fox</h4>
+            <div class="image-gallery">
+              <div class="image-item">
+                <img src="media/fox_iter_00001.jpg" alt="image" width="300">
+                <p><strong>Fox Iteration 1</strong></p>
+              </div> 
+              <div class="image-item">
+                <img src="media/fox_iter_00050.jpg" alt="image" width="300">
+                <p><strong>Fox Iteration 50</strong></p>
+              </div> 
+              <div class="image-item">
+                <img src="media/fox_iter_00100.jpg" alt="image" width="300">
+                <p><strong>Fox Iteration 100</strong></p>
+              </div> 
+              <div class="image-item">
+                <img src="media/fox_iter_00150.jpg" alt="image" width="300">
+                <p><strong>Fox Iteration 150</strong></p>
+              </div> 
+              <div class="image-item">
+                <img src="media/fox_iter_00300.jpg" alt="image" width="300">
+                <p><strong>Fox Iteration 300</strong></p>
+              </div> 
+              <div class="image-item">
+                <img src="media/fox_iter_01000.jpg" alt="image" width="300">
+                <p><strong>Fox Iteration 1000</strong></p>
+              </div> 
+            </div>
+            <div class="image-gallery">
+              <div class="image-item3">
+                <img src="media/fox_training_results.jpg" alt="image" width="300">
+                <p><strong>Fox Training Results</strong></p>
+              </div> 
+            </div>
+
+          <h4>Image 2: Rio de Janeiro (my birthplace!)</h4>
+            <div class="image-gallery">
+              <div class="image-item">
+                  <img src="media/rio_iter_00001.jpg" alt="image" width="300">
+                  <p><strong>Rio Iteration 1</strong></p>
+              </div> 
+              <div class="image-item">
+                  <img src="media/rio_iter_00050.jpg" alt="image" width="300">
+                  <p><strong>Rio Iteration 50</strong></p>
+              </div> 
+              <div class="image-item">
+                  <img src="media/rio_iter_00100.jpg" alt="image" width="300">
+                  <p><strong>Rio Iteration 100</strong></p>
+              </div> 
+              <div class="image-item">
+                  <img src="media/rio_iter_00200.jpg" alt="image" width="300">
+                  <p><strong>Rio Iteration 200</strong></p>
+              </div> 
+              <div class="image-item">
+                  <img src="media/rio_iter_00400.jpg" alt="image" width="300">
+                  <p><strong>Rio Iteration 400</strong></p>
+              </div> 
+              <div class="image-item">
+                  <img src="media/rio_iter_01000.jpg" alt="image" width="300">
+                  <p><strong>Rio Iteration 1000</strong></p>
+              </div> 
+            </div>
+            <div class="image-gallery">
+              <div class="image-item3">
+                <img src="media/rio_training_results.jpg" alt="image" width="300">
+                <p><strong>Rio Training Results</strong></p>
+              </div> 
             </div>
             
+        <h3>Final Results For Others Tweaks</h3>
+            <p>At very low values for max position encoding frequency (e.g., L=1), the image becomes more and more smooth.
+              This makes sense since the reconstruction mainly captures large-scale, global features of the image,
+              ignoring sharp local details and high-frequency noise. As seen below, for very low L=1, the reconstruction
+              resembles some abstract modern geometric art, while at L=5 we almost get a lightly Gaussian blurred version of the original.</p>
+            <p>At very low values of width (e.g., <code>hidden_dim=4</code>) we lose learning ability. Since width directly correlates with 
+              the number of parameters in our network, for very low width we underfit, as seen below, because we have limited representational capacity.
+              The high bias of our <code>hidden_dim=4</code> final result shows the network only learning the simplest global pattern (i.e., there's 
+              some entity with some background). Uping the width to 16 shows a big improvement, but it still fails to learn
+              more intricate and complex features of the image, like whisker shape and individual fur colors. </p>
+          <div class="image-gallery">
+            <div class="image-item2">
+              <img src="media/fox_training_results_L1.jpg" alt="image" width="300">
+              <p><strong>Fox (<code>L=1</code>) Training Results</strong></p>
+            </div> 
+            <div class="image-item2">
+              <img src="media/fox_training_results_L5.jpg" alt="image" width="300">
+              <p><strong>Fox (<code>L=5</code>)  Training Results</strong></p>
+            </div> 
+            <div class="image-item2">
+              <img src="media/fox_training_results_HD4.jpg" alt="image" width="300">
+              <p><strong>Fox (<code>hidden_dim=4</code>) Training Results</strong></p>
+            </div> 
+            <div class="image-item2">
+              <img src="media/fox_training_results_HD16.jpg" alt="image" width="300">
+              <p><strong>Fox (<code>hidden_dim=16</code>) Training Results</strong></p>
+            </div> 
+          </div>
+    </div>
+    
+  <div class="container">
+        <h1><center>Part 2: Fit a Neural Radiance Field from Multi-view Images</center></h1>
+        <h2><center>Brief Implementation Description</center></h2>
+          <h3>Part 2.1: Create Rays from Cameras</h3>
+            <p>I implemented three functions for this part. All with pretty straightforward logic.</p>
+            <p><code><strong>transform(c2w, x_c):</strong></code> converts 3D points from camera space to the world space using a homogeneous transformation.<br>
+                <code><strong>pixel_to_camera(K, uv, s):</strong></code> converts pixel coordinates <code>(u, v)</code> with depth <code>s</code> to 3D camera coordinates.
+                  Here I extract intrinsic parameters from the camera matrix and use the pinhole camera inverse equations.<br>
+                <code><strong>pixel_to_ray(K, c2w, uv):</strong></code> computes ray origins and directions in world coordinates for each pixel.</p>
+          
+          <h3>Part 2.2: Sampling</h3>
+            <p>I followed the question set for this part and implemented one function for each of the two prompt paragraphs.</p>
+            <p><code><strong>sample_rays_from_images_stratified(images, c2ws, K, n_rays, training=True):</strong></code> I opted for the first method of sampling rays. This function
+              samples a fixed number of rays per image (instead of compressing and sampling globally). If the <code>training</code> flag is set to True, then it
+              randomly selects <code>n_rays_per_image</code> pixels; else, it uniformly samples pixels.<br>
+            <code><strong>sample_points_along_rays(ray_origins, ray_directions, near=2.0, far=6.0, n_samples=64, training=True):</strong></code> samples 3D points 
+              along each ray between the near and far planes (i.e., stratified sampling step for NeRF). If the <code>training</code> flag is set to True, it adds some random 
+              perturbation: <code>np.random.rand(N_rays, n_samples) * ((far - near) / n_samples)</code>, applied within each interval to improve training robustness!</p>
+            
+          <h3>Part 2.3: Putting the Dataloading All Together</h3>
+            <p>I implemented a dataloading class to preprocess and store all the data neatly.</p>
+            <p><code><strong>class RaysData</strong></code>: precomputes all possible rays from (origins, directions)
+            and corresponding pixel colors from the set of multiview images. It contains a private function <code>_precompute_rays(self)</code>, which loops through each image,
+            calls <code>pixel_to_ray(K, c2w, uv)</code> to acquire ray origins and directions in world coords. Then all image data is concatenated into numpy array of shape 
+            <code>[N_images * H * W, 2]</code>. The class also contains a public function <code>sample_rays(self, n_rays)</code>, which randomly selects <code>n_rays</code> indices
+            from all precomputed rays and returns the corresponding ray origins, directions, and pixels subsets.</p>
+          
+          <h3>Part 2.4: Neural Radiance Field</h3>
+            <p>I implemented this part exactly following the description given and replicated the LEGO results shown.
+              The same sinusoidal positional encoding is used now with two frequencies to capture both high and low frequency spatial details!</p>
+              <p><strong>Positional Encoders:</strong> a position encoder (L=10) takes (low) 3 dimensional inputs to a (higher) 63 dimensional space. 
+                A direction encoder (L=4) takes 3 dimensional input to 27 dimensional space.<br>
+              <strong>Network Architecture:</strong> <code>num_layers = 8</code> (8 hidden layers with
+              skip connection after layer 4), 
+              <code>hidden_dim = 256</code> (width of hidden layers is 256)<br>
+              <strong>Training:</strong> <code>num_iterations = 1000</code>, 
+              <code>batch_size = 10000</code>,
+              <code>n_samples = 64</code>,
+              <code>learning_rate = 5e-4</code></p>
+          
+          <h3>Part 2.5: Volume Rendering</h3>
+            <p>Following the given discrete approximation equation of the core volume rendering equation and the suggestion to use <code>torch.cumprod</code>, the core volrend function is birthed.</p>
+              <p><code><strong>volrend(sigmas, rgbs, step_siz):</strong></code> computes volume rendering for each ray using the discrete approximation equation.
+              Densities are first converted to per-sample opacities (alpha-compositing). Then transmittance is computed using exclusive cumulative product (<code>torch.cumprod</code>).
+              Transmittances are then multiplied with their corresponding alphas to acquire weights. At last, the final color is rendered as a linear combination (i.e., weighted sum) 
+              of each color at sample i weighted by its weight!</p>
 
+        <h2>Visualization of Rays</h2> 
+            
 
-</body>
-</html>
+        <h2>Training Progression</h2> 
+          <div class="image-gallery">
+            <div class="image-item3">
+              <img src="media/lego_training_results.jpg" alt="image" width="900">
+              <p><strong>Lego Training Progression with Predicted Images Across Iterations</strong></p>
+            </div> 
+          </div>
+          
+        <h2>Validation PSNR Curve</h2>
+          <div class="image-gallery">
+            <div class="image-item3">
+              <img src="media/lego_psnr_curve.jpg" alt="image" width="900">
+              <p><strong>Lego Validation PSNR Curve (Peak Validation PSNR > 23)  </strong></p>
+            </div> 
+          </div>
+          
+        <h2>Spherical Rendering Video</h2>
+          <center><video width="350" height="350" controls>
+            <source src="media/lego_video.mp4" type="video/mp4">
+          </video></center>
+          <div class="image-gallery">
+            <div class="image-item">
+              <img src="media/lego_video.gif" alt="image" width="300">
+              <p><strong>Spherical Rendering GIF (in case the video breaks)</strong></p>
+            </div>
+          </div>
+        
+        <h2>Part 2.6: Training with Your Own Data</h2>
+            <h3>GIF of Camera Circling Object</h3>
+
+            <h3>Code and Hyperparameter Changes</h3>
+
+            <h3>Training Loss Plot</h3>
+
+            <h3>Intermediate Renders</h3>
+
+</bod
