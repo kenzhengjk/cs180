@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Portfolio</title>
+            <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {   
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #2e2e2d; /* Slightly grey background for the page */
+        }
+        
+        header {
+          background-color: #f2f2f0; /* Dark grey top banner */
+          color: white;
+          text-align: center;
+          padding: 2rem 1rem; /* Spacing to make the banner large */
+          color: black;
+        }
+        
+        header h1 {
+          margin: 0;
+          font-size: 2rem;
+        }
+        
+        header h2 {
+          margin: 1rem 0 0 0;
+          font-size: 1.5rem;
+        }
+        
+        .big_container {
+          max-width: 1200px;
+          margin: 1rem auto; /* Centers the container */
+          background-color: silver; /* White background for content */
+          padding: 1rem;
+          border-radius: 5px;
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          color: white;   
+        }
+            
+        .container {
+          max-width: 1100px;
+          margin: 2rem auto; /* Centers the container */
+          background-color: #f2f2f0; /* White background for content */
+          padding: 2rem;
+          border-radius: 5px;
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4); /* Subtle shadow for depth */
+          color: black;
+        }
+        
+        .container a {
+          color: #007bff; /* Blue link for "Back to Home" */
+          text-decoration: none;
+        }
+        
+        .container a:hover {
+          text-decoration: underline;
+        }
+        
+        .container h3 {
+          font-size: 1.5rem;
+          margin-top: 2rem;
+        }
+        
+        .container p {
+          line-height: 1.6; /* Improved readability for paragraphs */
+        }
+
+        .image-gallery {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: center;
+          margin-top: 1rem;
+        }
+        
+        .image-item img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item {
+            width: 350px;
+            text-align: center;
+        }
+        
+        .image-item2 img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item2 {
+          width: 538px;
+          text-align: center;
+        }
+        
+        .image-item3 img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item3 {
+          width: 1200px;
+          text-align: center;
+        }
+        
+        .image-item4 img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          align: center;
+        }
+        .image-item4 {
+          width: 700px;
+          text-align: center;
+        }
+        
+        .image-item5 img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .image-item5 {
+            width: 200px;
+            text-align: center;
+        }
+
+        .pixelated {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges; /* fallback for some browsers */
+        }
+      
+        .math-block {
+          text-align: center;         /* Center content */
+          padding: 5px 10px;              /* Spacing inside the block */
+          border-radius: 5px;         /* Rounded corners */
+          margin: 20px auto;          /* Center the block horizontally */
+          max-width: 100%;             /* Optional: limit width */
+        }    
+    </style>
+</head>
+    
+<body>
+    <header>
+        <h1>CS 180 Project 5</h1>
+            <h2>Fun with Diffusion Models!</h2>
+    </header>
+    
+    <div class="container">
+        <h1><center>Part A: The Power of Diffusion Models</center></h1>
+        <h2>Part 0: Setup</h2>
+            <div class="image-gallery">
+                <div class="image-item2">
+                    <img src="media/myrender1.jpg" alt="image" width="300">
+                    <p><strong>Visualization Angle 1</strong></p>
+                </div>       
+                <div class="image-item2">
+                    <img src="media/myrender2.jpg" alt="image" width="300">
+                    <p><strong>Visualization Angle 2</strong></p>
+                </div>       
+            </div>
+    </div>
+
+
+
+
+    
+
+
+    <div class="container">
+        <h1><center>Part B: Flow Matching From Scratch!</center></h1>
+        <h2>Part 1: Training a Single-Step Denoising UNet</h2>
+    </div>
+
+</body>
