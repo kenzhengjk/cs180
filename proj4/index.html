@@ -160,19 +160,15 @@
     
     <div class="container">
         <h1><center>Part 0: Calibrating Your Camera and Capturing a 3D Scan</center></h1>
-        <h2>Camera Frustum Visualizations</h2>
+        <h2>Camera Frustums Visualizations</h2>
             <div class="image-gallery">
-                <div class="image-item">
-                    <img src="media/scene1_1.jpg" alt="image" width="300">
-                    <p><strong>Scene 1 Leftmost Shot</strong></p>
+                <div class="image-item2">
+                    <img src="media/myrender1.jpg" alt="image" width="300">
+                    <p><strong>Visualization Angle 1</strong></p>
                 </div>       
-                <div class="image-item">
-                    <img src="media/scene1_2.jpg" alt="image" width="300">
-                    <p><strong>Scene 1 Center Shot</strong></p>
-                </div>       
-                <div class="image-item">
-                    <img src="media/scene1_3.jpg" alt="image" width="300">
-                    <p><strong>Scene 1 Rightmost Shot</strong></p>
+                <div class="image-item2">
+                    <img src="media/myrender2.jpg" alt="image" width="300">
+                    <p><strong>Visualization Angle 2</strong></p>
                 </div>       
             </div>
     </div>
@@ -333,6 +329,16 @@
               of each color at sample i weighted by its weight!</p>
 
         <h2>Visualization of Rays</h2> 
+          <div class="image-gallery">
+            <div class="image-item2">
+              <img src="media/render2.jpg" alt="image" width="900">
+              <p><strong>Random Sample of 100 Rays Globally</strong></p>
+            </div> 
+            <div class="image-item2">
+              <img src="media/render1.jpg" alt="image" width="900">
+              <p><strong>Random Sample of 100 Rays From One Camera</strong></p>
+            </div> 
+          </div>
             
 
         <h2>Training Progression</h2> 
@@ -361,14 +367,52 @@
               <p><strong>Spherical Rendering GIF (in case the video breaks)</strong></p>
             </div>
           </div>
-        
-        <h2>Part 2.6: Training with Your Own Data</h2>
+          
+          <h2>Part 2.6: Training with Your Own Data</h2>
+            <p>Prime Bottle!</p>
+            <p><strong>Sample Ground Truth Images</strong></p>
+              <div class="image-gallery">
+                <div class="image-item">
+                  <img src="media/prime1.jpg" alt="image" width="300">
+                  <p><strong></strong></p>
+                </div>
+                <div class="image-item">
+                  <img src="media/prime2.jpg" alt="image" width="300">
+                  <p><strong></strong></p>
+                </div>
+                <div class="image-item">
+                  <img src="media/prime3.jpg" alt="image" width="300">
+                  <p><strong></strong></p>
+                </div>
+              </div>
+            
             <h3>GIF of Camera Circling Object</h3>
+              <div class="image-gallery">
+                <div class="image-item">
+                  <img src="media/prime_orbit.gif" alt="image" width="300">
+                  <p><strong>Merry-go-round Circling</strong></p>
+                </div>
+                <div class="image-item">
+                  <img src="media/prime_cartwheel.gif" alt="image" width="300">
+                  <p><strong>Cartwheel Circling</strong></p>
+                </div>
+                <div class="image-item">
+                  <img src="media/prime_wiggle.gif" alt="image" width="300">
+                  <p><strong>Wiggling View</strong></p>
+                </div>
+              </div>
 
             <h3>Code and Hyperparameter Changes</h3>
+              <p>Some hyperparameters were tweaked: <code>num_iterations</code> was increased to 5000, and
+                <code>near=0.15</code>, <code>far=0.65</code>. 
+                  Everything else stayed the same as Part 2.4 (i.e., model architecture for training Lego).</p>
 
-            <h3>Training Loss Plot</h3>
-
-            <h3>Intermediate Renders</h3>
+            <h3>Losses & Intermediate Renders (channels flipped)</h3>
+              <div class="image-gallery">
+                <div class="image-item3">
+                  <img src="media/prime_renders.jpg" alt="image" width="300">
+                  <p><strong></strong></p>
+                </div>
+              </div>
 
 </bod
