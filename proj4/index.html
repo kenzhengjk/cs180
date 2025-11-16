@@ -292,7 +292,7 @@
                 <code><strong>pixel_to_ray(K, c2w, uv):</strong></code> computes ray origins and directions in world coordinates for each pixel.</p>
           
           <h3>Part 2.2: Sampling</h3>
-            <p>I followed the prompt for this part and implemented one function.</p>
+            <p>I followed the prompt for this part and implemented one main function.</p>
             <p><code><strong>sample_points_along_rays(ray_origins, ray_directions, near=2.0, far=6.0, n_samples=64, training=True):</strong></code> samples 3D points 
               along each ray between the near and far planes (i.e., stratified sampling step for NeRF). If the <code>training</code> flag is set to True, it adds some random 
               perturbation: <code>np.random.rand(N_rays, n_samples) * ((far - near) / n_samples)</code>, applied within each interval to improve training robustness!</p>
