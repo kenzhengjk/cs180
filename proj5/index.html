@@ -122,7 +122,7 @@
           align: center;
         }
         .image-item4 {
-          width: 700px;
+          width: 255px;
           text-align: center;
         }
         
@@ -160,21 +160,629 @@
     
     <div class="container">
         <h1><center>Part A: The Power of Diffusion Models</center></h1>
+        <h2>Part 0: Setup</h2>
+        <p><code>SEED = 12345</code></p>
+        <h3>3 Images</h3>
+            <h4><code>num_inference_steps=5</code></h4>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/0_0_5steps.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>"Hacker in Cory Hall, code glowing in fog."</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/0_1_5steps.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>"Robot TA teaching CS 180 in mossy Wheeler."</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/0_2_5steps.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>"Drones and cherry blossoms over Memorial Glade."</strong></p>
+                </div>         
+            </div>
+            <h4><code>num_inference_steps=50</code></h4>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/0_0_50steps.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>"Hacker in Cory Hall, code glowing in fog."</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/0_1_50steps.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>"Robot TA teaching CS 180 in mossy Wheeler."</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/0_2_50steps.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>"Drones and cherry blossoms over Memorial Glade."</strong></p>
+                </div>         
+            </div>
+            <p>We see that the quality of the outputs for each prompt improves as <code>num_inference_steps</code> increases.
+            This makes sense since the more denoising steps taken the more "detailed" an output we can expect.
+            And the less steps taken, the fast the output is generated, but at the cost of quality, so we see more granular images.
+            A side note is that I included a lot of UC Berkeley-specific diction, like Cory Hall, CS 180, Memorial Glade, etc., which
+            isn't general enough for the model to accurately pinpoint, thus we see across generations that the image fails to capture those details, 
+            but it does generate objects that are commonly found, like fog, code, robot, cherry blossoms, etc. Thus overall the generated images
+            do closely align with my prompts!</p>
+
         <h2>Part 1.1: Implementing the Forward Pass</h2>
             <div class="image-gallery">
                 <div class="image-item">
-                    <img src="media/campanile_noise_250.jpg" alt="image" width="300">
+                    <img src="media/campanile_noise_250.jpg" alt="image" width="300" class="pixelated">
                     <p><strong>Campanile at Noise Level 250</strong></p>
                 </div>         
                 <div class="image-item">
-                    <img src="media/campanile_noise_500.jpg" alt="image" width="300">
+                    <img src="media/campanile_noise_500.jpg" alt="image" width="300" class="pixelated">
                     <p><strong>Campanile at Noise Level 250</strong></p>
                 </div>         
                 <div class="image-item">
-                    <img src="media/campanile_noise_750.jpg" alt="image" width="300">
+                    <img src="media/campanile_noise_750.jpg" alt="image" width="300" class="pixelated">
                     <p><strong>Campanile at Noise Level 250</strong></p>
                 </div>         
             </div>
+            
+        <h2>Part 1.2: Classical Denoising</h2>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/campanile_noise_250.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Campanile at Noise Level 250</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/campanile_noise_500.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Campanile at Noise Level 250</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/campanile_noise_750.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Campanile at Noise Level 250</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/campanile_noise_250_gaus.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Campanile Denoised Level 250</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/campanile_noise_500_gaus.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Campanile Denoised Level 250</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/campanile_noise_750_gaus.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Campanile Denoised Level 250</strong></p>
+                </div>         
+            </div>
+
+        <h2>Part 1.3: Implementing One Step Denoising</h2>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/og_campanile.jpg" alt="image" width="300">
+                    <p><strong>Original Campanile</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/13_noise_250.jpg" alt="image" width="300" class="pixelated"> 
+                    <p><strong>Noisy Campanile (t = 250)</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/13_denoised_250.jpg" alt="image" width="300">
+                    <p><strong>Denoised Campanile Estimate (t = 250)</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/og_campanile.jpg" alt="image" width="300">
+                    <p><strong>Original Campanile</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/13_noise_500.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (t = 500)</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/13_denoised_500.jpg" alt="image" width="300">
+                    <p><strong>Denoised Campanile Estimate (t = 500)</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/og_campanile.jpg" alt="image" width="300">
+                    <p><strong>Original Campanile</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/13_noise_750.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (t = 750)</strong></p>
+                </div>         
+                <div class="image-item">
+                    <img src="media/13_denoised_750.jpg" alt="image" width="300">
+                    <p><strong>Denoised Campanile Estimate (t = 750)</strong></p>
+                </div>         
+            </div>
+
+        <h2>Part 1.4: Implementing Iterative Denoising</h2>
+            <div class="image-gallery">
+                <div class="image-item5">
+                    <img src="media/14_step_10.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (step = 10)</strong></p>
+                </div>         
+                <div class="image-item5">
+                    <img src="media/14_step_15.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (step = 15)</strong></p>
+                </div>         
+                <div class="image-item5">
+                    <img src="media/14_step_20.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (step = 20)</strong></p>
+                </div>         
+                <div class="image-item5">
+                    <img src="media/14_step_25.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (step = 25)</strong></p>
+                </div>         
+                <div class="image-item5">
+                    <img src="media/14_step_30.jpg" alt="image" width="300" class="pixelated">
+                    <p><strong>Noisy Campanile (step = 30)</strong></p>
+                </div>         
+            </div>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/14_clean.jpg" alt="image" width="300">
+                    <p><strong>Final Predicted Clean Campanile</strong></p>
+                </div>               
+                <div class="image-item">
+                    <img src="media/14_clean_onestep.jpg" alt="image" width="300">
+                    <p><strong>One Step Denoised Campanile</strong></p>
+                </div>               
+                <div class="image-item">
+                    <img src="media/14_blur_filtered.jpg" alt="image" width="300">
+                    <p><strong>Campanile with Gaussian Blurring </strong></p>
+                </div>               
+            </div>
+
+        <h2>Part 1.5: Diffusion Model Sampling</h2>
+            <h4>5 sampled images with prompt "a high quality photo".</h4>
+            <div class="image-gallery">
+                <div class="image-item5">
+                    <img src="media/15_im0.jpg" alt="image" width="300">
+                    <p><strong>Image 1</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/15_im1.jpg" alt="image" width="300">
+                    <p><strong>Image 2</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/15_im2.jpg" alt="image" width="300">
+                    <p><strong>Image 3</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/15_im3.jpg" alt="image" width="300">
+                    <p><strong>Image 4</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/15_im4.jpg" alt="image" width="300">
+                    <p><strong>Image 5</strong></p>
+                </div>
+            </div>
+
+        <h2>Part 1.6: Classifier Free Guidance</h2>
+            <h4>5 sampled images with prompt "a high quality photo" and a CFG scale of <code>gamma=7</code>.</h4>
+            <div class="image-gallery">
+                <div class="image-item5">
+                    <img src="media/16_im0.jpg" alt="image" width="300">
+                    <p><strong>Image 1</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/16_im1.jpg" alt="image" width="300">
+                    <p><strong>Image 2</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/16_im2.jpg" alt="image" width="300">
+                    <p><strong>Image 3</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/16_im3.jpg" alt="image" width="300">
+                    <p><strong>Image 4</strong></p>
+                </div>
+                <div class="image-item5">
+                    <img src="media/16_im4.jpg" alt="image" width="300">
+                    <p><strong>Image 5</strong></p>
+                </div>
+            </div>
+
+        <h2>Part 1.7: Image-to-image Translation</h2>
+            <h4>Edits of the Campanile at distinct noise levels with the conditional text prompt "a high quality photo":</h4>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/17_campanile_1.jpg" alt="image" width="300">
+                    <p><strong>Campanile Edit at Noise Level 1</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_campanile_3.jpg" alt="image" width="300">
+                    <p><strong>Campanile Edit at Noise Level 3</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_campanile_5.jpg" alt="image" width="300">
+                    <p><strong>Campanile Edit at Noise Level 5</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_campanile_7.jpg" alt="image" width="300">
+                    <p><strong>Campanile Edit at Noise Level 7</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_campanile_10.jpg" alt="image" width="300">
+                    <p><strong>Campanile Edit at Noise Level 10</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_campanile_20.jpg" alt="image" width="300">
+                    <p><strong>Campanile Edit at Noise Level 20</strong></p>
+                </div>
+            </div>
+            <h4>Edits with my image 1:</h4>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/17_dodo.jpg" alt="image" width="300">
+                    <p><strong>Dodo Image</strong></p>
+                </div>
+            </div>
+
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/17_dodo_1.jpg" alt="image" width="300">
+                    <p><strong>Dodo Edit at Noise Level 1</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_dodo_3.jpg" alt="image" width="300">
+                    <p><strong>Dodo Edit at Noise Level 3</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_dodo_5.jpg" alt="image" width="300">
+                    <p><strong>Dodo Edit at Noise Level 5</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_dodo_7.jpg" alt="image" width="300">
+                    <p><strong>Dodo Edit at Noise Level 7</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_dodo_10.jpg" alt="image" width="300">
+                    <p><strong>Dodo Edit at Noise Level 10</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_dodo_20.jpg" alt="image" width="300">
+                    <p><strong>Dodo Edit at Noise Level 20</strong></p>
+                </div>
+            </div>
+            <h4>Edits with my image 2:</h4>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/17_hand.jpg" alt="image" width="300">
+                    <p><strong>Hand Frame Image</strong></p>
+                </div>
+            </div>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="media/17_hand_1.jpg" alt="image" width="300">
+                    <p><strong>Hand Edit at Noise Level 1</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_hand_3.jpg" alt="image" width="300">
+                    <p><strong>Hand Edit at Noise Level 3</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_hand_5.jpg" alt="image" width="300">
+                    <p><strong>Hand Edit at Noise Level 5</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_hand_7.jpg" alt="image" width="300">
+                    <p><strong>Hand Edit at Noise Level 7</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_hand_10.jpg" alt="image" width="300">
+                    <p><strong>Hand Edit at Noise Level 10</strong></p>
+                </div>
+                <div class="image-item">
+                    <img src="media/17_hand_20.jpg" alt="image" width="300">
+                    <p><strong>Hand Edit at Noise Level 20</strong></p>
+                </div>
+            </div>
+
+        <h2>Part 1.7.1: Editing Hand-Drawn and Web Images</h2>
+            <h4>Stock image of Mr. Cat:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/171_stock_og.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat</strong></p>
+                  </div>
+              </div>
+            <h4>Edits of Mr. Cat at distinct noise levels:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/171_stock_1.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat at Noise Level 1</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/171_stock_3.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat at Noise Level 3</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/171_stock_5.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat at Noise Level 5</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/171_stock_7.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat at Noise Level 7</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/171_stock_10.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat at Noise Level 10</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/171_stock_20.jpg" alt="image" width="300">
+                      <p><strong>Mr. Cat at Noise Level 20</strong></p>
+                  </div>
+              </div>
+            <h4>Sketch image 1:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/sketch1.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1</strong></p>
+                  </div>
+              </div>
+            <h4>Edits of Sketch 1 at distinct noise levels:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/sketch1_1.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 1</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch1_3.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 3</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch1_5.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 5</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch1_7.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 7</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch1_10.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 10</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch1_20.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 20</strong></p>
+                  </div>
+              </div>
+            <h4>Sketch image 2:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/sketch2.jpg" alt="image" width="300">
+                      <p><strong>Sketch 2</strong></p>
+                  </div>
+              </div>
+            <h4>Edits of Sketch 1 at distinct noise levels:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/sketch2_1.jpg" alt="image" width="300">
+                      <p><strong>Sketch 1 at Noise Level 1</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch2_3.jpg" alt="image" width="300">
+                      <p><strong>Sketch 2 at Noise Level 3</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch2_5.jpg" alt="image" width="300">
+                      <p><strong>Sketch 2 at Noise Level 5</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch2_7.jpg" alt="image" width="300">
+                      <p><strong>Sketch 2 at Noise Level 7</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch2_10.jpg" alt="image" width="300">
+                      <p><strong>Sketch 2 at Noise Level 10</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/sketch2_20.jpg" alt="image" width="300">
+                      <p><strong>Sketch 2 at Noise Level 20</strong></p>
+                  </div>
+              </div>
+
+        <h2>Part 1.7.2: Inpainting</h2>
+            <h4>Campanile inpainted:</h4>
+              <div class="image-gallery">
+                  <div class="image-item4">
+                      <img src="media/og_campanile.jpg" alt="image" width="300">
+                      <p><strong>Original Campanile</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_campanile_mask.jpg" alt="image" width="300">
+                      <p><strong>Mask</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_campanile_hole.jpg" alt="image" width="300">
+                      <p><strong>Hole to Fill</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/campanile_inpainted.jpg" alt="image" width="300">
+                      <p><strong>Campanile Inpainted</strong></p>
+                  </div>
+              </div>
+            <h4>My example 1 inpainted:</h4>
+              <div class="image-gallery">
+                  <div class="image-item4">
+                      <img src="media/17_dodo.jpg" alt="image" width="300">
+                      <p><strong>Original Dodo</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_dodo_mask.jpg" alt="image" width="300">
+                      <p><strong>Mask</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_dodo_hole.jpg" alt="image" width="300">
+                      <p><strong>Dodo Inpainted</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_dodo_inpainted.jpg" alt="image" width="300">
+                      <p><strong>Dodo Inpainted</strong></p>
+                  </div>
+              </div>
+            <h4>My example 2 Inpainted:</h4>
+              <div class="image-gallery">
+                  <div class="image-item4">
+                      <img src="media/17_hand.jpg" alt="image" width="300">
+                      <p><strong>Original Hand Frame</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_hand_mask.jpg" alt="image" width="300">
+                      <p><strong>Mask</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_hand_hole.jpg" alt="image" width="300">
+                      <p><strong>Hand Frame Inpainted</strong></p>
+                  </div>
+                  <div class="image-item4">
+                      <img src="media/172_hand_inpainted.jpg" alt="image" width="300">
+                      <p><strong>Hand Frame Inpainted</strong></p>
+                  </div>
+              </div>
+
+        <h2>Part 1.7.3: Text-Conditioned Image-to-image Translation</h2>
+            <h4>Edits of the Campanile at distinct noise levels with prompt "a papaya":</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/173_campanile_1.jpg" alt="image" width="300">
+                      <p><strong>Campanile Edit at Noise Level 1</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_campanile_3.jpg" alt="image" width="300">
+                      <p><strong>Campanile Edit at Noise Level 3</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_campanile_5.jpg" alt="image" width="300">
+                      <p><strong>Campanile Edit at Noise Level 5</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_campanile_7.jpg" alt="image" width="300">
+                      <p><strong>Campanile Edit at Noise Level 7</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_campanile_10.jpg" alt="image" width="300">
+                      <p><strong>Campanile Edit at Noise Level 10</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_campanile_20.jpg" alt="image" width="300">
+                      <p><strong>Campanile Edit at Noise Level 20</strong></p>
+                  </div>
+              </div>
+            <h4>Edits of my image 1 at distinct noise levels with prompt "a car":</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/173_dodo_1.jpg" alt="image" width="300">
+                      <p><strong>Dodo Edit at Noise Level 1</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_dodo_3.jpg" alt="image" width="300">
+                      <p><strong>Dodo Edit at Noise Level 3</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_dodo_5.jpg" alt="image" width="300">
+                      <p><strong>Dodo Edit at Noise Level 5</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_dodo_7.jpg" alt="image" width="300">
+                      <p><strong>Dodo Edit at Noise Level 7</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_dodo_10.jpg" alt="image" width="300">
+                      <p><strong>Dodo Edit at Noise Level 10</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_dodo_20.jpg" alt="image" width="300">
+                      <p><strong>Dodo Edit at Noise Level 20</strong></p>
+                  </div>
+              </div>
+            <h4>Edits of my image 2 at distinct noise levels with prompt "a banana":</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/173_hand_1.jpg" alt="image" width="300">
+                      <p><strong>Hand Edit at Noise Level 1</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_hand_3.jpg" alt="image" width="300">
+                      <p><strong>Hand Edit at Noise Level 3</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_hand_5.jpg" alt="image" width="300">
+                      <p><strong>Hand Edit at Noise Level 5</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_hand_7.jpg" alt="image" width="300">
+                      <p><strong>Hand Edit at Noise Level 7</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_hand_10.jpg" alt="image" width="300">
+                      <p><strong>Hand Edit at Noise Level 10</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/173_hand_20.jpg" alt="image" width="300">
+                      <p><strong>Hand Edit at Noise Level 20</strong></p>
+                  </div>
+              </div>
+
+        <h2>Part 1.8: Visual Anagrams</h2>
+            <h4>Illusion 1:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/18_1.jpg" alt="image" width="300">
+                      <p><strong>'an oil painting of an old man' </strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/18_1_flip.jpg" alt="image" width="300">
+                      <p><strong>'an oil painting of people around a campfire'</strong></p>
+                  </div>
+              </div>
+            <h4>Illusion 2:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/18_2.jpg" alt="image" width="300">
+                      <p><strong>'an oil painting of a snowy mountain village' </strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/18_2_flip.jpg" alt="image" width="300">
+                      <p><strong>'a man wearing a hat'</strong></p>
+                  </div>
+              </div>
+            <h4>Illusion 3:</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/18_3.jpg" alt="image" width="300">
+                      <p><strong>'a photo of a dog' </strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/18_3_flip.jpg" alt="image" width="300">
+                      <p><strong>'a photo of a hipster barista'</strong></p>
+                  </div>
+              </div>
+
+
+        <h2>Part 1.9: Hybrid Images</h2>
+            <h4>Hybrid 1 ("a lithograph of waterfalls" + "a lithograph of a skull"):</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/hybrid_1.jpg" alt="image" width="300">
+                      <p><strong>Hybrid Image</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/hybrid_1_sharp.jpg" alt="image" width="300">
+                      <p><strong>High-pass View</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/hybrid_1_blur.jpg" alt="image" width="300">
+                      <p><strong>Blurred View</strong></p>
+                  </div>
+              </div>
+            <h4>Hybrid 2 ("a sketch of a forest landscape" + "a sketch of an owl face"):</h4>
+              <div class="image-gallery">
+                  <div class="image-item">
+                      <img src="media/hybrid_2.jpg" alt="image" width="300">
+                      <p><strong>Hybrid Image</strong></p>
+                  </div>
+                  <div class="image-item">
+                    <img src="media/hybrid_2_sharp.jpg" alt="image" width="300">
+                    <p><strong>High-pass View</strong></p>
+                  </div>
+                  <div class="image-item">
+                      <img src="media/hybrid_2_blur.jpg" alt="image" width="300">
+                      <p><strong>Blurred View</strong></p>
+                  </div>
+              </div>
+
     </div>
 
 
