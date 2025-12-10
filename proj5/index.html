@@ -782,18 +782,132 @@
                       <p><strong>Blurred View</strong></p>
                   </div>
               </div>
-
-    </div>
-
-
-
-
+            </div>
+            
+            
+            
 
 
+        <div class="container">
+            <h1><center>Part B: Flow Matching From Scratch!</center></h1>
+            <h2>Part 1.2: Using the UNet to Train a Denoiser</h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/noise_visualization.png" alt="image" width="300">
+                        <p><strong>Noising Process Visualization</strong></p>
+                    </div>
+                </div>
 
-    <div class="container">
-        <h1><center>Part B: Flow Matching From Scratch!</center></h1>
-        <h2>Part 1: Training a Single-Step Denoising UNet</h2>
-    </div>
+            <h2>Part 1.2.1: Training</h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/training_curve_sigma05.png" alt="image" width="300">
+                        <p><strong>Training Loss Curve</strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/denoising_results_epoch1.png" alt="image" width="300">
+                        <p><strong>Sample Test Results After 1st Epoch</strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/denoising_results_epoch5.png" alt="image" width="300">
+                        <p><strong>Sample Test Results After 5th Epoch</strong></p>
+                    </div>
+                </div>
+
+            <h2>Part 1.2.2: Out-of-Distribution Testing</h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/ood_testing_results.png" alt="image" width="300">
+                        <p><strong>Training Loss Curve</strong></p>
+                    </div>
+                </div>
+            
+            <h2>Part 1.2.3: Denoising Pure Noise</h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/training_curve_pure_noise.png" alt="image" width="300">
+                        <p><strong>Training Loss Curve</strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/pure_noise_results_epoch1.png" alt="image" width="300">
+                        <p><strong>Sample Results After 1st Epoch</strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/pure_noise_results_epoch5.png" alt="image" width="300">
+                        <p><strong>Sample Results After 5th Epoch</strong></p>
+                    </div>
+                </div>
+            <p>One pattern observed in the generated outputs is that regardless of the initial noise,
+                the denoised images tend to cluster around the center in a deformed shape somewhere in between a "6", "8", and "9". 
+                As the hint suggests, this is likely due to the fact that MSE loss drives the model to predict the mean image of the training set (i.e.,
+                the centroid minimizing squared distances). Thus, the "loss minimizing" result converges to the average MNIST digit structure, which reflects dominant training data patterns.
+                Specifically, since most numbers have some sort of curve in its top or bottom half, this curvature is captured by the generations. </p>
+            
+            <h2>Part 2.2: Training the UNet (Time-Conditioned)</h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/training_curve_time_conditional.png" alt="image" width="300">
+                        <p><strong>Training Loss Curve</strong></p>
+                    </div>
+                </div>
+                
+            <h2>Part 2.3: Sampling from the UNet (Time-Conditioned)</h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/time_samples_epoch1.png" alt="image" width="300">
+                        <p><strong>Sampling Results from UNet for 1 Epoch</strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/time_samples_epoch5.png" alt="image" width="300">
+                        <p><strong>Sampling Results from UNet for 5 Epochs</strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/time_samples_epoch10.png" alt="image" width="300">
+                        <p><strong>Sampling Results from UNet for 10 Epochs</strong></p>
+                    </div>
+                </div>
+                
+            <h2>Part 2.5: Training the UNet (Class-Conditioned) </h2>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/training_curve_class_conditional.png" alt="image" width="300">
+                        <p><strong>Training Loss Curve</strong></p>
+                    </div>
+                </div>
+                
+            <h2>Part 2.6: Sampling from the UNet (Class-Conditioned)</h2>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/class_samples_epoch1.png" alt="image" width="300">
+                        <p><strong>Sampling Results from UNet for 1 Epoch</strong></p>
+                    </div>
+                    <div class="image-item">
+                        <img src="media/class_samples_epoch5.png" alt="image" width="300">
+                        <p><strong>Sampling Results from UNet for 5 Epochs</strong></p>
+                    </div>
+                    <div class="image-item">
+                        <img src="media/class_samples_epoch10.png" alt="image" width="300">
+                        <p><strong>Sampling Results from UNet for 10 Epochs</strong></p>
+                    </div>
+                </div>
+                
+                <h3>Removing Exponential Learning Rate Scheduler</h3>
+                <p>To compensate for removing the exponential LR scheduler, I used a constant LR of 5e-3 (i.e., half of the initial 1e-2). 
+                    This seems to provide stable training throughout and achieves similar performance!</p>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="media/class_samples_no_scheduler.png" alt="image" width="300">
+                        <p><strong>No Scheduler Visualization</strong></p>
+                    </div>
+                </div>
+                <div class="image-gallery">
+                    <div class="image-item3">
+                        <img src="media/training_comparison.png" alt="image" width="300">
+                        <p><strong>Training Loss Curve Comparison</strong></p>
+                    </div>
+                </div>
+
+
+        </div>
 
 </body>
