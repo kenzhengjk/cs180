@@ -818,7 +818,11 @@
                 <div class="image-gallery">
                     <div class="image-item3">
                         <img src="media/ood_testing_results.png" alt="image" width="300">
-                        <p><strong>Training Loss Curve</strong></p>
+                        <p><strong></strong></p>
+                    </div>
+                    <div class="image-item3">
+                        <img src="media/ood_testing_results2.png" alt="image" width="300">
+                        <p><strong>OOD Sample Results on Test Set</strong></p>
                     </div>
                 </div>
             
@@ -841,7 +845,7 @@
                 the denoised images tend to cluster around the center in a deformed shape somewhere in between a "6", "8", and "9". 
                 As the hint suggests, this is likely due to the fact that MSE loss drives the model to predict the mean image of the training set (i.e.,
                 the centroid minimizing squared distances). Thus, the "loss minimizing" result converges to the average MNIST digit structure, which reflects dominant training data patterns.
-                Specifically, since most numbers have some sort of curve in its top or bottom half, this curvature is captured by the generations. </p>
+                Specifically, since most numbers have some sort of curve at their top or bottom half, we see this curvature get captured by the generations. </p>
             
             <h2>Part 2.2: Training the UNet (Time-Conditioned)</h2>
                 <div class="image-gallery">
@@ -903,7 +907,7 @@
                 <div class="image-gallery">
                     <div class="image-item3">
                         <img src="media/training_comparison.png" alt="image" width="300">
-                        <p><strong>Training Loss Curve Comparison</strong></p>
+                        <p><strong>Training Loss Curves</strong></p>
                     </div>
                 </div>
 
